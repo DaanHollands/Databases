@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence version="2.1"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="default">
+    <class>Database.dbSpelers</class>
+    <class>Database.dbAdressen</class>
+    <class>Database.dbBallenrapers</class>
+    <class>Database.dbDatums</class>
+    <class>Database.dbDeelnamen</class>
+    <class>Database.dbFinales</class>
+    <class>Database.dbGeraapteBallen</class>
+    <class>Database.dbMatchen</class>
+    <class>Database.dbNiveauReeks</class>
+    <class>Database.dbToernooienReeksen</class>
+    <class>Database.dbWedstrijdleiders</class>
+    <class>Database.dbUitslagenEnum</class>
+    <class>Database.dbVeldSoortEnum</class>
+    <class>Database.dbVelden</class>
+    <class>Database.dbSpelersEmailadressen</class>
+    <class>Database.dbSupporterde</class>
+    <class>Database.dbSupporters</class>
+    <class>Database.dbTennisclubs</class>
+    <class>Database.dbToernooien</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:Taak.db"/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+
+      <property name="hibernate.dialect" value="org.hibernate.dialect.SQLiteDialect" />
+      <property name="hibernate.connection.autocommit" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.flushMode" value="ALWAYS" />
+
+      <property name="hibernate.cache.use_second_level_cache" value="false" />
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
+      <property name="toplink.jdbc.url"
+                value="jdbc:sqlite:C:\Users\vince\OneDrive - KU Leuven\Desktop\Opdracht DataBases\Databases\Taak.db"/>
+      <property name="toplink.jdbc.driver" value="org.sqlite.JDBC"/>
+      <property name="hibernate.connection.url"
+                value="jdbc:sqlite:C:\Users\vince\OneDrive - KU Leuven\Desktop\Opdracht DataBases\Databases\Taak.db"/>
+      <property name="hibernate.connection.driver_class" value="org.sqlite.JDBC"/>
+      <property name="openjpa.ConnectionURL"
+                value="jdbc:sqlite:C:\Users\vince\OneDrive - KU Leuven\Desktop\Opdracht DataBases\Databases\Taak.db"/>
+      <property name="openjpa.ConnectionDriverName" value="org.sqlite.JDBC"/>
+      <property name="eclipselink.jdbc.url"
+                value="jdbc:sqlite:C:\Users\vince\OneDrive - KU Leuven\Desktop\Opdracht DataBases\Databases\Taak.db"/>
+      <property name="eclipselink.jdbc.driver" value="org.sqlite.JDBC"/>
+    </properties>
+  </persistence-unit>
+</persistence>

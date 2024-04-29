@@ -37,6 +37,12 @@ javafx {
 dependencies {
   implementation('org.controlsfx:controlsfx:11.1.2')
 
+  implementation('org.xerial:sqlite-jdbc:3.45.3.0')
+  implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.24.final'
+
+  implementation group: 'com.zsoltfabok', name: 'sqlite-dialect', version: '1.0'
+  implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

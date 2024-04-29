@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooi.controllers.HeaderController">
+   <children>
+      <MenuBar fx:id="titleBar" layoutY="2.0" prefHeight="25.0" prefWidth="850.0">
+        <menus>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
