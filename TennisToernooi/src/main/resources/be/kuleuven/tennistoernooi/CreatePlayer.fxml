@@ -7,11 +7,6 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooi.controllers.CreatePlayerController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="850" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/TennisField.jpg" />
-         </image>
-      </ImageView>
       <fx:include source="Header.fxml" />
       <AnchorPane layoutX="85.0" layoutY="57.0" prefHeight="429.0" prefWidth="714.0" style="-fx-border-width: 3; -fx-background-color: white; -fx-background-radius: 20;">
          <children>

@@ -1,5 +1,12 @@
 package be.kuleuven.tennistoernooi.models.CreatePlayer;
 
+import Database.*;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
 public class CreatePlayer {
     private String naam;
     private String achterNaam;
@@ -25,5 +32,12 @@ public class CreatePlayer {
         this.geboorteMaand = geboorteMaand;
         this.geboorteJaar = geboorteJaar;
         this.ranking = ranking;
+    }
+
+    public CreatePlayer() {
+    }
+
+    public void run() {
+        System.out.println("hier zitten we");
     }
 }

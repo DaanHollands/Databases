@@ -17,34 +17,37 @@ ext {
   junitVersion = '5.10.0'
 }
 
-sourceCompatibility = '21'
-targetCompatibility = '21'
+sourceCompatibility = 1.13
+//targetCompatibility = '21'
 
-tasks.withType(JavaCompile) {
-  options.encoding = 'UTF-8'
-}
+//javafx {
+//  version = '21'
+//  modules = ['javafx.controls', 'javafx.fxml']
+//}
 
-application {
-  mainModule = 'be.kuleuven.tennistoernooi'
-  mainClass = 'be.kuleuven.tennistoernooi.HelloApplication'
-}
-
-javafx {
-  version = '21'
-  modules = ['javafx.controls', 'javafx.fxml']
-}
+//dependencies {
+//  implementation('org.controlsfx:controlsfx:11.1.2')
+//
+//  implementation('org.xerial:sqlite-jdbc:3.45.3.0')
+//  // Updated Hibernate version (check documentation for compatible version)
+//  // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+//  implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.33.Final'
+//
+//
+//  implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+//
+//  testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+//  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+//}
 
 dependencies {
-  implementation('org.controlsfx:controlsfx:11.1.2')
-
-  implementation('org.xerial:sqlite-jdbc:3.45.3.0')
-  implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.24.final'
-
+  implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.23.Final'
+  implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.32.3.2'
   implementation group: 'com.zsoltfabok', name: 'sqlite-dialect', version: '1.0'
   implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 
-  testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 test {
