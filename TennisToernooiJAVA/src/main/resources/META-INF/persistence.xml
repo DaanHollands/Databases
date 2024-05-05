@@ -3,8 +3,28 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="be.kuleuven.tennistoernooijava.databasePU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-<!--        <class>be.kuleuven.tennistoernooijava.database.Spelers</class>-->
         <class>be.kuleuven.tennistoernooijava.database.Adressen</class>
+        <class>be.kuleuven.tennistoernooijava.database.Ballenrapers</class>
+        <class>be.kuleuven.tennistoernooijava.database.Datums</class>
+        <class>be.kuleuven.tennistoernooijava.database.Deelnamen</class>
+        <class>be.kuleuven.tennistoernooijava.database.Finales</class>
+        <class>be.kuleuven.tennistoernooijava.database.GeraapteBallen</class>
+        <class>be.kuleuven.tennistoernooijava.database.Matchen</class>
+        <class>be.kuleuven.tennistoernooijava.database.NiveauReeks</class>
+        <class>be.kuleuven.tennistoernooijava.database.PlaatsenEnum</class>
+        <class>be.kuleuven.tennistoernooijava.database.Reeksen</class>
+        <class>be.kuleuven.tennistoernooijava.database.Scheidsen</class>
+        <class>be.kuleuven.tennistoernooijava.database.Spelers</class>
+        <class>be.kuleuven.tennistoernooijava.database.SpelersEmailadressen</class>
+        <class>be.kuleuven.tennistoernooijava.database.Supporterde</class>
+        <class>be.kuleuven.tennistoernooijava.database.Toernooien</class>
+        <class>be.kuleuven.tennistoernooijava.database.ToernooienReeksen</class>
+        <class>be.kuleuven.tennistoernooijava.database.UitslagenEnum</class>
+        <class>be.kuleuven.tennistoernooijava.database.VeldSoortEnum</class>
+        <class>be.kuleuven.tennistoernooijava.database.Velden</class>
+        <class>be.kuleuven.tennistoernooijava.database.Wedstrijdleiders</class>
+        <class>be.kuleuven.tennistoernooijava.database.Supporters</class>
+        <class>be.kuleuven.tennistoernooijava.database.Tennisclubs</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.user" value=""/>
@@ -16,6 +36,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.connection.driver_class" value="org.sqlite.JDBC"/>
         </properties>
         
         
