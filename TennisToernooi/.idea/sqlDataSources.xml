@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="b25596c6-1e90-48e4-8e9d-b4f84fecdebf" name="Taak Mapping">
+      <data-sources db="53412c16-9cae-4733-adaa-f12a0fb266fb" ddl="79dd3ad9-fef5-4c63-b4ed-4783c2a9a222" />
+      <scope>
+        <node kind="database" qname="@">
+          <node kind="schema" negative="1" />
+        </node>
+      </scope>
+    </mapping>
+  </component>
+</project>
