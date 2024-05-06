@@ -1,14 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="be.kuleuven.tennistoernooijava.controller.AanmakenSpelerController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.AanmakenSpelerController">
+    <children>
+        <fx:include source="Header.fxml" />
+        <AnchorPane layoutX="85.0" layoutY="57.0" prefHeight="429.0" prefWidth="714.0" style="-fx-border-width: 3; -fx-background-color: white; -fx-background-radius: 20;">
+            <children>
+                <Label layoutX="37.0" layoutY="14.0" text="Speler informatie">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Label>
+                <Label layoutX="62.0" layoutY="80.0" text="Naam">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="naamInput" layoutX="117.0" layoutY="80.0" prefHeight="25.0" prefWidth="180.0" />
+                <Label layoutX="388.0" layoutY="80.0" text="Achternaam">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="achternaamInput" layoutX="496.0" layoutY="80.0" prefHeight="25.0" prefWidth="180.0" />
+                <Label layoutX="65.0" layoutY="130.0" text="Email">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="emailInput" layoutX="117.0" layoutY="130.0" prefHeight="25.0" prefWidth="180.0" />
+                <Label layoutX="356.0" layoutY="130.0" text="Geboortedatum">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <Label layoutX="39.0" layoutY="180.0" text="Ranking">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="rankingInput" layoutX="114.0" layoutY="180.0" prefHeight="25.0" prefWidth="40.0" text="0" />
+                <Label layoutX="44.0" layoutY="230.0" text="Gewicht">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="gwichtInput" layoutX="114.0" layoutY="230.0" prefHeight="25.0" prefWidth="40.0" text="0" />
+                <Label layoutX="162.0" layoutY="230.0" prefHeight="28.0" prefWidth="29.0" text="kg">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <Label layoutX="49.0" layoutY="280.0" text="Lengte">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="lengteInput" layoutX="115.0" layoutY="280.0" prefHeight="25.0" prefWidth="40.0" text="0" />
+                <Label layoutX="161.0" layoutY="280.0" prefHeight="28.0" prefWidth="29.0" text="cm">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <Label layoutX="347.0" layoutY="180.0" text="Telefoonnummer">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="telefoonNummerInput" layoutX="496.0" layoutY="180.0" prefHeight="25.0" prefWidth="180.0" />
+                <Label layoutX="37.0" layoutY="330.0" text="Geslacht">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <ChoiceBox fx:id="geslachtSelector" layoutX="114.0" layoutY="330.0" prefWidth="150.0" />
+                <ChoiceBox fx:id="dagInput" layoutX="502.0" layoutY="132.0" prefHeight="25.0" prefWidth="50.0" />
+                <ChoiceBox fx:id="maandInput" layoutX="561.0" layoutY="132.0" prefHeight="25.0" prefWidth="50.0" />
+                <Label layoutX="505.0" layoutY="105.0" text="Dag    Maand   Jaar">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <Button fx:id="voegToeKnop" layoutX="531.0" layoutY="343.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Voeg toe" />
+                <TextField fx:id="jaarInput" layoutX="626.0" layoutY="132.0" prefHeight="25.0" prefWidth="50.0" />
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

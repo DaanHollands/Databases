@@ -37,20 +37,10 @@ javafx {
 dependencies {
     implementation('org.controlsfx:controlsfx:11.1.2')
 
-    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.45.3.0'
-
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.33.Final'
-
-// https://mvnrepository.com/artifact/com.zsoltfabok/sqlite-dialect
-//    implementation group: 'com.zsoltfabok', name: 'sqlite-dialect', version: '1.0'
-
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.17.0'
-
     implementation group:'com.github.gwenn', name:'sqlite-dialect', version:'0.1.2'
-    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
     implementation group:'net.bytebuddy', name: 'byte-buddy', version: '1.13.0'
 
 
