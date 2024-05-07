@@ -3,28 +3,28 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="be.kuleuven.tennistoernooijava.databasePU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>be.kuleuven.tennistoernooijava.model.Adressen</class>
-        <class>be.kuleuven.tennistoernooijava.model.Ballenrapers</class>
-        <class>be.kuleuven.tennistoernooijava.model.Datums</class>
-        <class>be.kuleuven.tennistoernooijava.model.Deelnamen</class>
-        <class>be.kuleuven.tennistoernooijava.model.Finales</class>
-        <class>be.kuleuven.tennistoernooijava.model.GeraapteBallen</class>
-        <class>be.kuleuven.tennistoernooijava.model.Matchen</class>
+        <class>be.kuleuven.tennistoernooijava.model.Adres</class>
+        <class>be.kuleuven.tennistoernooijava.model.Ballenraper</class>
+        <class>be.kuleuven.tennistoernooijava.model.Datum</class>
+        <class>be.kuleuven.tennistoernooijava.model.Deelname</class>
+        <class>be.kuleuven.tennistoernooijava.model.Finale</class>
+        <class>be.kuleuven.tennistoernooijava.model.GeraapteBal</class>
+        <class>be.kuleuven.tennistoernooijava.model.Match</class>
         <class>be.kuleuven.tennistoernooijava.model.NiveauReeks</class>
         <class>be.kuleuven.tennistoernooijava.model.PlaatsenEnum</class>
-        <class>be.kuleuven.tennistoernooijava.model.Reeksen</class>
-        <class>be.kuleuven.tennistoernooijava.model.Scheidsen</class>
-        <class>be.kuleuven.tennistoernooijava.model.Spelers</class>
-        <class>be.kuleuven.tennistoernooijava.model.SpelersEmailadressen</class>
+        <class>be.kuleuven.tennistoernooijava.model.Reeks</class>
+        <class>be.kuleuven.tennistoernooijava.model.Scheids</class>
+        <class>be.kuleuven.tennistoernooijava.model.Speler</class>
+        <class>be.kuleuven.tennistoernooijava.model.SpelersEmailadres</class>
         <class>be.kuleuven.tennistoernooijava.model.Supporterde</class>
-        <class>be.kuleuven.tennistoernooijava.model.Toernooien</class>
-        <class>be.kuleuven.tennistoernooijava.model.ToernooienReeksen</class>
+        <class>be.kuleuven.tennistoernooijava.model.Toernooi</class>
+        <class>be.kuleuven.tennistoernooijava.model.ToernooiReeks</class>
         <class>be.kuleuven.tennistoernooijava.model.UitslagenEnum</class>
         <class>be.kuleuven.tennistoernooijava.model.VeldSoortEnum</class>
-        <class>be.kuleuven.tennistoernooijava.model.Velden</class>
-        <class>be.kuleuven.tennistoernooijava.model.Wedstrijdleiders</class>
-        <class>be.kuleuven.tennistoernooijava.model.Supporters</class>
-        <class>be.kuleuven.tennistoernooijava.model.Tennisclubs</class>
+        <class>be.kuleuven.tennistoernooijava.model.Veld</class>
+        <class>be.kuleuven.tennistoernooijava.model.Wedstrijdleider</class>
+        <class>be.kuleuven.tennistoernooijava.model.Supporter</class>
+        <class>be.kuleuven.tennistoernooijava.model.Tennisclub</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.user" value=""/>

@@ -1,11 +1,8 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelerDAO;
-import be.kuleuven.tennistoernooijava.model.Spelers;
+import be.kuleuven.tennistoernooijava.model.Speler;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import java.math.BigInteger;
 
 public class SpelerService {
@@ -29,13 +26,13 @@ public class SpelerService {
             int geboorteJaar,
             int ranking
     ) {
-        Spelers spelers = new Spelers();
-        spelers.setNaam(naam);
-        spelers.setGeslacht(geslacht);
-        spelers.setClub(2);
-        spelers.setGeboortedatum(datumService.createDatum(geboorteJaar, geboorteMaand, geboorteDag , 0,0).getDatumId());
-        spelers.setGewicht(gewicht);
-        spelers.setLengte(lengte);
-        spelers.setRanking(ranking);
+        Speler speler = new Speler();
+        speler.setNaam(naam);
+        speler.setGeslacht(geslacht);
+        speler.setClub(2);
+        speler.setGeboortedatum(datumService.createDatum(geboorteJaar, geboorteMaand, geboorteDag , 0,0).getDatumId());
+        speler.setGewicht(gewicht);
+        speler.setLengte(lengte);
+        speler.setRanking(ranking);
     }
 }

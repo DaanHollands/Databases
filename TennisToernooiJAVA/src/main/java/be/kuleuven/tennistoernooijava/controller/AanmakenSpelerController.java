@@ -1,15 +1,13 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
-import be.kuleuven.tennistoernooijava.model.Datums;
+import be.kuleuven.tennistoernooijava.dao.DatumDAO;
+import be.kuleuven.tennistoernooijava.model.Datum;
 import be.kuleuven.tennistoernooijava.service.DatumService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-
-import javax.persistence.Persistence;
 
 public class AanmakenSpelerController
 {
@@ -57,11 +55,11 @@ public class AanmakenSpelerController
         geslachtSelector.setItems(FXCollections.observableArrayList(geslachten));
         dagInput.setItems(FXCollections.observableArrayList((dagen)));
         voegToeKnop.setOnMouseClicked(event -> maakSpeler());
-        datumService = new DatumService(new DatumsDAO());
+        datumService = new DatumService(new DatumDAO());
     }
 
     public void maakSpeler() {
-        Datums datum = datumService.createDatum(2000,2,20,2,20);
+        Datum datum = datumService.createDatum(2000,2,20,2,20);
         System.out.println(datum.getJaar());
     }
 

@@ -3,14 +3,14 @@ package be.kuleuven.tennistoernooijava.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public interface BaseDAO<T, ID> {
     EntityManagerFactory sessionFactory = Persistence.createEntityManagerFactory("be.kuleuven.tennistoernooijava.databasePU");
     EntityManager entityManager = sessionFactory.createEntityManager();
 
-    Class<T> getEntityClass();
+    Class<T> getEntityClass(
+    );
 
     default T create(T entity) {
         entityManager.getTransaction().begin();
