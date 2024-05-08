@@ -5,16 +5,17 @@ import java.util.Objects;
 
 @Entity
 public class Scheidsen {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @javax.persistence.Column(name = "SpelerID")
-    private int spelerId;
 
-    public int getSpelerId() {
+    @Id
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "spelerID")
+    private Spelers spelerId;
+
+    public Spelers getSpelerId() {
         return spelerId;
     }
 
-    public void setSpelerId(int spelerId) {
+    public void setSpelerId(Spelers spelerId) {
         this.spelerId = spelerId;
     }
 

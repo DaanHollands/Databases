@@ -5,28 +5,31 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Adressen", schema = "main", catalog = "")
 public class Adressen {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "AdresID")
-    private int adresId;
-    @Basic
-    @Column(name = "Straatnaam")
-    private String straatnaam;
-    @Basic
-    @Column(name = "Straatnummer")
-    private int straatnummer;
-    @Basic
-    @Column(name = "Postcode", length = 4)
-    private int postcode;
+    @Column(name = "AdresID", nullable = false)
+    private Integer adresID;
 
-    public int getAdresId() {
-        return adresId;
+    @Basic
+    @Column(name = "Straatnaam", nullable = false)
+    private String straatnaam;
+
+    @Basic
+    @Column(name = "Straatnummer", nullable = false)
+    private Integer straatnummer;
+
+    @Basic
+    @Column(name = "Postcode", length = 4, nullable = false)
+    private Integer postcode;
+
+    public int getAdresID() {
+        return adresID;
     }
 
-    public void setAdresId(int adresId) {
-        this.adresId = adresId;
+    public void setAdresID(int adresID) {
+        this.adresID = adresID;
     }
 
     public String getStraatnaam() {
@@ -60,7 +63,7 @@ public class Adressen {
 
         Adressen that = (Adressen) o;
 
-        if (adresId != that.adresId) return false;
+        if (adresID != that.adresID) return false;
         if (straatnummer != that.straatnummer) return false;
         if (postcode != that.postcode) return false;
         if (straatnaam != null ? !straatnaam.equals(that.straatnaam) : that.straatnaam != null) return false;
@@ -70,7 +73,7 @@ public class Adressen {
 
     @Override
     public int hashCode() {
-        int result = adresId;
+        int result = adresID;
         result = 31 * result + (straatnaam != null ? straatnaam.hashCode() : 0);
         result = 31 * result + straatnummer;
         result = 31 * result + postcode;

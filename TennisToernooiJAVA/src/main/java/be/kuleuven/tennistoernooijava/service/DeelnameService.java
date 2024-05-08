@@ -11,8 +11,8 @@ public class DeelnameService {
 
     public Deelnamen create(int matchID, int spelerID, String vraag){
         Deelnamen deelname = new Deelnamen();
-        deelname.setMatchId(matchID);
-        deelname.setSpelerId(spelerID);
+        deelname.setMatchID(matchID);
+        deelname.setSpelerID(spelerID);
         deelname.setVraag(vraag);
         return deelnameDAO.create(deelname);
     }

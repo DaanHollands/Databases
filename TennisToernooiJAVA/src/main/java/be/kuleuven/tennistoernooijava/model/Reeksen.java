@@ -1,23 +1,20 @@
 package be.kuleuven.tennistoernooijava.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Reeksen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @javax.persistence.Column(name = "ReeksID")
-    private int reeksId;
+    @Column(name = "ReeksID")
+    private Integer reeksId;
 
-    public int getReeksId() {
+    public Integer getReeksId() {
         return reeksId;
     }
 
-    public void setReeksId(int reeksId) {
+    public void setReeksId(Integer reeksId) {
         this.reeksId = reeksId;
     }
 

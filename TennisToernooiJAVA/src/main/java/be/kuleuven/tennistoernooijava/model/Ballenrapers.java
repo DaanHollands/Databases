@@ -1,31 +1,49 @@
 package be.kuleuven.tennistoernooijava.model;
 
+import be.kuleuven.tennistoernooijava.enums.Plaatsen;
+import net.bytebuddy.description.field.FieldList;
+
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Ballenrapers {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "SpelerID")
-    private int spelerId;
-    @Basic
-    @Column(name = "PlaatsID")
-    private int plaatsId;
 
-    public int getSpelerId() {
+    @Id
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "SpelerID")
+    private Spelers spelerId;
+
+    @ManyToOne
+    @JoinColumn(name = "plaatsID", nullable = false)
+    private PlaatsenEnum plaatsId;
+
+    @ManyToMany
+    @JoinColumn(name = "finales", nullable = false)
+    private Set<Finales> finales;
+
+    public Set<Finales> getFinales() {
+        return finales;
+    }
+
+    public void addFinale(Finales finale) {
+        finales.add(finale);
+    }
+
+    public Spelers getSpelerId() {
         return spelerId;
     }
 
-    public void setSpelerId(int spelerId) {
+    public void setSpelerId(Spelers spelerId) {
         this.spelerId = spelerId;
     }
 
-    public int getPlaatsId() {
+    public PlaatsenEnum getPlaatsId() {
         return plaatsId;
     }
 
-    public void setPlaatsId(int plaatsId) {
+    public void setPlaatsId(PlaatsenEnum plaatsId) {
         this.plaatsId = plaatsId;
     }
 

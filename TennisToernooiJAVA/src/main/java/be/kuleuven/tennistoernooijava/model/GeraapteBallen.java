@@ -1,38 +1,35 @@
 package be.kuleuven.tennistoernooijava.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@javax.persistence.IdClass(GeraapteBalPK.class)
 public class GeraapteBallen {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
-    @javax.persistence.Column(name = "BallenraperID")
-    private int ballenraperId;
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "ballenraperID")
+    private Ballenrapers ballenraperID;
 
-    public int getBallenraperId() {
-        return ballenraperId;
+    public Ballenrapers getBallenraperId() {
+        return ballenraperID;
     }
 
-    public void setBallenraperId(int ballenraperId) {
-        this.ballenraperId = ballenraperId;
+    public void setBallenraperId(Ballenrapers ballenraperID) {
+        this.ballenraperID = ballenraperID;
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @javax.persistence.Column(name = "FinaleID")
-    private int finaleId;
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "finaleID")
+    private Finales finaleID;
 
-    public int getFinaleId() {
-        return finaleId;
+    public Finales getFinaleID() {
+        return finaleID;
     }
 
-    public void setFinaleId(int finaleId) {
-        this.finaleId = finaleId;
+    public void setFinaleId(Finales finaleId) {
+        this.finaleID = finaleId;
     }
 
     @Override
@@ -40,11 +37,11 @@ public class GeraapteBallen {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GeraapteBallen that = (GeraapteBallen) o;
-        return ballenraperId == that.ballenraperId && finaleId == that.finaleId;
+        return ballenraperID == that.ballenraperID && finaleID == that.finaleID;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ballenraperId, finaleId);
+        return Objects.hash(ballenraperID, finaleID);
     }
 }

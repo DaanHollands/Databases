@@ -2,14 +2,25 @@ package be.kuleuven.tennistoernooijava.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@javax.persistence.Table(name = "Plaatsen_ENUM", schema = "main", catalog = "")
 public class PlaatsenEnum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "PlaatsID")
     private int plaatsId;
+
+    @OneToMany(mappedBy = "plaatsenENUM")
+    private Set<Ballenrapers> ballenrapers;
+
+    public Set<Ballenrapers> getBallenrapers() {
+        return ballenrapers;
+    }
+
+    public void setBallenRaper(Ballenrapers ballenRaper) {
+        ballenrapers.add(ballenRaper);
+    }
 
     public int getPlaatsId() {
         return plaatsId;

@@ -1,38 +1,33 @@
 package be.kuleuven.tennistoernooijava.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@javax.persistence.IdClass(be.kuleuven.tennistoernooijava.model.NiveauReeksPK.class)
 public class NiveauReeks {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @javax.persistence.Column(name = "ReeksID")
-    private int reeksId;
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "reeksID")
+    private Reeksen reeksID;
 
-    public int getReeksId() {
-        return reeksId;
+    public Reeksen getReeksID() {
+        return reeksID;
     }
 
-    public void setReeksId(int reeksId) {
-        this.reeksId = reeksId;
+    public void setReeksID(Reeksen reeksId) {
+        this.reeksID = reeksId;
     }
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     @Id
-    @javax.persistence.Column(name = "Niveau")
-    private String niveau;
+    @Column(name = "niveauID")
+    private String niveauID;
 
     public String getNiveau() {
-        return niveau;
+        return niveauID;
     }
 
-    public void setNiveau(String niveau) {
-        this.niveau = niveau;
+    public void setNiveau(String niveauID) {
+        this.niveauID = niveauID;
     }
 
     @Override
@@ -40,11 +35,11 @@ public class NiveauReeks {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NiveauReeks that = (NiveauReeks) o;
-        return reeksId == that.reeksId && Objects.equals(niveau, that.niveau);
+        return reeksID == that.reeksID && Objects.equals(niveauID, that.niveauID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reeksId, niveau);
+        return Objects.hash(reeksID, niveauID);
     }
 }

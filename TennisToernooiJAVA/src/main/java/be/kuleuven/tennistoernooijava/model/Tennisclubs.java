@@ -31,6 +31,7 @@ public class Tennisclubs {
     }
 
     @OneToOne
+    @JoinColumn(name = "adres")
     private Adressen adres;
 
     public Adressen getAdres() {

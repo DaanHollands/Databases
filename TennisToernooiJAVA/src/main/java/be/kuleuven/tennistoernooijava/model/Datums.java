@@ -2,28 +2,46 @@ package be.kuleuven.tennistoernooijava.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Datums {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "DatumID")
-    private int datumId;
+    @Column(name = "DatumID", nullable = false)
+    private Integer datumId;
+
     @Basic
-    @Column(name = "Dag")
-    private int dag;
+    @Column(name = "Dag", nullable = false)
+    private Integer dag;
+
     @Basic
-    @Column(name = "Maand")
-    private int maand;
+    @Column(name = "Maand", nullable = false)
+    private Integer maand;
+
     @Basic
-    @Column(name = "Jaar")
-    private int jaar;
+    @Column(name = "Jaar" , nullable = false)
+    private Integer jaar;
+
     @Basic
-    @Column(name = "Uur")
+    @Column(name = "Uur" , nullable = true)
     private Integer uur;
+
     @Basic
-    @Column(name = "Minuten")
+    @Column(name = "Minuten", nullable = true)
     private Integer minuten;
+
+    @OneToMany
+    @JoinColumn(name = "matches")
+    private Set<Matchen> matches;
+
+    public Set<Matchen> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(Matchen matche) {
+        matches.add(matche);
+    }
 
     public int getDatumId() {
         return datumId;

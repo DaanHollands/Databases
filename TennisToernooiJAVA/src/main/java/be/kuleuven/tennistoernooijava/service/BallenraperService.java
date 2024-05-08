@@ -9,10 +9,10 @@ public class BallenraperService {
 
     public BallenraperService(BallenraperDAO ballenraperDAO) {this.ballenraperDAO = ballenraperDAO;}
 
-    public Ballenrapers create (int spelerID, Plaatsen plaats) {
-        Ballenrapers ballenraper = new Ballenrapers();
-        ballenraper.setSpelerId(spelerID);
-        ballenraper.setPlaatsId(plaats.ordinal());
-        return ballenraperDAO.create(ballenraper);
-    }
+//    public Ballenrapers create ( Plaatsen plaats) {
+//        Ballenrapers ballenraper = new Ballenrapers();
+//        ballenraper.setSpelerId(spelerID);
+//        ballenraper.setPlaatsId(plaats.ordinal());
+//        return ballenraperDAO.create(ballenraper);
+//    }
 }

@@ -7,43 +7,43 @@ import java.util.Objects;
 public class Deelnamen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @javax.persistence.Column(name = "DeelnameID")
-    private int deelnameId;
+    @Column(name = "DeelnameID")
+    private Integer deelnameID;
 
-    public int getDeelnameId() {
-        return deelnameId;
+    public Integer getDeelnameID() {
+        return deelnameID;
     }
 
-    public void setDeelnameId(int deelnameId) {
-        this.deelnameId = deelnameId;
+    public void setDeelnameID(Integer deelnameId) {
+        this.deelnameID = deelnameId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "spelerID", referencedColumnName = "spelerID", nullable = false)
+    private Spelers spelerID;
+
+    public Spelers getSpelerID() {
+        return spelerID;
+    }
+
+    public void setSpelerID(Spelers spelerId) {
+        this.spelerID = spelerId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "matchID", referencedColumnName = "matchID", nullable = false)
+    private Matchen matchID;
+
+    public Matchen getMatchID() {
+        return matchID;
+    }
+
+    public void setMatchID(Matchen matchID) {
+        this.matchID = matchID;
     }
 
     @Basic
-    @Column(name = "SpelerID")
-    private int spelerId;
-
-    public int getSpelerId() {
-        return spelerId;
-    }
-
-    public void setSpelerId(int spelerId) {
-        this.spelerId = spelerId;
-    }
-
-    @Basic
-    @Column(name = "MatchID")
-    private int matchId;
-
-    public int getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(int matchId) {
-        this.matchId = matchId;
-    }
-
-    @Basic
-    @Column(name = "Vraag")
+    @Column(name = "Vraag", nullable = true)
     private String vraag;
 
     public String getVraag() {
@@ -59,11 +59,11 @@ public class Deelnamen {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Deelnamen deelname = (Deelnamen) o;
-        return deelnameId == deelname.deelnameId && spelerId == deelname.spelerId && matchId == deelname.matchId && Objects.equals(vraag, deelname.vraag);
+        return deelnameID == deelname.deelnameID && spelerID == deelname.spelerID && matchID == deelname.matchID && Objects.equals(vraag, deelname.vraag);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deelnameId, spelerId, matchId, vraag);
+        return Objects.hash(deelnameID, spelerID, matchID, vraag);
     }
 }

@@ -9,8 +9,7 @@ public interface BaseDAO<T, ID> {
     EntityManagerFactory sessionFactory = Persistence.createEntityManagerFactory("be.kuleuven.tennistoernooijava.databasePU");
     EntityManager entityManager = sessionFactory.createEntityManager();
 
-    Class<T> getEntityClass(
-    );
+    Class<T> getEntityClass();
 
     default T create(T entity) {
         entityManager.getTransaction().begin();

@@ -11,7 +11,7 @@ public class NiveauReeksService {
     public NiveauReeks create(String niveau, int reeksID){
         NiveauReeks niveauReeks = new NiveauReeks();
         niveauReeks.setNiveau(niveau);
-        niveauReeks.setReeksId(reeksID);
+        niveauReeks.setReeksID(reeksID);
         return niveauReeksDAO.create(niveauReeks);
     }
 

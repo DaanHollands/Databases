@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
+@Table(name = "Spelers")
 public class Spelers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

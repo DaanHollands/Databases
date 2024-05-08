@@ -2,31 +2,32 @@ package be.kuleuven.tennistoernooijava.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Finales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @javax.persistence.Column(name = "MatchID")
-    private int matchId;
+    @Column(name = "MatchID")
+    private Integer matchId;
 
-    public int getMatchId() {
+    public Integer getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(int matchId) {
+    public void setMatchId(Integer matchId) {
         this.matchId = matchId;
     }
 
-    @Basic
-    @Column(name = "Scheidsrechter")
-    private int scheidsrechter;
+    @ManyToMany
+    @JoinColumn(name="scheidsrechter", referencedColumnName = "spelerID", nullable = false)
+    private Scheidsen scheidsrechter;
 
-    public int getScheidsrechter() {
+    public Scheidsen getScheidsrechters() {
         return scheidsrechter;
     }
 
-    public void setScheidsrechter(int scheidsrechter) {
+    public void setScheidsrecht(Scheidsen scheidsrechter) {
         this.scheidsrechter = scheidsrechter;
     }
 

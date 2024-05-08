@@ -7,98 +7,98 @@ import java.util.Objects;
 public class Matchen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @javax.persistence.Column(name = "MatchID")
-    private int matchId;
+    @Column(name = "matchID")
+    private Integer matchID;
 
-    public int getMatchId() {
-        return matchId;
+    public Integer getMatchID() {
+        return matchID;
     }
 
-    public void setMatchId(int matchId) {
-        this.matchId = matchId;
+    public void setMatchID(Integer matchId) {
+        this.matchID = matchId;
     }
 
-    @Basic
-    @Column(name = "Uitslag")
-    private int uitslag;
+    @ManyToOne
+    @JoinColumn(name = "uitslagID", nullable = false)
+    private UitslagenEnum uitslag;
 
-    public int getUitslag() {
+    public UitslagenEnum getUitslag() {
         return uitslag;
     }
 
-    public void setUitslag(int uitslag) {
+    public void setUitslag(UitslagenEnum uitslag) {
         this.uitslag = uitslag;
     }
 
     @Basic
     @Column(name = "ScoreUit")
-    private int scoreUit;
+    private Integer scoreUit;
 
-    public int getScoreUit() {
+    public Integer getScoreUit() {
         return scoreUit;
     }
 
-    public void setScoreUit(int scoreUit) {
+    public void setScoreUit(Integer scoreUit) {
         this.scoreUit = scoreUit;
     }
 
     @Basic
     @Column(name = "ScoreThuis")
-    private int scoreThuis;
+    private Integer scoreThuis;
 
-    public int getScoreThuis() {
+    public Integer getScoreThuis() {
         return scoreThuis;
     }
 
-    public void setScoreThuis(int scoreThuis) {
+    public void setScoreThuis(Integer scoreThuis) {
         this.scoreThuis = scoreThuis;
     }
 
-    @Basic
-    @Column(name = "Datum")
-    private int datum;
+    @ManyToOne
+    @JoinColumn(name = "datumID", nullable = false)
+    private Datums datum;
 
-    public int getDatum() {
+    public Datums getDatum() {
         return datum;
     }
 
-    public void setDatum(int datum) {
+    public void setDatum(Datums datum) {
         this.datum = datum;
     }
 
-    @Basic
-    @Column(name = "Wedstrijdleider")
-    private int wedstrijdleider;
+    @ManyToOne
+    @JoinColumn(name = "wedstrijdleiderID", nullable = false)
+    private Wedstrijdleiders wedstrijdleider;
 
-    public int getWedstrijdleider() {
+    public Wedstrijdleiders getWedstrijdleider() {
         return wedstrijdleider;
     }
 
-    public void setWedstrijdleider(int wedstrijdleider) {
+    public void setWedstrijdleider(Wedstrijdleiders wedstrijdleider) {
         this.wedstrijdleider = wedstrijdleider;
     }
 
-    @Basic
-    @Column(name = "Veld")
-    private int veld;
+    @ManyToOne
+    @JoinColumn(name = "veldID", nullable = false)
+    private VeldSoortEnum veld;
 
-    public int getVeld() {
+    public VeldSoortEnum getVeld() {
         return veld;
     }
 
-    public void setVeld(int veld) {
+    public void setVeld(VeldSoortEnum veld) {
         this.veld = veld;
     }
 
-    @Basic
-    @Column(name = "ToernooiID")
-    private int toernooiId;
+    @ManyToOne
+    @JoinColumn(name = "toernooiID", nullable = false)
+    private Toernooien toernooiId;
 
-    public int getToernooiId() {
+    public Toernooien getToernooiId() {
         return toernooiId;
     }
 
-    public void setToernooiId(int toernooiId) {
+    public void setToernooiId(Toernooien toernooiId) {
         this.toernooiId = toernooiId;
     }
 
@@ -107,11 +107,11 @@ public class Matchen {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Matchen match = (Matchen) o;
-        return matchId == match.matchId && uitslag == match.uitslag && scoreUit == match.scoreUit && scoreThuis == match.scoreThuis && datum == match.datum && wedstrijdleider == match.wedstrijdleider && veld == match.veld && toernooiId == match.toernooiId;
+        return matchID == match.matchID && uitslag == match.uitslag && scoreUit == match.scoreUit && scoreThuis == match.scoreThuis && datum == match.datum && wedstrijdleider == match.wedstrijdleider && veld == match.veld && toernooiId == match.toernooiId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(matchId, uitslag, scoreUit, scoreThuis, datum, wedstrijdleider, veld, toernooiId);
+        return Objects.hash(matchID, uitslag, scoreUit, scoreThuis, datum, wedstrijdleider, veld, toernooiId);
     }
 }
