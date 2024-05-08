@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Finale {
+public class Finales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "MatchID")
@@ -34,7 +34,7 @@ public class Finale {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Finale finale = (Finale) o;
+        Finales finale = (Finales) o;
         return matchId == finale.matchId && scheidsrechter == finale.scheidsrechter;
     }
 

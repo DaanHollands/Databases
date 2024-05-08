@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Wedstrijdleider;
+import be.kuleuven.tennistoernooijava.model.Wedstrijdleiders;
 
 import java.util.List;
 
-public class WedstrijdleiderDAO implements BaseDAO<Wedstrijdleider, Integer>{
+public class WedstrijdleiderDAO implements BaseDAO<Wedstrijdleiders, Integer>{
     @Override
-    public Class<Wedstrijdleider> getEntityClass() {
-        return Wedstrijdleider.class;
+    public Class<Wedstrijdleiders> getEntityClass() {
+        return Wedstrijdleiders.class;
     }
 
     @Override
-    public Wedstrijdleider create(Wedstrijdleider entity) {
+    public Wedstrijdleiders create(Wedstrijdleiders entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Wedstrijdleider update(Wedstrijdleider entity) {
+    public Wedstrijdleiders update(Wedstrijdleiders entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Wedstrijdleider entity) {
+    public void delete(Wedstrijdleiders entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Wedstrijdleider find(Integer integer) {
+    public Wedstrijdleiders find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Wedstrijdleider> findAll() {
+    public List<Wedstrijdleiders> findAll() {
         return BaseDAO.super.findAll();
     }
 }

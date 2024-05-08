@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Veld;
+import be.kuleuven.tennistoernooijava.model.Velden;
 
 import java.util.List;
 
-public class VeldDAO implements BaseDAO<Veld, Integer> {
+public class VeldDAO implements BaseDAO<Velden, Integer> {
     @Override
-    public Class<Veld> getEntityClass() {
-        return Veld.class;
+    public Class<Velden> getEntityClass() {
+        return Velden.class;
     }
 
     @Override
-    public Veld create(Veld entity) {
+    public Velden create(Velden entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Veld update(Veld entity) {
+    public Velden update(Velden entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Veld entity) {
+    public void delete(Velden entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Veld find(Integer integer) {
+    public Velden find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Veld> findAll() {
+    public List<Velden> findAll() {
         return BaseDAO.super.findAll();
     }
 }

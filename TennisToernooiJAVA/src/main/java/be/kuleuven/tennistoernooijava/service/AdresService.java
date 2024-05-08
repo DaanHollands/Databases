@@ -1,18 +1,26 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
-import be.kuleuven.tennistoernooijava.model.Adres;
+import be.kuleuven.tennistoernooijava.model.Adressen;
 
 public class AdresService {
     private final AdresDAO adresDAO;
 
     public AdresService(AdresDAO adresDAO) {this.adresDAO = adresDAO;}
 
-    public Adres create(int postcode, String straatnaam, int straatnummer) {
-        Adres adres = new Adres();
+    public Adressen create(Integer postcode, String straatnaam, Integer straatnummer) {
+        Adressen adres = new Adressen();
         adres.setPostcode(postcode);
         adres.setStraatnaam(straatnaam);
         adres.setStraatnummer(straatnummer);
         return adresDAO.create(adres);
+    }
+
+    public Adressen getOrCreate(Integer postcode, String straatnaam, Integer straatnummer) {
+        Adressen adres = adresDAO.getAdresFrom(postcode, straatnaam, straatnummer);
+        if(adres == null) {
+            return create(postcode, straatnaam, straatnummer);
+        }
+        return adres;
     }
 }

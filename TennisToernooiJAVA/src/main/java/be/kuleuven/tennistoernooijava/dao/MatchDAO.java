@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Match;
+import be.kuleuven.tennistoernooijava.model.Matchen;
 
 import java.util.List;
 
-public class MatchDAO implements BaseDAO<Match, Integer> {
+public class MatchDAO implements BaseDAO<Matchen, Integer> {
     @Override
-    public Class<Match> getEntityClass() {
-        return Match.class;
+    public Class<Matchen> getEntityClass() {
+        return Matchen.class;
     }
 
     @Override
-    public Match create(Match entity) {
+    public Matchen create(Matchen entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Match update(Match entity) {
+    public Matchen update(Matchen entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Match entity) {
+    public void delete(Matchen entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Match find(Integer integer) {
+    public Matchen find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Match> findAll() {
+    public List<Matchen> findAll() {
         return BaseDAO.super.findAll();
     }
 }

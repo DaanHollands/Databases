@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Datum {
+public class Datums {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "DatumID")
@@ -77,7 +77,7 @@ public class Datum {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Datum datum = (Datum) o;
+        Datums datum = (Datums) o;
         return datumId == datum.datumId && dag == datum.dag && maand == datum.maand && jaar == datum.jaar && Objects.equals(uur, datum.uur) && Objects.equals(minuten, datum.minuten);
     }
 

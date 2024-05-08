@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
-public class Speler {
+public class Spelers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "SpelerID")
@@ -131,7 +131,7 @@ public class Speler {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Speler speler = (Speler) o;
+        Spelers speler = (Spelers) o;
         return spelerId == speler.spelerId && geboortedatum == speler.geboortedatum && reeks == speler.reeks && club == speler.club && Objects.equals(naam, speler.naam) && Objects.equals(telefoonnummer, speler.telefoonnummer) && Objects.equals(gewicht, speler.gewicht) && Objects.equals(lengte, speler.lengte) && Objects.equals(ranking, speler.ranking) && Objects.equals(geslacht, speler.geslacht);
     }
 

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Veld {
+public class Velden {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "VeldID")
@@ -44,7 +44,7 @@ public class Veld {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Veld veld = (Veld) o;
+        Velden veld = (Velden) o;
         return veldId == veld.veldId && veldSoort == veld.veldSoort && clubId == veld.clubId;
     }
 

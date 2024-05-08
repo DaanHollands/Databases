@@ -1,38 +1,38 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Datum;
+import be.kuleuven.tennistoernooijava.model.Datums;
 
 import java.util.List;
 
-public class DatumDAO implements BaseDAO<Datum, Integer>{
+public class DatumDAO implements BaseDAO<Datums, Integer>{
 
     @Override
-    public Class<Datum> getEntityClass() {
-        return Datum.class;
+    public Class<Datums> getEntityClass() {
+        return Datums.class;
     }
 
     @Override
-    public Datum create(Datum entity) {
+    public Datums create(Datums entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Datum update(Datum entity) {
+    public Datums update(Datums entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Datum entity) {
+    public void delete(Datums entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Datum find(Integer integer) {
+    public Datums find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Datum> findAll() {
+    public List<Datums> findAll() {
         return BaseDAO.super.findAll();
     }
 }

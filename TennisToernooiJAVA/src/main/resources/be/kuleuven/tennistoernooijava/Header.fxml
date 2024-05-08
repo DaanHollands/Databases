@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.HeaderController">
+<AnchorPane prefHeight="400.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.HeaderController">
    <children>
-      <MenuBar fx:id="titleBar" layoutY="2.0" prefHeight="25.0" prefWidth="850.0">
-        <menus>
-        </menus>
-      </MenuBar>
+      <Pane prefHeight="60.0" prefWidth="850.0" style="-fx-background-color: lightgrey;">
+         <children>
+            <Button fx:id="maakspelerKnop" layoutX="205.0" layoutY="18.0" mnemonicParsing="false" text="Maak speler" />
+            <Button fx:id="maakclubKnop" layoutX="112.0" layoutY="18.0" mnemonicParsing="false" text="Maak club" />
+            <Button fx:id="dashboardKnop" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" text="Dashboard" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

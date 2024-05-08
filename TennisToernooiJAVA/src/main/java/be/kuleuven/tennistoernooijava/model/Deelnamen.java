@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Deelname {
+public class Deelnamen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "DeelnameID")
@@ -58,7 +58,7 @@ public class Deelname {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Deelname deelname = (Deelname) o;
+        Deelnamen deelname = (Deelnamen) o;
         return deelnameId == deelname.deelnameId && spelerId == deelname.spelerId && matchId == deelname.matchId && Objects.equals(vraag, deelname.vraag);
     }
 

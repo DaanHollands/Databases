@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @javax.persistence.IdClass(GeraapteBalPK.class)
-public class GeraapteBal {
+public class GeraapteBallen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "BallenraperID")
@@ -39,7 +39,7 @@ public class GeraapteBal {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GeraapteBal that = (GeraapteBal) o;
+        GeraapteBallen that = (GeraapteBallen) o;
         return ballenraperId == that.ballenraperId && finaleId == that.finaleId;
     }
 

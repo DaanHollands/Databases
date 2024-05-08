@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Toernooi {
+public class Toernooien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "ToornooiID")
@@ -58,7 +58,7 @@ public class Toernooi {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Toernooi that = (Toernooi) o;
+        Toernooien that = (Toernooien) o;
         return toornooiId == that.toornooiId && beginDatumId == that.beginDatumId && eindDatumId == that.eindDatumId && clubId == that.clubId;
     }
 

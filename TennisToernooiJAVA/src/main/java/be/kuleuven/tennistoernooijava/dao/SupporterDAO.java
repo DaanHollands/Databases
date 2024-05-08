@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Supporter;
+import be.kuleuven.tennistoernooijava.model.Supporters;
 
 import java.util.List;
 
-public class SupporterDAO implements BaseDAO<Supporter, Integer> {
+public class SupporterDAO implements BaseDAO<Supporters, Integer> {
     @Override
-    public Class<Supporter> getEntityClass() {
-        return Supporter.class;
+    public Class<Supporters> getEntityClass() {
+        return Supporters.class;
     }
 
     @Override
-    public Supporter create(Supporter entity) {
+    public Supporters create(Supporters entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Supporter update(Supporter entity) {
+    public Supporters update(Supporters entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Supporter entity) {
+    public void delete(Supporters entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Supporter find(Integer integer) {
+    public Supporters find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Supporter> findAll() {
+    public List<Supporters> findAll() {
         return BaseDAO.super.findAll();
     }
 }

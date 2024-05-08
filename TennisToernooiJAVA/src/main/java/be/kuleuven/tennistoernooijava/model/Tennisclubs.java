@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Tennisclub {
+public class Tennisclubs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "ClubID")
@@ -30,15 +30,14 @@ public class Tennisclub {
         this.naam = naam;
     }
 
-    @Basic
-    @Column(name = "Adres")
-    private int adres;
+    @OneToOne
+    private Adressen adres;
 
-    public int getAdres() {
+    public Adressen getAdres() {
         return adres;
     }
 
-    public void setAdres(int adres) {
+    public void setAdres(Adressen adres) {
         this.adres = adres;
     }
 
@@ -46,7 +45,7 @@ public class Tennisclub {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tennisclub that = (Tennisclub) o;
+        Tennisclubs that = (Tennisclubs) o;
         return clubId == that.clubId && adres == that.adres && Objects.equals(naam, that.naam);
     }
 

@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Tennisclub;
+import be.kuleuven.tennistoernooijava.model.Tennisclubs;
 
 import java.util.List;
 
-public class TennisclubDAO implements BaseDAO<Tennisclub, Integer> {
+public class TennisclubDAO implements BaseDAO<Tennisclubs, Integer> {
     @Override
-    public Class<Tennisclub> getEntityClass() {
-        return Tennisclub.class;
+    public Class<Tennisclubs> getEntityClass() {
+        return Tennisclubs.class;
     }
 
     @Override
-    public Tennisclub create(Tennisclub entity) {
+    public Tennisclubs create(Tennisclubs entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Tennisclub update(Tennisclub entity) {
+    public Tennisclubs update(Tennisclubs entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Tennisclub entity) {
+    public void delete(Tennisclubs entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Tennisclub find(Integer integer) {
+    public Tennisclubs find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Tennisclub> findAll() {
+    public List<Tennisclubs> findAll() {
         return BaseDAO.super.findAll();
     }
 }

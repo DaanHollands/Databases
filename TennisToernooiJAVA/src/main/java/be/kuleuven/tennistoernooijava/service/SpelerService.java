@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.SpelerDAO;
-import be.kuleuven.tennistoernooijava.model.Speler;
+import be.kuleuven.tennistoernooijava.model.Spelers;
 
 import java.math.BigInteger;
 
@@ -26,7 +26,7 @@ public class SpelerService {
             int geboorteJaar,
             int ranking
     ) {
-        Speler speler = new Speler();
+        Spelers speler = new Spelers();
         speler.setNaam(naam);
         speler.setGeslacht(geslacht);
         speler.setClub(2);

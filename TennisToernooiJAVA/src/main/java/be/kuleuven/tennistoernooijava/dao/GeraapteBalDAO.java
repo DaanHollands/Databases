@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.GeraapteBal;
+import be.kuleuven.tennistoernooijava.model.GeraapteBallen;
 
 import java.util.List;
 
-public class GeraapteBalDAO implements BaseDAO<GeraapteBal, Integer> {
+public class GeraapteBalDAO implements BaseDAO<GeraapteBallen, Integer> {
     @Override
-    public Class<GeraapteBal> getEntityClass() {
-        return GeraapteBal.class;
+    public Class<GeraapteBallen> getEntityClass() {
+        return GeraapteBallen.class;
     }
 
     @Override
-    public GeraapteBal create(GeraapteBal entity) {
+    public GeraapteBallen create(GeraapteBallen entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public GeraapteBal update(GeraapteBal entity) {
+    public GeraapteBallen update(GeraapteBallen entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(GeraapteBal entity) {
+    public void delete(GeraapteBallen entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public GeraapteBal find(Integer integer) {
+    public GeraapteBallen find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<GeraapteBal> findAll() {
+    public List<GeraapteBallen> findAll() {
         return BaseDAO.super.findAll();
     }
 }

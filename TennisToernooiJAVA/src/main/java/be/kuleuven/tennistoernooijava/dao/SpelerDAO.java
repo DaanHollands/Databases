@@ -1,38 +1,38 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Speler;
+import be.kuleuven.tennistoernooijava.model.Spelers;
 
 import java.util.List;
 
-public class SpelerDAO implements BaseDAO<Speler, Integer> {
+public class SpelerDAO implements BaseDAO<Spelers, Integer> {
 
     @Override
-    public Class<Speler> getEntityClass() {
-        return Speler.class;
+    public Class<Spelers> getEntityClass() {
+        return Spelers.class;
     }
 
     @Override
-    public Speler create(Speler entity) {
+    public Spelers create(Spelers entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Speler update(Speler entity) {
+    public Spelers update(Spelers entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Speler entity) {
+    public void delete(Spelers entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Speler find(Integer id) {
+    public Spelers find(Integer id) {
         return BaseDAO.super.find(id);
     }
 
     @Override
-    public List<Speler> findAll() {
+    public List<Spelers> findAll() {
         return BaseDAO.super.findAll();
     }
 }

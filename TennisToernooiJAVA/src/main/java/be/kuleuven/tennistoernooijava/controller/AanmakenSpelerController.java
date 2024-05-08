@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.controller;
 
 import be.kuleuven.tennistoernooijava.dao.DatumDAO;
-import be.kuleuven.tennistoernooijava.model.Datum;
+import be.kuleuven.tennistoernooijava.model.Datums;
 import be.kuleuven.tennistoernooijava.service.DatumService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -59,7 +59,7 @@ public class AanmakenSpelerController
     }
 
     public void maakSpeler() {
-        Datum datum = datumService.createDatum(2000,2,20,2,20);
+        Datums datum = datumService.createDatum(2000,2,20,2,20);
         System.out.println(datum.getJaar());
     }
 

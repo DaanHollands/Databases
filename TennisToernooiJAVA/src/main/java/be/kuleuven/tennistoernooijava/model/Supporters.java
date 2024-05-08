@@ -4,14 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Ballenraper {
+public class Supporters {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "SpelerID")
+    @javax.persistence.Column(name = "SpelerID")
     private int spelerId;
-    @Basic
-    @Column(name = "PlaatsID")
-    private int plaatsId;
 
     public int getSpelerId() {
         return spelerId;
@@ -21,24 +18,28 @@ public class Ballenraper {
         this.spelerId = spelerId;
     }
 
-    public int getPlaatsId() {
-        return plaatsId;
+    @Basic
+    @Column(name = "ClubID")
+    private int clubId;
+
+    public int getClubId() {
+        return clubId;
     }
 
-    public void setPlaatsId(int plaatsId) {
-        this.plaatsId = plaatsId;
+    public void setClubId(int clubId) {
+        this.clubId = clubId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ballenraper that = (Ballenraper) o;
-        return spelerId == that.spelerId && plaatsId == that.plaatsId;
+        Supporters that = (Supporters) o;
+        return spelerId == that.spelerId && clubId == that.clubId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(spelerId, plaatsId);
+        return Objects.hash(spelerId, clubId);
     }
 }

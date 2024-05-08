@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.SpelersEmailadres;
+import be.kuleuven.tennistoernooijava.model.SpelersEmailadressen;
 
 import java.util.List;
 
-public class SpelersEmailAdresDAO implements BaseDAO<SpelersEmailadres, Integer> {
+public class SpelersEmailAdresDAO implements BaseDAO<SpelersEmailadressen, Integer> {
     @Override
-    public Class<SpelersEmailadres> getEntityClass() {
-        return SpelersEmailadres.class;
+    public Class<SpelersEmailadressen> getEntityClass() {
+        return SpelersEmailadressen.class;
     }
 
     @Override
-    public SpelersEmailadres create(SpelersEmailadres entity) {
+    public SpelersEmailadressen create(SpelersEmailadressen entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public SpelersEmailadres update(SpelersEmailadres entity) {
+    public SpelersEmailadressen update(SpelersEmailadressen entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(SpelersEmailadres entity) {
+    public void delete(SpelersEmailadressen entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public SpelersEmailadres find(Integer integer) {
+    public SpelersEmailadressen find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<SpelersEmailadres> findAll() {
+    public List<SpelersEmailadressen> findAll() {
         return BaseDAO.super.findAll();
     }
 }

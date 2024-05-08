@@ -2,15 +2,15 @@ package be.kuleuven.tennistoernooijava.service;
 
 
 import be.kuleuven.tennistoernooijava.dao.DeelnameDAO;
-import be.kuleuven.tennistoernooijava.model.Deelname;
+import be.kuleuven.tennistoernooijava.model.Deelnamen;
 
 public class DeelnameService {
     private final DeelnameDAO deelnameDAO;
 
     public DeelnameService(DeelnameDAO deelnameDAO) {this.deelnameDAO = deelnameDAO;}
 
-    public be.kuleuven.tennistoernooijava.model.Deelname create(int matchID, int spelerID, String vraag){
-        be.kuleuven.tennistoernooijava.model.Deelname deelname = new be.kuleuven.tennistoernooijava.model.Deelname();
+    public Deelnamen create(int matchID, int spelerID, String vraag){
+        Deelnamen deelname = new Deelnamen();
         deelname.setMatchId(matchID);
         deelname.setSpelerId(spelerID);
         deelname.setVraag(vraag);

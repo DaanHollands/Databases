@@ -1,15 +1,15 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.ToernooiReeksDAO;
-import be.kuleuven.tennistoernooijava.model.ToernooiReeks;
+import be.kuleuven.tennistoernooijava.model.ToernooiReeksen;
 
 public class ToernooiReeksService {
     private final ToernooiReeksDAO toernooiReeksDAO;
 
     public ToernooiReeksService(ToernooiReeksDAO toernooiReeksDAO) {this.toernooiReeksDAO = toernooiReeksDAO;}
 
-    public ToernooiReeks create(int reeksID, int ToernooiID){
-        ToernooiReeks toernooiReeks = new ToernooiReeks();
+    public ToernooiReeksen create(int reeksID, int ToernooiID){
+        ToernooiReeksen toernooiReeks = new ToernooiReeksen();
         toernooiReeks.setReeksId(reeksID);
         toernooiReeks.setToernooiId(ToernooiID);
         return toernooiReeksDAO.create(toernooiReeks);

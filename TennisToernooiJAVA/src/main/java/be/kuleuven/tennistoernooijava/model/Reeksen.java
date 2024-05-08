@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Reeks {
+public class Reeksen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "ReeksID")
@@ -25,7 +25,7 @@ public class Reeks {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Reeks reeks = (Reeks) o;
+        Reeksen reeks = (Reeksen) o;
         return reeksId == reeks.reeksId;
     }
 

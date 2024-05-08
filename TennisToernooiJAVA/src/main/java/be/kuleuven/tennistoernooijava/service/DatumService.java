@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.DatumDAO;
-import be.kuleuven.tennistoernooijava.model.Datum;
+import be.kuleuven.tennistoernooijava.model.Datums;
 
 public class DatumService {
 
@@ -11,8 +11,8 @@ public class DatumService {
         this.datumDAO = datumDAO;
     }
 
-    public Datum createDatum(int jaar, int maand, int dag, int uur, int minuten) {
-        Datum datum = new Datum();
+    public Datums createDatum(int jaar, int maand, int dag, int uur, int minuten) {
+        Datums datum = new Datums();
         datum.setJaar(jaar);
         datum.setMaand(maand);
         datum.setDag(dag);

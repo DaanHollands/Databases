@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Finale;
+import be.kuleuven.tennistoernooijava.model.Finales;
 
 import java.util.List;
 
-public class FinaleDAO implements BaseDAO<Finale, Integer>{
+public class FinaleDAO implements BaseDAO<Finales, Integer>{
     @Override
-    public Class<Finale> getEntityClass() {
-        return Finale.class;
+    public Class<Finales> getEntityClass() {
+        return Finales.class;
     }
 
     @Override
-    public Finale create(Finale entity) {
+    public Finales create(Finales entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Finale update(Finale entity) {
+    public Finales update(Finales entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Finale entity) {
+    public void delete(Finales entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Finale find(Integer integer) {
+    public Finales find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Finale> findAll() {
+    public List<Finales> findAll() {
         return BaseDAO.super.findAll();
     }
 }

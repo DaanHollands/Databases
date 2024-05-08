@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @javax.persistence.IdClass(SpelersEmailadresPK.class)
-public class SpelersEmailadres {
+public class SpelersEmailadressen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "spelerID")
@@ -39,7 +39,7 @@ public class SpelersEmailadres {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SpelersEmailadres that = (SpelersEmailadres) o;
+        SpelersEmailadressen that = (SpelersEmailadressen) o;
         return spelerId == that.spelerId && Objects.equals(email, that.email);
     }
 

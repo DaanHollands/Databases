@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Wedstrijdleider {
+public class Scheidsen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "SpelerID")
+    @javax.persistence.Column(name = "SpelerID")
     private int spelerId;
 
     public int getSpelerId() {
@@ -18,16 +18,28 @@ public class Wedstrijdleider {
         this.spelerId = spelerId;
     }
 
+    @Basic
+    @Column(name = "Arbiter-Ranking")
+    private Integer arbiterRanking;
+
+    public Integer getArbiterRanking() {
+        return arbiterRanking;
+    }
+
+    public void setArbiterRanking(Integer arbiterRanking) {
+        this.arbiterRanking = arbiterRanking;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Wedstrijdleider that = (Wedstrijdleider) o;
-        return spelerId == that.spelerId;
+        Scheidsen scheids = (Scheidsen) o;
+        return spelerId == scheids.spelerId && Objects.equals(arbiterRanking, scheids.arbiterRanking);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(spelerId);
+        return Objects.hash(spelerId, arbiterRanking);
     }
 }

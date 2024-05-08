@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @javax.persistence.IdClass(ToernooiReeksPK.class)
-public class ToernooiReeks {
+public class ToernooiReeksen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @javax.persistence.Column(name = "ToernooiID")
@@ -39,7 +39,7 @@ public class ToernooiReeks {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ToernooiReeks that = (ToernooiReeks) o;
+        ToernooiReeksen that = (ToernooiReeksen) o;
         return toernooiId == that.toernooiId && reeksId == that.reeksId;
     }
 

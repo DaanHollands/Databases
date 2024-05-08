@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Adressen", schema = "main", catalog = "")
-public class Adres {
+public class Adressen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "AdresID")
@@ -18,7 +18,7 @@ public class Adres {
     @Column(name = "Straatnummer")
     private int straatnummer;
     @Basic
-    @Column(name = "Postcode")
+    @Column(name = "Postcode", length = 4)
     private int postcode;
 
     public int getAdresId() {
@@ -58,7 +58,7 @@ public class Adres {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Adres that = (Adres) o;
+        Adressen that = (Adressen) o;
 
         if (adresId != that.adresId) return false;
         if (straatnummer != that.straatnummer) return false;

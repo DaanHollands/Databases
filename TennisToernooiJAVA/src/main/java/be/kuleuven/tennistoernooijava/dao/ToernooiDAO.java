@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Toernooi;
+import be.kuleuven.tennistoernooijava.model.Toernooien;
 
 import java.util.List;
 
-public class ToernooiDAO implements BaseDAO<Toernooi, Integer> {
+public class ToernooiDAO implements BaseDAO<Toernooien, Integer> {
     @Override
-    public Class<Toernooi> getEntityClass() {
-        return Toernooi.class;
+    public Class<Toernooien> getEntityClass() {
+        return Toernooien.class;
     }
 
     @Override
-    public Toernooi create(Toernooi entity) {
+    public Toernooien create(Toernooien entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Toernooi update(Toernooi entity) {
+    public Toernooien update(Toernooien entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Toernooi entity) {
+    public void delete(Toernooien entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Toernooi find(Integer integer) {
+    public Toernooien find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Toernooi> findAll() {
+    public List<Toernooien> findAll() {
         return BaseDAO.super.findAll();
     }
 }

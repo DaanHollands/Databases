@@ -1,37 +1,37 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Ballenraper;
+import be.kuleuven.tennistoernooijava.model.Ballenrapers;
 
 import java.util.List;
 
-public class BallenraperDAO implements BaseDAO<Ballenraper, Integer> {
+public class BallenraperDAO implements BaseDAO<Ballenrapers, Integer> {
     @Override
-    public Class<Ballenraper> getEntityClass() {
-        return Ballenraper.class;
+    public Class<Ballenrapers> getEntityClass() {
+        return Ballenrapers.class;
     }
 
     @Override
-    public Ballenraper create(Ballenraper entity) {
+    public Ballenrapers create(Ballenrapers entity) {
         return BaseDAO.super.create(entity);
     }
 
     @Override
-    public Ballenraper update(Ballenraper entity) {
+    public Ballenrapers update(Ballenrapers entity) {
         return BaseDAO.super.update(entity);
     }
 
     @Override
-    public void delete(Ballenraper entity) {
+    public void delete(Ballenrapers entity) {
         BaseDAO.super.delete(entity);
     }
 
     @Override
-    public Ballenraper find(Integer integer) {
+    public Ballenrapers find(Integer integer) {
         return BaseDAO.super.find(integer);
     }
 
     @Override
-    public List<Ballenraper> findAll() {
+    public List<Ballenrapers> findAll() {
         return BaseDAO.super.findAll();
     }
 }
