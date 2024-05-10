@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.ClubController">
+   <children>
+      <fx:include source="Header.fxml" />
+      <ListView fx:id="clubsList" layoutX="51.0" layoutY="42.0" prefHeight="444.0" prefWidth="331.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="468.0" AnchorPane.topAnchor="42.0" />
+      <Label layoutX="113.0" layoutY="14.0" text="Select Your clubs:">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

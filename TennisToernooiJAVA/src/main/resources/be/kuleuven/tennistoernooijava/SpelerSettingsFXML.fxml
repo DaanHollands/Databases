@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.SpelerSettingsController">
+   <children>
+       <fx:include source="Header.fxml" />
+      <AnchorPane layoutX="37.0" layoutY="38.0" prefHeight="455.0" prefWidth="777.0" style="-fx-border-width: 3; -fx-background-color: white; -fx-background-radius: 20;">
+         <children>
+            <Label layoutX="37.0" layoutY="14.0" text="Speler informatie">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="80.0" text="Naam">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="naamInput" layoutX="117.0" layoutY="80.0" prefHeight="25.0" prefWidth="180.0" />
+            <Label layoutX="339.0" layoutY="216.0" text="Emails:">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailInput" layoutX="410.0" layoutY="216.0" prefHeight="28.0" prefWidth="200.0" />
+            <Label layoutX="370.0" layoutY="82.0" text="Geboortedatum">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="39.0" layoutY="127.0" text="Ranking">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="rankingInput" layoutX="114.0" layoutY="127.0" prefHeight="25.0" prefWidth="40.0" />
+            <Label layoutX="44.0" layoutY="177.0" text="Gewicht">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="gewichtInput" layoutX="114.0" layoutY="177.0" prefHeight="25.0" prefWidth="40.0" />
+            <Label layoutX="162.0" layoutY="177.0" prefHeight="28.0" prefWidth="29.0" text="kg">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="49.0" layoutY="227.0" text="Lengte">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="lengteInput" layoutX="115.0" layoutY="227.0" prefHeight="25.0" prefWidth="40.0" />
+            <Label layoutX="161.0" layoutY="227.0" prefHeight="28.0" prefWidth="29.0" text="cm">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="361.0" layoutY="132.0" text="Telefoonnummer">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="telefoonNummerInput" layoutX="510.0" layoutY="132.0" prefHeight="25.0" prefWidth="180.0" />
+            <Label layoutX="37.0" layoutY="277.0" text="Geslacht">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="geslachtSelector" layoutX="114.0" layoutY="277.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="dagInput" layoutX="516.0" layoutY="84.0" prefHeight="25.0" prefWidth="50.0" />
+            <ChoiceBox fx:id="maandInput" layoutX="575.0" layoutY="84.0" prefHeight="25.0" prefWidth="50.0" />
+            <Label layoutX="519.0" layoutY="57.0" text="Dag    Maand   Jaar">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Button fx:id="opslaanKnop" layoutX="680.0" layoutY="396.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="77.0" text="Opslaan" />
+            <TextField fx:id="jaarInput" layoutX="640.0" layoutY="84.0" prefHeight="25.0" prefWidth="50.0" />
+            <Button fx:id="addEmail" layoutX="614.0" layoutY="216.0" mnemonicParsing="false" text="Add" />
+            <AnchorPane fx:id="emailList" layoutX="410.0" layoutY="255.0" prefHeight="169.0" prefWidth="247.0" style="-fx-border-color: GRAY;" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

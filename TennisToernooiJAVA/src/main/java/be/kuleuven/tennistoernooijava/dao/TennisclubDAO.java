@@ -1,8 +1,6 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.model.Tennisclubs;
-
-import java.util.List;
+import be.kuleuven.tennistoernooijava.database.Tennisclubs;
 
 public class TennisclubDAO implements BaseDAO<Tennisclubs, Integer> {
     @Override

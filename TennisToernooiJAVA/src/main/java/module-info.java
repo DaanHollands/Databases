@@ -9,12 +9,14 @@ module be.kuleuven.tennistoernooijava {
     requires net.bytebuddy;
     requires com.fasterxml.classmate;
     requires java.xml.bind;
+    requires org.hibernate.orm.core;
+    requires com.fasterxml.jackson.core;
 
     opens be.kuleuven.tennistoernooijava to javafx.fxml;
     opens be.kuleuven.tennistoernooijava.controller to javafx.fxml;
-    opens be.kuleuven.tennistoernooijava.model to org.hibernate.orm.core;
+    opens be.kuleuven.tennistoernooijava.database to org.hibernate.orm.core;
     exports be.kuleuven.tennistoernooijava.controller;
     exports be.kuleuven.tennistoernooijava.view;
-    exports be.kuleuven.tennistoernooijava.model;
+    exports be.kuleuven.tennistoernooijava.database;
     exports be.kuleuven.tennistoernooijava;
 }

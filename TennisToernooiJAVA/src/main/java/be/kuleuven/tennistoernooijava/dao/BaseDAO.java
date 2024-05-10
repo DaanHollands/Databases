@@ -12,10 +12,16 @@ public interface BaseDAO<T, ID> {
     Class<T> getEntityClass();
 
     default T create(T entity) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(entity);
-        entityManager.getTransaction().commit();
-        return entity;
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(entity);
+            entityManager.getTransaction().commit();
+            return entity;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     default T update(T entity) {
@@ -24,9 +30,14 @@ public interface BaseDAO<T, ID> {
     }
 
     default void delete(T entity) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(entity);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(entity);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     default T find(ID id) {

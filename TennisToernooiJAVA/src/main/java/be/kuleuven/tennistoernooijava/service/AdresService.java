@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
-import be.kuleuven.tennistoernooijava.model.Adressen;
+import be.kuleuven.tennistoernooijava.database.Adressen;
 
 public class AdresService {
     private final AdresDAO adresDAO;

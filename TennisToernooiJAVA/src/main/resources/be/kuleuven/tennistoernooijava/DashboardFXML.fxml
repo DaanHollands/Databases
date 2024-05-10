@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="be.kuleuven.tennistoernooijava.controller.DashBoardController"
-            prefHeight="500.0" prefWidth="850.0">
+<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.DashBoardController">
     <children>
         <fx:include source="Header.fxml" />
+      <Text layoutX="30.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aantal gespeelde matchen:" />
+      <Text layoutX="220.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dit is jouw ID:" />
+      <Text fx:id="idField" layoutX="313.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="########">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="aantalMatchen" layoutX="204.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="49.89299011230469" />
+      <Text layoutX="30.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aantal gewonnen matchen:" />
+      <Text fx:id="gewonnenMatchen" layoutX="204.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="49.89299011230469" />
+      <Text layoutX="41.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aantal verloren matchen:" />
+      <Text fx:id="verlorenMatchen" layoutX="204.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="49.89299011230469" />
+      <Text layoutX="261.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hoogste plaats bereikt:" />
+      <Text fx:id="hoogstePlaats" layoutX="415.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Je hebt nog geen match gespeeld" wrappingWidth="343.8929901123047" />
+      <Text layoutX="593.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Huidige ranking:" />
+      <Text fx:id="huidigeRanking" layoutX="703.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="49.89299011230469" />
+      <Text layoutX="393.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Onthoud dit om opnieuw in te loggen!!" />
     </children>
 </AnchorPane>

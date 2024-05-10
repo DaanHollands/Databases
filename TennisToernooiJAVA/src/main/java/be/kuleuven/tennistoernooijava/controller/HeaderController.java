@@ -1,64 +1,73 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import be.kuleuven.tennistoernooijava.models.ChangeScene;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class HeaderController {
     @FXML
-    private Button maakspelerKnop;
+    private MenuBar menuBar;
 
-    @FXML
-    private Button maakclubKnop;
+    private Menu home = new Menu("Home");
+    private Menu club = new Menu("Club");
+    private Menu instellingen = new Menu("Instellingen");
 
-    @FXML
-    private Button dashboardKnop;
+    private MenuItem dashboard = new MenuItem("Dashboard");
+    private MenuItem maakClub = new MenuItem("Maak Club");
+    private MenuItem selectClubs = new MenuItem("Bekijk Clubs");
+    private MenuItem veranderProfiel = new MenuItem("Verander profiel");
 
-    private Stage stage;
-    private Scene scene;
-    private Parent parent;
-
+    private ChangeScene switchScene = new ChangeScene();
     @FXML
     void initialize() {
-        maakclubKnop.setOnAction(actionEvent -> {
+        menuBar.getMenus().clear();
+        home.getItems().add(dashboard);
+        club.getItems().add(maakClub);
+        club.getItems().add(selectClubs);
+        instellingen.getItems().add(veranderProfiel);
+        menuBar.getMenus().addAll(home, club, instellingen);
+
+        veranderProfiel.setOnAction(actionEvent -> {
             try {
-                switchToScene(actionEvent, "AanmakenClubFXML");
+                switchScene.switchToScene(menuBar,"SpelerSettingsFXML");
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
         });
 
-        maakspelerKnop.setOnAction(actionEvent -> {
+        selectClubs.setOnAction(actionEvent -> {
             try {
-                switchToScene(actionEvent, "AanmakenSpelerFXML");
+                switchScene.switchToScene( menuBar,"SelectClubFXML");
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
         });
 
-        dashboardKnop.setOnAction(actionEvent -> {
+        maakClub.setOnAction(actionEvent -> {
             try {
-                switchToScene(actionEvent, "DashboardFXML");
+                switchScene.switchToScene( menuBar,"AanmakenClubFXML");
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
+            }
+        });
+//
+//        maakspelerKnop.setOnAction(actionEvent -> {
+//            try {
+//                switchToScene(actionEvent, "AanmakenSpelerFXML");
+//            } catch (IOException e) {
+//                System.out.println(e);
+//            }
+//        });
+
+        dashboard.setOnAction(actionEvent -> {
+            try {
+                switchScene.switchToScene( menuBar,"DashboardFXML");
+            } catch (IOException e) {
+                System.out.println(e);
             }
         });
     }
 
-
-    public void switchToScene(ActionEvent event, String sceneNaam) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/be/kuleuven/tennistoernooijava/" + sceneNaam + ".fxml"));
-        stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 }

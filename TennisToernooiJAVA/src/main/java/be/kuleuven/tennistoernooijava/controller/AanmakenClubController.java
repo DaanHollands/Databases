@@ -1,5 +1,9 @@
 package be.kuleuven.tennistoernooijava.controller;
+import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
+import be.kuleuven.tennistoernooijava.database.Tennisclubs;
+import be.kuleuven.tennistoernooijava.models.SpelerSessie;
+import be.kuleuven.tennistoernooijava.service.SpelerService;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,15 +27,23 @@ public class AanmakenClubController {
     private TextField straatnummerInput;
 
     private TennisclubService service;
+    private SpelerService spelerService;
     @FXML
     void initialize() {
-        service = new TennisclubService(new TennisclubDAO());
+        try {
+            service = new TennisclubService(new TennisclubDAO());
+            spelerService = new SpelerService(new SpelersDAO());
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
         maakClubKnop.setOnMouseClicked(event -> maakClub());
     }
 
     void maakClub() {
         try {
-            service.create(straatnaamInput.getText(), Integer.parseInt(straatnummerInput.getText()), Integer.parseInt(postcodeInput.getText()), clubNaamInput.getText());
+            Tennisclubs tennisclub = service.create(straatnaamInput.getText(), Integer.parseInt(straatnummerInput.getText()), Integer.parseInt(postcodeInput.getText()), clubNaamInput.getText());
+            spelerService.getSpeler(SpelerSessie.getSessie().getSpeler().getSpelerID()).setTennisclubID(tennisclub);
         }
         catch (InputMismatchException e) {
             System.out.println("InputMismatchException");

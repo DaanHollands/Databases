@@ -1,9 +1,9 @@
 package be.kuleuven.tennistoernooijava.dao;
-import be.kuleuven.tennistoernooijava.model.Adressen;
+
+import be.kuleuven.tennistoernooijava.database.Adressen;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import java.util.List;
 
 public class AdresDAO implements BaseDAO<Adressen, Integer>{
     @Override
