@@ -1,10 +1,12 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalSpelerRequest;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalClubRequest;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.database.SpelerEmailadressen;
+import be.kuleuven.tennistoernooijava.database.Tennisclubs;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
 import be.kuleuven.tennistoernooijava.database.Datums;
 import be.kuleuven.tennistoernooijava.database.Spelers;
@@ -57,15 +59,31 @@ public class SpelerService {
         return speler;
     }
 
+    public void joinClub(Tennisclubs club, Spelers speler) {
+        speler.setTennisclubID(club);
+        spelersDAO.update(speler);
+    }
+
     public void removeEmailFromSpeler(Integer spelerID, String email) {
         SpelerEmailadressenDAO emailadressenDAO = new SpelerEmailadressenDAO();
         Set<SpelerEmailadressen> emailadressen = spelersDAO.find(spelerID).getEmails();
         for (SpelerEmailadressen spelerEmailadres : emailadressen) {
             if(spelerEmailadres.getEmail().equals(email)) {
-                emailadressenDAO.delete(spelerEmailadres);
-//                SpelerSessie.getSessie().getSpeler().removeEmailAdres(spelerEmailadres);
+                SpelerSessie.getSessie().getSpeler().removeEmailAdres(spelerEmailadres);
+                spelersDAO.update(SpelerSessie.getSessie().getSpeler());
                 return;
             }
+        }
+    }
+
+    public void leaveClub(Integer spelerID, Tennisclubs club) {
+        Spelers gevondenSpeler = spelersDAO.find(spelerID);
+        if(gevondenSpeler.getTennisclubID().getClubID().equals(club.getClubID())) {
+            gevondenSpeler.setTennisclubID(null);
+            spelersDAO.update(gevondenSpeler);
+        }
+        else {
+            throw new IllegalArgumentException("Er is een probleem om de huidige club te verwijderen");
         }
     }
 }

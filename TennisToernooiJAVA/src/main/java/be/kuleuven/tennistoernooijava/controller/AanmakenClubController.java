@@ -1,6 +1,7 @@
 package be.kuleuven.tennistoernooijava.controller;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
+import be.kuleuven.tennistoernooijava.database.Spelers;
 import be.kuleuven.tennistoernooijava.database.Tennisclubs;
 import be.kuleuven.tennistoernooijava.models.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
@@ -42,8 +43,8 @@ public class AanmakenClubController {
 
     void maakClub() {
         try {
-            Tennisclubs tennisclub = service.create(straatnaamInput.getText(), Integer.parseInt(straatnummerInput.getText()), Integer.parseInt(postcodeInput.getText()), clubNaamInput.getText());
-            spelerService.getSpeler(SpelerSessie.getSessie().getSpeler().getSpelerID()).setTennisclubID(tennisclub);
+            Tennisclubs tennisclub = service.create(SpelerSessie.getSessie().getSpeler(), straatnaamInput.getText(), Integer.parseInt(straatnummerInput.getText()), Integer.parseInt(postcodeInput.getText()), clubNaamInput.getText());
+            spelerService.joinClub(tennisclub, SpelerSessie.getSessie().getSpeler());
         }
         catch (InputMismatchException e) {
             System.out.println("InputMismatchException");

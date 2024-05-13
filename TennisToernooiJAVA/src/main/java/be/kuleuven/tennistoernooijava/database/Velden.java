@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "velden")
 public class Velden {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "veldID", nullable = false)
     private Integer veldID;
 
@@ -22,7 +22,7 @@ public class Velden {
     @JoinColumn(name = "tennisclubID", referencedColumnName = "clubID", nullable = false)
     private Tennisclubs tennisclubID;
 
-    @OneToMany(mappedBy = "matchID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "matchID", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Matchen> matchen = new HashSet<>();
 
 

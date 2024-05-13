@@ -1,6 +1,8 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
+import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
+import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
 import be.kuleuven.tennistoernooijava.database.*;
 
@@ -36,7 +38,15 @@ public class ToernooiService {
         toernooien.setEindDatumID(eindDatum);
 
         toernooien.setClubOrganistorID(organisatorClub);
+        toernooien = toernooienDAO.create(toernooien);
+        organisatorClub.addToernooi(toernooien);
+        return toernooien;
+    }
 
-        return toernooienDAO.create(toernooien);
+    public Set<Reeksen> addReeks(Toernooien toernooi, String reeksNiveau) {
+        Reeksen reeks = new ReeksenService(new ReeksenDAO()).getReeks(reeksNiveau);
+        toernooi.addReeks(reeks);
+        Toernooien newToernooi = toernooienDAO.update(toernooi);
+        return newToernooi.getReeksen();
     }
 }

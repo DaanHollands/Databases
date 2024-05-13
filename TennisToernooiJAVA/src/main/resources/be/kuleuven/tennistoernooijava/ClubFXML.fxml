@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="be.kuleuven.tennistoernooijava.controller.ClubController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.ClubController">
+    <children>
+        <fx:include source="Header.fxml" />
+      <Text layoutX="39.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Club naam:">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Text>
+      <Text fx:id="clubnaam" layoutX="196.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Club naam">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Text>
+      <Text layoutX="41.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Club adres:" wrappingWidth="151.84799194335938">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="clubadres" layoutX="175.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Club adres" wrappingWidth="314.3600082397461">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ListView fx:id="allespelerList" layoutX="497.0" layoutY="71.0" prefHeight="405.0" prefWidth="297.0" />
+      <Text layoutX="571.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alle spelers:">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Text>
+      <Text layoutX="166.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matchen:">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Text>
+      <ListView fx:id="matchenList" layoutX="34.0" layoutY="214.0" prefHeight="265.0" prefWidth="375.0" />
 
+
+    </children>
 </AnchorPane>

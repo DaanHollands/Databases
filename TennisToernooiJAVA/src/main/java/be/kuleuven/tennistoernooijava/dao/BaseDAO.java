@@ -1,5 +1,7 @@
 package be.kuleuven.tennistoernooijava.dao;
 
+import org.slf4j.Logger;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -19,23 +21,34 @@ public interface BaseDAO<T, ID> {
             return entity;
         }
         catch (Exception e) {
+            entityManager.getTransaction().rollback();
             System.out.println(e);
             return null;
         }
     }
 
     default T update(T entity) {
-        var merge = entityManager.merge(entity);
-        return merge;
+        try {
+            entityManager.getTransaction().begin();
+            var merge = entityManager.merge(entity);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+            return merge;
+        }
+        catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println(e);
+            return null;
+        }
+
     }
 
     default void delete(T entity) {
         try {
-            entityManager.getTransaction().begin();
             entityManager.remove(entity);
-            entityManager.getTransaction().commit();
         }
         catch (Exception e) {
+            entityManager.getTransaction().rollback();
             System.out.println(e);
         }
     }

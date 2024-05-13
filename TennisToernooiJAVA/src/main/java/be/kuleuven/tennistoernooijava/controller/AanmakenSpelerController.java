@@ -74,7 +74,7 @@ public class AanmakenSpelerController
         geslachtSelector.setItems(FXCollections.observableArrayList(geslachten));
         dagInput.setItems(FXCollections.observableArrayList((dagen)));
         maandInput.setItems(FXCollections.observableArrayList((maanden)));
-        voegToeKnop.setOnAction(event -> maakSpeler(event));
+        voegToeKnop.setOnAction(this::maakSpeler);
 
         terugKnop.setOnAction(event -> {
             try {

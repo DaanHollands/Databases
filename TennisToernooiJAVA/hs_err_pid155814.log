@@ -1,0 +1,21 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x0000720c85a7e291, pid=155814, tid=155825
+#
+# JRE version: OpenJDK Runtime Environment Zulu15.46+17-CA (15.0.10+5) (build 15.0.10+5-MTS)
+# Java VM: OpenJDK 64-Bit Server VM Zulu15.46+17-CA (15.0.10+5-MTS, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x4291]  ImageStrings::find(Endian*, char const*, int*, unsigned int)+0x71
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -- %E" (or dumping to /home/vince/Desktop/Databases/Databases/TennisToernooiJAVA/core.155814)
+#
+# If you would like to submit a bug report, please visit:
+#   http://www.azul.com/support/
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=127.0.0.1:41727 -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant --module-path=/home/vince/Desktop/Databases/Databases/TennisToernooiJAVA/build/libs/TennisToernooiJAVA-1.0-SNAPSHOT.jar:/home/vince/Desktop/Databases/Databases/TennisToernooiJAVA/build/classes/java/main:/home/vince/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-fxml/17.0.6/c500ec44fd60e74a11021c71c0e6127dc31bc41d/javafx-fxml-17.0.6-linux.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/17.0.6/f25aeef6fad7ae52bafb2218a9ce80c2e9d6588e/javafx-controls-17.0.6-linux.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/17.0.6/8a9b91d717ec8bcdb179b91ae8a4f1137756fe3a/javafx-controls-17.0.6.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/17.0.6/c24e954d2f9d5970625b2d6d7a775c07c0319f19/javafx-graphics-17.0.6-linux.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/17.0.6/a71a20fc765c578c17e6bd6525c029b03286ff5e/javafx-graphics-17.0.6.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-base/17.0.6/548ae43836cdba76530eeeafef197d1f539eee17/javafx-base-17.0.6-linux.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-base/17.0.6/808b77ecf79be87b304a78fa9fffad805bfdb9f5/javafx-base-17.0.6.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.controlsfx/controlsfx/11.1.2/584bc3f468e2c33100fcdbb1daf0a3e095e5e031/controlsfx-11.1.2.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.xerial/sqlite-jdbc/3.45.3.0/6ae68e5fbf0d184c2f8191818fbe66e4dd70e14/sqlite-jdbc-3.45.3.0.jar:/home/vince/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-core/5.4.33.Final/58c7f5a749462213c5517eab35af4bc6e793f671/hibernate-core-5.4.33.Final.jar:/home/vince/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.17.0/a6e5058ef9720623c517252d17162f845306ff3a/jackson-core-2.17.0.jar:/home/vince/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy/1.13.0/11cf6a07c02fee0dc828458e1cff2d1bd47288d9/byte-buddy-1.13.0.-Djdk.module.main=be.kuleuven.tennistoernooijava be.kuleuven.tennistoernooijava/be.kuleuven.tennistoernooijava.StartingApplicatie
+
+Host: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz, 8 cores, 15G, 

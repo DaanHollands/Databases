@@ -11,7 +11,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="be.kuleuven.tennistoernooijava.databasePU/Hibernate" uuid="07a92a36-f9e4-468c-affd-50fb5676b80b">
+    <data-source source="LOCAL" name="be.kuleuven.tennistoernooijava.databasePU/Hibernate" uuid="6abfa3ca-26f1-4fa4-8cac-67856bd8c8f8">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

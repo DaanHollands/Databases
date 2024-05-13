@@ -95,8 +95,8 @@ public class SpelerSettingsController {
         newEmail.setSpelerID(SpelerSessie.getSessie().getSpeler());
         newEmail = new SpelerEmailadressenDAO().create(newEmail);
         service.getSpeler(SpelerSessie.getSessie().getSpeler().getSpelerID()).addEmails(newEmail);
-        view.update();
 
+        view.update();
         emailList.getChildren().add(view);
     }
 }

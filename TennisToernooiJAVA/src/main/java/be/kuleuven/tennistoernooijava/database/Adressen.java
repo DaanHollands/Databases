@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "adressen")
 public class Adressen {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "adresID", nullable = false)
     private Integer adresID;
 
@@ -21,7 +21,7 @@ public class Adressen {
     @Column(name = "postcode", nullable = false)
     private Integer postcode;
 
-    @OneToMany(mappedBy = "clubID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "clubID", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Tennisclubs> tennisclubs = new HashSet<>();
 
     public Integer getAdresID() {

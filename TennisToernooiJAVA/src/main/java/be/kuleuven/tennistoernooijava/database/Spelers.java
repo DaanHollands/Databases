@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "spelers")
 public class Spelers {
     @Id
@@ -61,13 +60,14 @@ public class Spelers {
         return emails;
     }
 
-//    public void removeEmailAdres(SpelerEmailadressen email) {
-//        for(SpelerEmailadressen e : getEmails()) {
-//            if(e.equals(email)) {
-//                emails.remove(e);
-//            }
-//        }
-//    }
+    public void removeEmailAdres(SpelerEmailadressen email) {
+        for(SpelerEmailadressen e : getEmails()) {
+            if(e.equals(email)) {
+                emails.remove(e);
+                return;
+            }
+        }
+    }
 
     public void addEmails(SpelerEmailadressen email) {
         emails.add(email);

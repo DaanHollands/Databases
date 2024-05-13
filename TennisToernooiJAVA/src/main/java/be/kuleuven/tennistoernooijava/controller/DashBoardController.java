@@ -31,6 +31,5 @@ public class DashBoardController {
         service = new SpelerService(new SpelersDAO());
         idField.setText(SpelerSessie.getSessie().getSpeler().getSpelerID().toString());
         huidigeRanking.setText(SpelerSessie.getSessie().getSpeler().getRanking().toString());
-//        verlorenMatchen.setText();
     }
 }

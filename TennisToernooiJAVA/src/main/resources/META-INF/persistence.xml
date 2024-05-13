@@ -21,6 +21,12 @@
         <class>be.kuleuven.tennistoernooijava.database.Deelnamen</class>
 
         <properties>
+            <property name="show_sql" value="true"/>
+            <property name="format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.generate_statistics" value="true"/>
+
+
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="javax.persistence.jdbc.password" value=""/>

@@ -26,7 +26,7 @@ public class Datums {
     @Column(name = "minuten", nullable = true)
     private Integer minuten;
 
-    @OneToMany(mappedBy = "spelerID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "spelerID", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Spelers> spelers = new HashSet<>();
 
     public Integer getDag() {

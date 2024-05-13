@@ -1,6 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
+import be.kuleuven.tennistoernooijava.dao.WedstrijdleiderDAO;
 import be.kuleuven.tennistoernooijava.database.*;
 
 public class MatchenService {
@@ -10,11 +11,10 @@ public class MatchenService {
         this.matchenDAO = matchenDAO;
     }
 
-    public void voegMatchAanToernooi(Toernooien toernooi, Velden veld,
+    public Matchen voegMatchAanToernooi(Toernooien toernooi, Velden veld,
                                 Integer startDag, Integer startMaand, Integer startJaar,
                                 Integer startdUur, Integer startMinuut,
-                                Integer scoretUit, Integer scoreThuis,
-                                Wedstrijdleider wedstrijdleider
+                                Spelers speler
     ) {
         Matchen match = new Matchen();
         Datums startDatum = new Datums();
@@ -24,14 +24,13 @@ public class MatchenService {
         startDatum.setUur(startdUur);
         startDatum.setMinuten(startMinuut);
         match.setDatumID(startDatum);
-
-        match.setScorethus(scoreThuis);
-        match.setScoreuit(scoretUit);
+        Wedstrijdleider wedstrijdleider = new Wedstrijdleider();
+        wedstrijdleider.setSpeler(speler);
+        wedstrijdleider = new WedstrijdleiderDAO().create(wedstrijdleider);
         match.setWedstrijdleider(wedstrijdleider);
 
         match.setToernooiID(toernooi);
         match.setVeldID(veld);
-        matchenDAO.create(match);
+        return matchenDAO.create(match);
     }
-
 }

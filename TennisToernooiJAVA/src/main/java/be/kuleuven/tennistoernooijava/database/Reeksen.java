@@ -10,7 +10,7 @@ import java.util.Set;
 @IdClass(ReeksenPK.class)
 public class Reeksen {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reeksID", nullable = false)
     private Integer reeksID;
 
@@ -18,7 +18,7 @@ public class Reeksen {
     @Column(name = "niveau", nullable = false)
     private String niveau;
 
-    @OneToMany(mappedBy = "reeksID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reeksID", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Spelers> spelers = new HashSet<>();
 
     @ManyToMany(mappedBy = "reeksen", fetch = FetchType.LAZY)
@@ -26,10 +26,6 @@ public class Reeksen {
 
     public Integer getReeksID() {
         return reeksID;
-    }
-
-    public void setReeksID(Integer reeksID) {
-        this.reeksID = reeksID;
     }
 
     public String getNiveau() {

@@ -7,30 +7,40 @@ import java.util.Set;
 @Entity
 @Table(name = "Finales")
 public class Finales extends Matchen {
-
+//
     @ManyToOne
-    @JoinColumn(name = "spelerID",  referencedColumnName = "spelerID", nullable = false)
+    @JoinColumn(name = "scheidsID",  referencedColumnName = "scheidsID", nullable = false)
     private Scheidsen scheidsID;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "supporterde",
             joinColumns = {
                     @JoinColumn(name = "finaleID", referencedColumnName = "matchID")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "supporterID", referencedColumnName = "spelerID"),
+                    @JoinColumn(name = "supporterID", referencedColumnName = "supporterID"),
             }
     )
     private Set<Supporters> supporters = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "geraapteBallen",
             joinColumns = {
                     @JoinColumn(name = "finaleID", referencedColumnName = "matchID")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "supporterID", referencedColumnName = "spelerID"),
+                    @JoinColumn(name = "ballenraperID", referencedColumnName = "ballenraperID"),
             }
     )
     private Set<Ballenrapers> ballenrapers = new HashSet<>();
+
+    public Scheidsen getScheidsID() {
+        return scheidsID;
+    }
+
+    public void setScheidsID(Scheidsen scheidsID) {
+        this.scheidsID = scheidsID;
+    }
 }
+
+

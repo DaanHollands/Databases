@@ -3,6 +3,11 @@ module be.kuleuven.tennistoernooijava {
     requires javafx.fxml;
     requires org.controlsfx.controls;
 
+//    requires slf4j.simple;
+//    requires ;
+
+    requires org.slf4j;
+    requires java.logging;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires java.persistence;
