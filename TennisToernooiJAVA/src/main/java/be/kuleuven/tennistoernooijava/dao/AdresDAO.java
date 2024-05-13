@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.database.Adressen;
+import be.kuleuven.tennistoernooijava.models.Adressen;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;

@@ -2,9 +2,9 @@ package be.kuleuven.tennistoernooijava.controller;
 
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
-import be.kuleuven.tennistoernooijava.database.SpelerEmailadressen;
-import be.kuleuven.tennistoernooijava.database.Spelers;
-import be.kuleuven.tennistoernooijava.models.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
+import be.kuleuven.tennistoernooijava.models.Spelers;
+import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.models.SpelerSettingsModel;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import be.kuleuven.tennistoernooijava.view.SpelerSettingsView;

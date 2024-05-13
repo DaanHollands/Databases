@@ -1,16 +1,14 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalSpelerRequest;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalClubRequest;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
-import be.kuleuven.tennistoernooijava.database.SpelerEmailadressen;
-import be.kuleuven.tennistoernooijava.database.Tennisclubs;
+import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
+import be.kuleuven.tennistoernooijava.models.Tennisclubs;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
-import be.kuleuven.tennistoernooijava.database.Datums;
-import be.kuleuven.tennistoernooijava.database.Spelers;
-import be.kuleuven.tennistoernooijava.models.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.Datums;
+import be.kuleuven.tennistoernooijava.models.Spelers;
 
 import java.util.Set;
 

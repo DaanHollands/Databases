@@ -3,17 +3,14 @@ package be.kuleuven.tennistoernooijava.controller;
 import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
-import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
-import be.kuleuven.tennistoernooijava.database.*;
+import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.VeldSoort;
-import be.kuleuven.tennistoernooijava.models.SpelerSessie;
+import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.FinaleService;
 import be.kuleuven.tennistoernooijava.service.MatchenService;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
-import be.kuleuven.tennistoernooijava.service.ToernooiService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.*;
 
 import java.util.ArrayList;
 
@@ -28,7 +25,7 @@ public class AanmakenMatchenController {
     private TextField uurInput;
 
     @FXML
-    private Text minuutInput;
+    private TextField minuutInput;
 
     @FXML
     private ListView<VeldSoort> veldList;
@@ -58,6 +55,8 @@ public class AanmakenMatchenController {
         clubService = new TennisclubService(new TennisclubDAO());
         toernooien.addAll(clubService.getToernooien(speler.getTennisclubID()));
         spelers.addAll(clubService.getAlleSpelers(speler.getTennisclubID()));
+
+        scheidsText.setVisible(false);
 
         for (Toernooien toernooi : toernooien) {
             toernooiList.getItems().add(toernooien.indexOf(toernooi) + " :  " +
@@ -105,9 +104,5 @@ public class AanmakenMatchenController {
                     speler, spelers.get(spelerListScheids.getSelectionModel().getSelectedIndex())
             );
         }
-        System.out.println("ja");
     }
-
-
-
 }

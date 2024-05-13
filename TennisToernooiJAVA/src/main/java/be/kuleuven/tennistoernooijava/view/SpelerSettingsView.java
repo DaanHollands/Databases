@@ -1,15 +1,10 @@
 package be.kuleuven.tennistoernooijava.view;
 
-import be.kuleuven.tennistoernooijava.database.SpelerEmailadressen;
-import be.kuleuven.tennistoernooijava.database.Spelers;
-import be.kuleuven.tennistoernooijava.models.SpelerSessie;
-import be.kuleuven.tennistoernooijava.models.SpelerSettingsModel;
+import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
+import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;

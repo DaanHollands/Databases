@@ -3,7 +3,7 @@ package be.kuleuven.tennistoernooijava.service;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.dao.VeldenDAO;
-import be.kuleuven.tennistoernooijava.database.*;
+import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.VeldSoort;
 
 import java.util.ArrayList;
@@ -62,10 +62,10 @@ public class TennisclubService {
                     return velden;
                 }
             }
-            VeldenDAO veldenDAO = new VeldenDAO();
             Velden newVeld = new Velden();
             newVeld.setVeldsoort(veldSoort);
-            newVeld = veldenDAO.create(newVeld);
+            newVeld.setTennisclubID(club);
+            newVeld = new VeldenDAO().create(newVeld);
             club.addVeld(newVeld);
             return newVeld;
 

@@ -2,9 +2,8 @@ package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
-import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
-import be.kuleuven.tennistoernooijava.database.*;
+import be.kuleuven.tennistoernooijava.models.*;
 
 import java.util.Set;
 
@@ -48,5 +47,9 @@ public class ToernooiService {
         toernooi.addReeks(reeks);
         Toernooien newToernooi = toernooienDAO.update(toernooi);
         return newToernooi.getReeksen();
+    }
+
+    public Set<Matchen> getAllMatchen(Toernooien toernooi) {
+        return toernooi.getMatchen();
     }
 }

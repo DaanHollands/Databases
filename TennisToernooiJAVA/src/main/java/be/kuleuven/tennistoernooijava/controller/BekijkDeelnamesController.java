@@ -1,0 +1,125 @@
+package be.kuleuven.tennistoernooijava.controller;
+
+import be.kuleuven.tennistoernooijava.dao.*;
+import be.kuleuven.tennistoernooijava.models.Finales;
+import be.kuleuven.tennistoernooijava.models.Matchen;
+import be.kuleuven.tennistoernooijava.models.Spelers;
+import be.kuleuven.tennistoernooijava.enums.TypeRang;
+import be.kuleuven.tennistoernooijava.enums.Uitslagen;
+import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.service.*;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BekijkDeelnamesController {
+    @FXML
+    private ListView<String> matchenList;
+
+    @FXML
+    private Button afmeldenAlsSpelerButton;
+
+    @FXML
+    private Text rangText;
+
+    @FXML
+    private AnchorPane wedstrijdleiderAnchorpane;
+
+    @FXML
+    private TextField scoreThuisInput;
+
+    @FXML
+    private TextField scoreUitInput;
+
+    @FXML
+    private Button scoresOpslaanKnop;
+
+    @FXML
+    private ListView<Uitslagen> uitlsagenList;
+
+    private DeelnameService deelnameService;
+    private MatchenService matchenService;
+    private FinaleService finaleService;
+    private SupporterService supporterService;
+    private BallenraperService ballenraperService;
+    private Spelers speler = SpelerSessie.getSessie().getSpeler();
+    private ArrayList<Matchen> matchen = new ArrayList<>();
+
+    private TypeRang rang = null;
+
+    @FXML
+    void initialize() {
+        finaleService = new FinaleService(new FinaleDAO());
+        supporterService = new SupporterService(new SupporterDAO());
+        ballenraperService = new BallenraperService(new BallenraperDAO());
+        matchenService = new MatchenService(new MatchenDAO());
+        deelnameService = new DeelnameService(new DeelnamenDAO());
+        uitlsagenList.getItems().addAll(Uitslagen.values());
+        List<Matchen> matchens = matchenService.getMatchesFrom(speler);
+        List<Finales> finales = finaleService.getFinalesFrom(speler);
+
+        matchens.forEach(m -> matchen.add(m));
+        finales.forEach(f -> matchen.add(f));
+        wedstrijdleiderAnchorpane.setVisible(false);
+
+        for (Matchen match : matchen) {
+            matchenList.getItems().add(matchen.indexOf(match) + " :  " +
+                    match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar() + "/"
+            );
+        }
+
+        scoresOpslaanKnop.setOnAction(e -> {
+            matchenService.updateScores(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), Integer.parseInt(scoreThuisInput.getText()), Integer.parseInt(scoreUitInput.getText()),
+                    uitlsagenList.getSelectionModel().getSelectedItem());
+        });
+
+        matchenList.setOnMouseClicked(e -> {
+            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getWedstrijdleider().getSpeler().equals(speler)) {
+                rangText.setText("wedstrijdleider");
+                rang = TypeRang.WEDSTRIJDLEIDER;
+                wedstrijdleiderAnchorpane.setVisible(true);
+            }
+
+            else if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+                rangText.setText("speler");
+                rang = TypeRang.SPELER;
+            }
+
+            else if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()) instanceof Finales) {
+                if(supporterService.isSupporter((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+                    rangText.setText("supporter");
+                    rang = TypeRang.SUPPORTER;
+                }
+                else if(ballenraperService.isBallenraper((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+                    rangText.setText("ballenraper");
+                    rang = TypeRang.BALLENRAPER;
+                }
+            }
+
+            else {
+                rangText.setText("Nog geen match geselecteerd!");
+            }
+        });
+
+        afmeldenAlsSpelerButton.setOnAction(e -> {
+            if(rang == TypeRang.WEDSTRIJDLEIDER) {
+                throw new IllegalArgumentException("Dit is niet mogelijk als wedstrijdleider");
+            }
+            else if(rang == TypeRang.SUPPORTER) {
+                supporterService.removeSupporter(speler, (Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
+            }
+            else if(rang == TypeRang.SPELER) {
+                deelnameService.removeDeelname(speler, matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
+            }
+            else if(rang == TypeRang.BALLENRAPER) {
+                ballenraperService.removeBallenraper(speler, (Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
+            }
+        });
+
+    }
+}

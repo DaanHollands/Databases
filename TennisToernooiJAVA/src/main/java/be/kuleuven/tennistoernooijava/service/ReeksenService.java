@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
-import be.kuleuven.tennistoernooijava.database.Reeksen;
+import be.kuleuven.tennistoernooijava.models.Reeksen;
 
 public class ReeksenService {
     private final ReeksenDAO reeksenDAO;

@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.database.SpelerEmailadressen;
-import be.kuleuven.tennistoernooijava.database.Spelers;
+import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
+import be.kuleuven.tennistoernooijava.models.Spelers;
 
 public class SpelerEmailadressenDAO implements BaseDAO<SpelerEmailadressen, Spelers> {
 

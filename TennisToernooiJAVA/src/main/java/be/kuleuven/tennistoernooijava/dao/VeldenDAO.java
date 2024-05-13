@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import be.kuleuven.tennistoernooijava.database.Velden;
+import be.kuleuven.tennistoernooijava.models.Velden;
 
 public class VeldenDAO implements BaseDAO<Velden, Integer> {
     @Override

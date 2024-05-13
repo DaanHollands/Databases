@@ -1,10 +1,11 @@
 package be.kuleuven.tennistoernooijava.controller;
 
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
-import be.kuleuven.tennistoernooijava.database.Adressen;
-import be.kuleuven.tennistoernooijava.database.Spelers;
-import be.kuleuven.tennistoernooijava.database.Tennisclubs;
-import be.kuleuven.tennistoernooijava.models.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.Adressen;
+import be.kuleuven.tennistoernooijava.models.Spelers;
+import be.kuleuven.tennistoernooijava.models.Tennisclubs;
+import be.kuleuven.tennistoernooijava.models.Toernooien;
+import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
 import javafx.fxml.*;
 import javafx.scene.control.ListView;
@@ -21,7 +22,7 @@ public class ClubController {
     private ListView<String> allespelerList;
 
     @FXML
-    private ListView<?> matchenList;
+    private ListView<String> toernooien;
 
     private TennisclubService service;
     private Spelers speler = SpelerSessie.getSessie().getSpeler();
@@ -36,5 +37,13 @@ public class ClubController {
         club.getSpelers().forEach(speler -> {
             allespelerList.getItems().add(speler.getNaam());
         });
+
+        for (Toernooien toernooi : club.getToernooien()) {
+            toernooien.getItems().add(
+                    toernooi.getBeginDatumID().getDag() + "/" + toernooi.getBeginDatumID().getMaand() + "/" + toernooi.getBeginDatumID().getMaand()
+                    + " tot " +
+                    toernooi.getEindDatumID().getDag() + "/" + toernooi.getEindDatumID().getMaand() + "/" + toernooi.getEindDatumID().getMaand()
+            );
+        }
     }
 }

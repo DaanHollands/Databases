@@ -1,11 +1,10 @@
 package be.kuleuven.tennistoernooijava.controller;
 
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
-import be.kuleuven.tennistoernooijava.database.Reeksen;
-import be.kuleuven.tennistoernooijava.database.Spelers;
-import be.kuleuven.tennistoernooijava.database.Tennisclubs;
-import be.kuleuven.tennistoernooijava.database.Toernooien;
-import be.kuleuven.tennistoernooijava.models.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.Spelers;
+import be.kuleuven.tennistoernooijava.models.Tennisclubs;
+import be.kuleuven.tennistoernooijava.models.Toernooien;
+import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.ToernooiService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -69,6 +68,7 @@ public class OrganiseerToernooiController {
 
     public void addReeks() {
         reeksen.add(new TextField());
+        reeksenVBox.getChildren().clear();
         reeksen.forEach(e -> {
             reeksenVBox.getChildren().add(e);
         });

@@ -1,8 +1,8 @@
 package be.kuleuven.tennistoernooijava.controller;
 
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
-import be.kuleuven.tennistoernooijava.models.ChangeScene;
-import be.kuleuven.tennistoernooijava.models.SpelerSessie;
+import be.kuleuven.tennistoernooijava.service.ChangeScene;
+import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;

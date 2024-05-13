@@ -21,8 +21,8 @@
       </Label>
       <DatePicker fx:id="datumPicker" layoutX="362.0" layoutY="75.0" />
       <TextField fx:id="uurInput" layoutX="569.0" layoutY="75.0" prefHeight="28.0" prefWidth="43.0" />
-      <TextField layoutX="630.0" layoutY="75.0" prefHeight="28.0" prefWidth="43.0" />
-      <Text fx:id="minuutInput" layoutX="620.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" wrappingWidth="42.99999997019768">
+      <TextField fx:id="minuutInput" layoutX="630.0" layoutY="75.0" prefHeight="28.0" prefWidth="43.0" />
+      <Text layoutX="620.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" wrappingWidth="42.99999997019768">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -45,7 +45,7 @@
       </Label>
       <CheckBox fx:id="finaleBoolean" layoutX="367.0" layoutY="250.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="116.0" text="Finale?" />
       <ListView fx:id="spelerListScheids" layoutX="367.0" layoutY="284.0" prefHeight="197.0" prefWidth="248.0" />
-      <Label layoutX="289.0" layoutY="284.0" text="Scheids:">
+      <Label fx:id="scheidsText" layoutX="289.0" layoutY="284.0" text="Scheids:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
