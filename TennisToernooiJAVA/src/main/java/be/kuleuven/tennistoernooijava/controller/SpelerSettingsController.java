@@ -5,7 +5,6 @@ import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
-import be.kuleuven.tennistoernooijava.models.SpelerSettingsModel;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import be.kuleuven.tennistoernooijava.view.SpelerSettingsView;
 import javafx.collections.FXCollections;
@@ -58,7 +57,6 @@ public class SpelerSettingsController {
     private Integer maanden[] = {1,2,3,4,5,6,7,8,9,10,11,12};
 
     private SpelerService service;
-    private SpelerSettingsModel model;
     private SpelerSettingsView view;
 
     @FXML
