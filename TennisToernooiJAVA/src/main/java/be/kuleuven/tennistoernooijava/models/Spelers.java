@@ -12,7 +12,7 @@ import java.util.Set;
 public class Spelers {
     @Id
     @GeneratedValue(generator = "customid")
-    @GenericGenerator(name = "customid", strategy = "be.kuleuven.tennistoernooijava.database.CustomIdGenerator")
+    @GenericGenerator(name = "customid", strategy = "be.kuleuven.tennistoernooijava.models.CustomIdGenerator")
     @Column(name = "spelerID", nullable = false, unique = true)
     private Integer spelerID;
 
