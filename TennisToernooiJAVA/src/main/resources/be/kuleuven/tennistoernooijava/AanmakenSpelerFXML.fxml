@@ -61,7 +61,7 @@
                         <Font size="19.0" />
                     </font>
                 </Label>
-                <Label layoutX="347.0" layoutY="180.0" text="Telefoonnummer">
+                <Label layoutX="332.0" layoutY="180.0" text="Telefoonnummer">
                     <font>
                         <Font size="19.0" />
                     </font>
