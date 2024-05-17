@@ -80,7 +80,19 @@ public class SpelerSettingsController {
         gewichtInput.setText(speler.getGewicht().toString());
         lengteInput.setText(speler.getLengte().toString());
         telefoonNummerInput.setText(speler.getTelefoonnummer());
-        geslachtSelector.setValue(speler.getGeslacht().toString());
+
+        if(Objects.equals(speler.getGeslacht(), Geslachten.M)) {
+            geslachtSelector.setValue("man");
+        }
+
+        else if(Objects.equals(speler.getGeslacht(), Geslachten.V)) {
+            geslachtSelector.setValue("vrouw");
+        }
+
+        else if(Objects.equals(speler.getGeslacht(), Geslachten.X)) {
+            geslachtSelector.setValue("in de war");
+        }
+
         dagInput.setValue(speler.getDatumID().getDag());
         maandInput.setValue(speler.getDatumID().getMaand());
         jaarInput.setText(speler.getDatumID().getJaar().toString());
