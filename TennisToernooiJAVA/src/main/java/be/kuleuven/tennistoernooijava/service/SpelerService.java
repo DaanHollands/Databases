@@ -1,5 +1,8 @@
 package be.kuleuven.tennistoernooijava.service;
 
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalEmailException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalSexException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalSpelerRequest;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
@@ -20,16 +23,37 @@ public class SpelerService {
     }
 
     public Spelers createSpeler(String naam, String telefoonnummer,
-                                Integer geboorteDag, Integer geboorteMaand, Integer geboorteJaar,
+                                Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
                                 Integer gewicht, Integer lengte, Integer ranking, Geslachten geslacht,
                                 String email) {
+        if (Integer.parseInt(telefoonnummer) < 0 || telefoonnummer.length() != 10 || telefoonnummer.contains("[a-zA-Z]+")){
+            throw new IllegalNumberException("Ongeldige telefoonnummer!");
+        }
+        if (gewicht <0){
+            throw new IllegalNumberException("Ongeldige gewicht!");
+        }
+        //Datum in orde
+        if(Integer.parseInt(geboorteJaar) < 0 || geboorteJaar.contains("[a-zA-Z]+")){
+            throw new IllegalNumberException("Ongeldige geboorteJaar!");
+        }
+
+        if(geslacht == null){
+            throw new IllegalSexException("Ongeldige geslacht!");
+        }
+
+        if (!email.contains("[.@]")){
+            throw new IllegalEmailException("Ongeldige email!");
+        }
+
         Spelers speler = new Spelers();
+
+
         speler.setNaam(naam);
         speler.setTelefoonnummer(telefoonnummer);
         speler.setGewicht(gewicht);
         Datums geboorteDatums = new Datums();
         geboorteDatums.setDag(geboorteDag);
-        geboorteDatums.setJaar(geboorteJaar);
+        geboorteDatums.setJaar(Integer.parseInt(geboorteJaar));
         geboorteDatums.setMaand(geboorteMaand);
         speler.setDatumID(new DatumsDAO().create(geboorteDatums));
         speler.setGeslacht(geslacht);

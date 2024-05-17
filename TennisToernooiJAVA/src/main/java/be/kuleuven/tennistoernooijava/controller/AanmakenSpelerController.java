@@ -1,5 +1,8 @@
 package be.kuleuven.tennistoernooijava.controller;
 
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalEmailException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalSexException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
@@ -99,21 +102,24 @@ public class AanmakenSpelerController
         else {
             throw new IllegalArgumentException("Geen valid gesalcht is gekozen!");
         }
+        try {
+            Spelers speler = service.createSpeler(
+                    naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),
+                    maandInput.getValue(), jaarInput.getText(),
+                    Integer.parseInt(gewichtInput.getText()), Integer.parseInt(lengteInput.getText()),
+                    Integer.parseInt(rankingInput.getText()), selectedGeslacht, emailInput.getText()
+            );
+                    SpelerSessie.getSessie().setSpeler(speler);
+                    try {
+                        switchScene.switchToScene((Node) event.getSource(), "DashboardFXML");
+                    }
+                    catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
-        Spelers speler = service.createSpeler(
-                naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),
-                maandInput.getValue(), Integer.parseInt(jaarInput.getText()),
-                Integer.parseInt(gewichtInput.getText()), Integer.parseInt(lengteInput.getText()),
-                Integer.parseInt(rankingInput.getText()), selectedGeslacht, emailInput.getText()
-        );
-
-        if(speler != null) {
-            try {
-                SpelerSessie.getSessie().setSpeler(speler);
-                switchScene.switchToScene( (Node)event.getSource(),"DashboardFXML");
-            } catch (IOException e) {
-                System.out.println(e);
-            }
+        }
+        catch (IllegalNumberException | IllegalEmailException | IllegalSexException e){
+            System.out.println(e.getMessage());
         }
     }
 }
