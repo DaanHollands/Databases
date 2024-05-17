@@ -89,22 +89,21 @@ public class SpelerService {
                                 Integer geboorteDag, Integer geboorteMaand, Integer geboorteJaar,
                                 Integer gewicht, Integer lengte, Integer ranking, Geslachten geslacht
                                 ) {
-        Spelers newSpeler = new Spelers();
-        newSpeler.setNaam(naam);
-        newSpeler.setTelefoonnummer(telefoonnummer);
-        newSpeler.setGewicht(gewicht);
+        speler.setNaam(naam);
+        speler.setTelefoonnummer(telefoonnummer);
+        speler.setGewicht(gewicht);
         Datums geboorteDatums = new Datums();
         geboorteDatums.setDag(geboorteDag);
         geboorteDatums.setJaar(geboorteJaar);
         geboorteDatums.setMaand(geboorteMaand);
-        newSpeler.setDatumID(new DatumsDAO().create(geboorteDatums));
-        newSpeler.setGeslacht(geslacht);
-        newSpeler.setRanking(ranking);
-        newSpeler.setLengte(lengte);
-        newSpeler.setTennisclubID(speler.getTennisclubID());
+        speler.setDatumID(new DatumsDAO().create(geboorteDatums));
+        speler.setGeslacht(geslacht);
+        speler.setRanking(ranking);
+        speler.setLengte(lengte);
+        speler.setTennisclubID(speler.getTennisclubID());
 
-        newSpeler = spelersDAO.update(newSpeler);
+        speler = spelersDAO.update(speler);
 
-        return newSpeler;
+        return speler;
     }
 }
