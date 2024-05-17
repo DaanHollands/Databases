@@ -34,12 +34,12 @@
             <Font name="System Bold" size="27.0" />
          </font>
       </Text>
-      <Text layoutX="166.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matchen:">
+      <Text layoutX="166.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Toernooien:">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>
       </Text>
-      <ListView fx:id="matchenList" layoutX="34.0" layoutY="214.0" prefHeight="265.0" prefWidth="375.0" />
+      <ListView fx:id="toernooien" layoutX="34.0" layoutY="214.0" prefHeight="265.0" prefWidth="375.0" />
 
 
     </children>
