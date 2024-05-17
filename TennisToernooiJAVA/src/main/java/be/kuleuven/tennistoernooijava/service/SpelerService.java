@@ -84,4 +84,27 @@ public class SpelerService {
             throw new IllegalArgumentException("Er is een probleem om de huidige club te verwijderen");
         }
     }
+
+    public Spelers updateSpeler(Spelers speler, String naam, String telefoonnummer,
+                                Integer geboorteDag, Integer geboorteMaand, Integer geboorteJaar,
+                                Integer gewicht, Integer lengte, Integer ranking, Geslachten geslacht
+                                ) {
+        Spelers newSpeler = new Spelers();
+        newSpeler.setNaam(naam);
+        newSpeler.setTelefoonnummer(telefoonnummer);
+        newSpeler.setGewicht(gewicht);
+        Datums geboorteDatums = new Datums();
+        geboorteDatums.setDag(geboorteDag);
+        geboorteDatums.setJaar(geboorteJaar);
+        geboorteDatums.setMaand(geboorteMaand);
+        newSpeler.setDatumID(new DatumsDAO().create(geboorteDatums));
+        newSpeler.setGeslacht(geslacht);
+        newSpeler.setRanking(ranking);
+        newSpeler.setLengte(lengte);
+        newSpeler.setTennisclubID(speler.getTennisclubID());
+
+        newSpeler = spelersDAO.update(newSpeler);
+
+        return newSpeler;
+    }
 }

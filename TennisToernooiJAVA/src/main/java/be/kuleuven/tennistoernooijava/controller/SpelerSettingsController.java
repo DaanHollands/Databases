@@ -2,6 +2,7 @@ package be.kuleuven.tennistoernooijava.controller;
 
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
+import be.kuleuven.tennistoernooijava.enums.Geslachten;
 import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
@@ -11,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+
+import java.util.Objects;
 
 public class SpelerSettingsController {
     @FXML
@@ -58,6 +61,7 @@ public class SpelerSettingsController {
 
     private SpelerService service;
     private SpelerSettingsView view;
+    private Spelers speler = SpelerSessie.getSessie().getSpeler();
 
     @FXML
     void initialize() {
@@ -71,9 +75,6 @@ public class SpelerSettingsController {
         dagInput.setItems(FXCollections.observableArrayList((dagen)));
         maandInput.setItems(FXCollections.observableArrayList((maanden)));
 
-        Integer spelerID = SpelerSessie.getSessie().getSpeler().getSpelerID();
-        Spelers speler = service.getSpeler(spelerID);
-
         naamInput.setText(speler.getNaam());
         rankingInput.setText(speler.getRanking().toString());
         gewichtInput.setText(speler.getGewicht().toString());
@@ -85,6 +86,8 @@ public class SpelerSettingsController {
         jaarInput.setText(speler.getDatumID().getJaar().toString());
 
         addEmail.setOnAction(e -> addEmail(emailInput.getText()));
+
+        opslaanKnop.setOnAction(e -> opslaan());
     }
 
     private void addEmail(String email) {
@@ -96,5 +99,27 @@ public class SpelerSettingsController {
 
         view.update();
         emailList.getChildren().add(view);
+    }
+
+    public void opslaan() {
+        Geslachten selectedGeslacht;
+        if(Objects.equals(geslachtSelector.getValue(), "man")) {
+            selectedGeslacht = Geslachten.M;
+        }
+        else if(Objects.equals(geslachtSelector.getValue(), "vrouw")) {
+            selectedGeslacht = Geslachten.V;
+        }
+        else if(Objects.equals(geslachtSelector.getValue(), "in de war")) {
+            selectedGeslacht = Geslachten.X;
+        }
+        else {
+            throw new IllegalArgumentException("Geen valid gesalcht is gekozen!");
+        }
+        service.updateSpeler(
+                speler, naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),
+                maandInput.getValue(), Integer.parseInt(jaarInput.getText()),
+                Integer.parseInt(gewichtInput.getText()), Integer.parseInt(lengteInput.getText()),
+                Integer.parseInt(rankingInput.getText()), selectedGeslacht
+        );
     }
 }
