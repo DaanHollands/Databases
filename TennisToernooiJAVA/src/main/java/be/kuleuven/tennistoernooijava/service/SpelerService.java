@@ -32,17 +32,21 @@ public class SpelerService {
         if (gewicht <0){
             throw new IllegalNumberException("Ongeldige gewicht!");
         }
+        if(lengte <0){
+            throw new IllegalNumberException("Ongeldige lengte!");
+        }
         //Datum in orde
         if(Integer.parseInt(geboorteJaar) < 0 || geboorteJaar.contains("[a-zA-Z]+")){
             throw new IllegalNumberException("Ongeldige geboorteJaar!");
         }
-
         if(geslacht == null){
             throw new IllegalSexException("Ongeldige geslacht!");
         }
-
-        if (!email.contains("[.@]")){
+        if (!isValidEmail(email)){
             throw new IllegalEmailException("Ongeldige email!");
+        }
+        if(ranking < 0){
+            throw new IllegalNumberException("Ongeldige ranking!");
         }
 
         Spelers speler = new Spelers();
@@ -129,5 +133,14 @@ public class SpelerService {
         speler = spelersDAO.update(speler);
 
         return speler;
+    }
+
+    public static boolean isValidEmail(String email) {
+        String[] parts = email.split("@");
+        if (parts.length != 2) {
+            return false;
+        }
+        String domain = parts[1];
+        return domain.contains(".");
     }
 }
