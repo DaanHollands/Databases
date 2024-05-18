@@ -1,5 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.WedstrijdleiderDAO;
@@ -21,6 +23,22 @@ public class MatchenService {
                                 Integer startdUur, Integer startMinuut,
                                 Spelers speler
     ) {
+        if (startDag<=0 || startDag >31 ){
+            throw new IllegalDateException("Ongeldige begindag");
+        }
+        if (startMaand<=0 || startMaand >12 ){
+            throw new IllegalDateException("Ongeldige beginmaand");
+        }
+        if (startJaar<=2023 ){
+            throw new IllegalDateException("Ongeldig beginjaar");
+        }
+        if (startdUur<=0 || startdUur >24 ){
+            throw new IllegalTimeException("Ongeldig Startuur");
+        }
+        if (startMinuut <0 || startMinuut >=60 ){
+            throw new IllegalTimeException("Ongeldig Startuur");
+        }
+
         Matchen match = new Matchen();
         Datums startDatum = new Datums();
         startDatum.setDag(startDag);

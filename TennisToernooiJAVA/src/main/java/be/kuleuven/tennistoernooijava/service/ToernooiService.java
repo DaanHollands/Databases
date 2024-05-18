@@ -85,4 +85,5 @@ public class ToernooiService {
             throw new IllegalDateException("Tweede datum komt voor de eerste datum!");
         }
     }
+
 }

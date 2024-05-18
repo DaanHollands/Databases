@@ -80,6 +80,8 @@ public class AanmakenMatchenController {
     }
 
     public void saveMatch() {
+        try{
+
         if(!finaleBoolean.isSelected()) {
             Matchen match = matchenService.voegMatchAanToernooi(
                     toernooien.get(toernooiList.getSelectionModel().getSelectedIndex()),
@@ -103,6 +105,9 @@ public class AanmakenMatchenController {
                     Integer.parseInt(minuutInput.getText()),
                     speler, spelers.get(spelerListScheids.getSelectionModel().getSelectedIndex())
             );
+        }
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
         }
     }
 }
