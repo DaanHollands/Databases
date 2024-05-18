@@ -10,6 +10,7 @@ import be.kuleuven.tennistoernooijava.service.TennisclubService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 
 public class AanmakenClubController {
@@ -40,6 +41,7 @@ public class AanmakenClubController {
             System.out.println(e);
         }
         maakClubKnop.setOnMouseClicked(event -> maakClub());
+
     }
 
     void maakClub() {

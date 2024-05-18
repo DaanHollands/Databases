@@ -56,6 +56,7 @@ public class OrganiseerToernooiController {
     }
 
     private void saveToernooi() {
+        try{
         Toernooien toernooi = service.createToernooi(club,
             beginDatumInput.getValue().getDayOfMonth(), beginDatumInput.getValue().getMonthValue(), beginDatumInput.getValue().getYear(),
             eindDatumInput.getValue().getDayOfMonth(), eindDatumInput.getValue().getMonthValue(), eindDatumInput.getValue().getYear()
@@ -64,6 +65,9 @@ public class OrganiseerToernooiController {
         reeksen.forEach(e -> {
             service.addReeks(toernooi, e.getText());
         });
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void addReeks() {
