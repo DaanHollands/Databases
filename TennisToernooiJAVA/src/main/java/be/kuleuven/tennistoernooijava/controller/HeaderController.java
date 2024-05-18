@@ -38,8 +38,8 @@ public class HeaderController {
             bekijkClub = new MenuItem("Bekijk club");
             organiseerToernooi = new MenuItem("Organiseer toernooi");
             aanmakenMatch = new MenuItem("Aanmaken match");
-            bekijkDeelnames = new MenuItem("bekijk deelnames");
-            bekijkMatches = new MenuItem("bekijk matches");
+            bekijkDeelnames = new MenuItem("Bekijk deelnames");
+            bekijkMatches = new MenuItem("Bekijk matches");
 
             club.getItems().add(bekijkClub);
             club.getItems().add(organiseerToernooi);

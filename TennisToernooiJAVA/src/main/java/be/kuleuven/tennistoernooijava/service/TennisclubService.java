@@ -1,5 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreeException;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.dao.VeldenDAO;
@@ -18,6 +20,18 @@ public class TennisclubService {
     public Tennisclubs create(Spelers speler, String straatnaam, Integer straatnummer, Integer postcode, String naam){
         Tennisclubs tennisclub = new Tennisclubs();
         Adressen adres = new AdresService(new AdresDAO()).getOrCreate(postcode,straatnaam,straatnummer);
+
+        //Exceptions
+        if(adres.getPostcode() <= 0){
+            throw new IllegalNumberException("Ongeldige postcode!");
+        }
+        if(!onlyLetters(adres.getStraatnaam())){
+            throw new IllegalStreeException("Ongeldige straatnaam!");
+        }
+        if(adres.getStraatnummer() < 0){
+            throw new IllegalNumberException("Ongeldige straatnummer!");
+        }
+
         tennisclub.setAdresID(adres);
         tennisclub.setNaam(naam);
         tennisclub = tennisclubDAO.create(tennisclub);
@@ -78,5 +92,13 @@ public class TennisclubService {
         return gevondenClub.getSpelers();
     }
 
-
+    public boolean onlyLetters(String name) {
+        char[] chars = name.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
