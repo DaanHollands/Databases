@@ -79,13 +79,13 @@ public class BekijkDeelnamesController {
         });
 
         matchenList.setOnMouseClicked(e -> {
-            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getWedstrijdleider().getSpeler().equals(speler)) {
-                rangText.setText("wedstrijdleider");
-                rang = TypeRang.WEDSTRIJDLEIDER;
-                wedstrijdleiderAnchorpane.setVisible(true);
-            }
+//            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getWedstrijdleider().getSpeler().equals(speler)) {
+//                rangText.setText("wedstrijdleider");
+//                rang = TypeRang.WEDSTRIJDLEIDER;
+//                wedstrijdleiderAnchorpane.setVisible(true);
+//            }
 
-            else if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+            if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
                 rangText.setText("speler");
                 rang = TypeRang.SPELER;
             }

@@ -4,6 +4,7 @@ import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreeException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
+import be.kuleuven.tennistoernooijava.service.ChangeScene;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
@@ -33,15 +34,16 @@ public class AanmakenClubController {
     private SpelerService spelerService;
     @FXML
     void initialize() {
-        try {
-            service = new TennisclubService(new TennisclubDAO());
-            spelerService = new SpelerService(new SpelersDAO());
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-        maakClubKnop.setOnMouseClicked(event -> maakClub());
-
+        service = new TennisclubService(new TennisclubDAO());
+        spelerService = new SpelerService(new SpelersDAO());
+        maakClubKnop.setOnMouseClicked(event -> {
+            maakClub();
+            try {
+                new ChangeScene().switchToScene(maakClubKnop, "ClubFXML");
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        });
     }
 
     void maakClub() {

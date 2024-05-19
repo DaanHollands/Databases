@@ -4,6 +4,7 @@ import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
+import be.kuleuven.tennistoernooijava.dao.WedstrijdleiderDAO;
 import be.kuleuven.tennistoernooijava.models.*;
 
 import java.time.LocalDate;
@@ -19,7 +20,8 @@ public class ToernooiService {
     public Toernooien createToernooi(
             Tennisclubs organisatorClub,
             Integer beginDag, Integer beginMaand, Integer beginJaar,
-            Integer eindDag, Integer eindMaand, Integer eindJaar
+            Integer eindDag, Integer eindMaand, Integer eindJaar,
+            Spelers nieuweWestrijdleider
     ) {
         if (beginDag<=0 || beginDag >31 ){
             throw new IllegalDateException("Ongeldige begindag");
@@ -56,11 +58,19 @@ public class ToernooiService {
         beginDatum = datumsDAO.create(beginDatum);
         eindDatum = datumsDAO.create(eindDatum);
 
+        Wedstrijdleider wedstrijdleider = new Wedstrijdleider();
+        wedstrijdleider.setSpeler(nieuweWestrijdleider);
+        wedstrijdleider = new WedstrijdleiderDAO().create(wedstrijdleider);
+
+        toernooien.setWedstrijdleider(wedstrijdleider);
         toernooien.setBeginDatumID(beginDatum);
         toernooien.setEindDatumID(eindDatum);
 
         toernooien.setClubOrganistorID(organisatorClub);
         toernooien = toernooienDAO.create(toernooien);
+
+
+        wedstrijdleider.setToernooi(toernooien);
         organisatorClub.addToernooi(toernooien);
         return toernooien;
     }

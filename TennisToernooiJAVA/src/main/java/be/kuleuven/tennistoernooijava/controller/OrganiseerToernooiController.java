@@ -4,6 +4,7 @@ import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
 import be.kuleuven.tennistoernooijava.models.Toernooien;
+import be.kuleuven.tennistoernooijava.service.ChangeScene;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.ToernooiService;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class OrganiseerToernooiController {
@@ -51,7 +53,14 @@ public class OrganiseerToernooiController {
         reeksen.add(reeksInput1);reeksen.add(reeksInput2);reeksen.add(reeksInput3);reeksen.add(reeksInput4);
         service = new ToernooiService(new ToernooienDAO());
         club = speler.getTennisclubID();
-        opslaanKnop.setOnAction(e -> saveToernooi());
+        opslaanKnop.setOnAction(event -> {
+            saveToernooi();
+            try {
+                new ChangeScene().switchToScene(opslaanKnop, "AanmakenMatchenFXML");
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        });
         extraReeksKnop.setOnAction(e -> addReeks());
     }
 
@@ -59,7 +68,8 @@ public class OrganiseerToernooiController {
         try{
         Toernooien toernooi = service.createToernooi(club,
             beginDatumInput.getValue().getDayOfMonth(), beginDatumInput.getValue().getMonthValue(), beginDatumInput.getValue().getYear(),
-            eindDatumInput.getValue().getDayOfMonth(), eindDatumInput.getValue().getMonthValue(), eindDatumInput.getValue().getYear()
+            eindDatumInput.getValue().getDayOfMonth(), eindDatumInput.getValue().getMonthValue(), eindDatumInput.getValue().getYear(),
+            speler
         );
 
         reeksen.forEach(e -> {

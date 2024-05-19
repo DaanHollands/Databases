@@ -1,6 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
@@ -8,8 +9,7 @@ import be.kuleuven.tennistoernooijava.dao.WedstrijdleiderDAO;
 import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.Uitslagen;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class MatchenService {
     private final MatchenDAO matchenDAO;
@@ -20,8 +20,7 @@ public class MatchenService {
 
     public Matchen voegMatchAanToernooi(Toernooien toernooi, Velden veld,
                                 Integer startDag, Integer startMaand, Integer startJaar,
-                                Integer startdUur, Integer startMinuut,
-                                Spelers speler
+                                Integer startdUur, Integer startMinuut
     ) {
         if (startDag<=0 || startDag >31 ){
             throw new IllegalDateException("Ongeldige begindag");
@@ -48,11 +47,6 @@ public class MatchenService {
         startDatum.setMinuten(startMinuut);
         startDatum = new DatumsDAO().create(startDatum);
         match.setDatumID(startDatum);
-        Wedstrijdleider wedstrijdleider = new Wedstrijdleider();
-        wedstrijdleider.setSpeler(speler);
-        wedstrijdleider = new WedstrijdleiderDAO().create(wedstrijdleider);
-        match.setWedstrijdleider(wedstrijdleider);
-
         match.setToernooiID(toernooi);
         match.setVeldID(veld);
         match = matchenDAO.create(match);
@@ -76,5 +70,29 @@ public class MatchenService {
         match.setScorethus(scoreThuis);
         match.setUitslag(uitslagen);
         matchenDAO.update(match);
+    }
+
+    public Map<String, List<Integer>> calculateMatches(String aantalMatchen) {
+        if(aantalMatchen.contains("[a-zA-Z]+")) {
+            throw new IllegalNumberException("Dit is geen integer");
+        }
+        int aantal = Integer.parseInt(aantalMatchen);
+        if(aantal%2 != 0) {
+            throw new IllegalNumberException("Het aantal matchen moet een geheel getal zijn");
+        }
+        Map<String, List<Integer>> matchStages = new LinkedHashMap<>();
+        List<Integer> startingMatches = new ArrayList<>();
+
+        while(aantal > 4) {
+            startingMatches.add(aantal);
+            aantal /= 2;
+        }
+
+        matchStages.put("startingMatches", startingMatches);
+        matchStages.put("semifinals", Collections.singletonList(2));
+        matchStages.put("final", Collections.singletonList(1));
+
+        return matchStages;
+
     }
 }

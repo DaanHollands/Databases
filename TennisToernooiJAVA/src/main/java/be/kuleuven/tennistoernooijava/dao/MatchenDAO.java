@@ -17,9 +17,7 @@ public class MatchenDAO implements BaseDAO<Matchen, Integer> {
         TypedQuery<Matchen> query = entityManager.createQuery(
                 "SELECT m FROM Matchen m " +
                         "LEFT JOIN m.deelnamens d " +
-                        "LEFT JOIN m.wedstrijdleider w " +
-                        "WHERE d.spelerID.spelerID = :spelerID " +
-                        "OR w.speler.spelerID = :spelerID",
+                        "WHERE d.spelerID.spelerID = :spelerID",
                 Matchen.class);
         query.setParameter("spelerID", speler.getSpelerID());
         try {

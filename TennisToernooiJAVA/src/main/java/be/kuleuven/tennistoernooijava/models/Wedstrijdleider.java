@@ -13,8 +13,9 @@ public class Wedstrijdleider implements Serializable {
     @JoinColumn(name = "wedstrijdleiderID", referencedColumnName = "spelerID")
     private Spelers speler;
 
-    @OneToMany(mappedBy = "matchID", cascade = CascadeType.ALL, orphanRemoval = true )
-    private Set<Matchen> matchen = new HashSet<>();
+    @OneToOne(mappedBy = "wedstrijdleider", cascade = CascadeType.ALL)
+    @JoinColumn(name = "toernooiID", referencedColumnName = "toernooiID", nullable = true)
+    private Toernooien toernooi;
 
     public void setSpeler(Spelers speler) {
         this.speler = speler;
@@ -24,15 +25,11 @@ public class Wedstrijdleider implements Serializable {
         return speler;
     }
 
-    public void setMatchen(Set<Matchen> matchen) {
-        this.matchen = matchen;
+    public Toernooien getToernooi() {
+        return toernooi;
     }
 
-    public void addMatch(Matchen match) {
-        matchen.add(match);
-    }
-
-    public Set<Matchen> getMatchen() {
-        return matchen;
+    public void setToernooi(Toernooien toernooi) {
+        this.toernooi = toernooi;
     }
 }

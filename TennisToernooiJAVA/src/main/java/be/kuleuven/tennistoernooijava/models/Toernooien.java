@@ -24,6 +24,10 @@ public class Toernooien {
     @JoinColumn(name = "clubOrganisatorID", referencedColumnName = "clubID", nullable = false)
     private Tennisclubs clubOrganistorID;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "wedstrijdLeider",  referencedColumnName = "wedstrijdleiderID", nullable = false)
+    private Wedstrijdleider wedstrijdleider;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "toernooienReeksen",
             joinColumns = {
@@ -82,4 +86,14 @@ public class Toernooien {
     public void setClubOrganistorID(Tennisclubs clubOrganistorID) {
         this.clubOrganistorID = clubOrganistorID;
     }
+
+    public Wedstrijdleider getWedstrijdleider() {
+        return wedstrijdleider;
+    }
+
+    public void setWedstrijdleider(Wedstrijdleider wedstrijdleider) {
+        this.wedstrijdleider = wedstrijdleider;
+    }
 }
+
+

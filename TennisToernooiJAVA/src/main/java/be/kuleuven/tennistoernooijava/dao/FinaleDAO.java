@@ -19,7 +19,6 @@ public class FinaleDAO implements BaseDAO<Finales, Integer> {
                         "LEFT JOIN f.deelnamens d " +
                         "LEFT JOIN f.ballenrapers b " +
                         "WHERE d.spelerID.spelerID = :spelerID " +
-                        "OR f.wedstrijdleider.speler.spelerID = :spelerID " +
                         "OR f.scheidsID.scheids.spelerID = :spelerID " +
                         "OR b.speler.spelerID = :spelerID",
                 Finales.class);

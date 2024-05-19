@@ -37,10 +37,6 @@ public class Matchen {
     private Toernooien toernooiID;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "wedstrijdLeider",  referencedColumnName = "wedstrijdleiderID", nullable = false)
-    private Wedstrijdleider wedstrijdleider;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "veldID", referencedColumnName = "veldID", nullable = false)
     private Velden veldID;
 
@@ -58,14 +54,6 @@ public class Matchen {
 
     public void setToernooiID(Toernooien toernooiID) {
         this.toernooiID = toernooiID;
-    }
-
-    public Wedstrijdleider getWedstrijdleider() {
-        return wedstrijdleider;
-    }
-
-    public void setWedstrijdleider(Wedstrijdleider wedstrijdleider) {
-        this.wedstrijdleider = wedstrijdleider;
     }
 
     public Integer getMatchID() {

@@ -63,6 +63,13 @@ public class TennisclubService {
         return tennisclubDAO.update(club);
     }
 
+    public Toernooien getToernooiVanSpeler(Tennisclubs club, Spelers speler) {
+        Set<Toernooien> toernooien = club.getToernooien();
+        return toernooien.stream()
+                .filter(a -> a.getWedstrijdleider().getSpeler().equals(speler)).findFirst()
+                .orElse(null);
+    }
+
     public Set<Toernooien> getToernooien(Tennisclubs club) {
         club = tennisclubDAO.find(club.getClubID());
         return club.getToernooien();
