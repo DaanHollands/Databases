@@ -1,10 +1,7 @@
 package be.kuleuven.tennistoernooijava.controller;
 
 import be.kuleuven.tennistoernooijava.dao.*;
-import be.kuleuven.tennistoernooijava.models.Finales;
-import be.kuleuven.tennistoernooijava.models.Matchen;
-import be.kuleuven.tennistoernooijava.models.Spelers;
-import be.kuleuven.tennistoernooijava.models.Toernooien;
+import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.Posities;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.*;
@@ -15,10 +12,21 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BekijkMatchesController {
     @FXML
-    private ListView<String> toernooienList;
+    private CheckBox ballenraperSelector;
+
+    @FXML
+    private CheckBox deelnemenSelector;
+
+    @FXML
+    private AnchorPane finaleAnchorpane;
+
+    @FXML
+    private AnchorPane gespeeldeAnchorpane;
 
     @FXML
     private ListView<String> matchesList;
@@ -27,31 +35,34 @@ public class BekijkMatchesController {
     private AnchorPane nietGespeeldAnchorpane;
 
     @FXML
-    private AnchorPane finaleAnchorpane;
+    private Button opslaanKnop;
 
     @FXML
-    private CheckBox supporterSelector;
+    private ListView<Posities> positiesList;
 
     @FXML
-    private CheckBox ballenraperSelector;
-
-    @FXML
-    private ListView<String> positiesList;
+    private Text reeksNiveauText;
 
     @FXML
     private Text positiesText;
 
     @FXML
-    private Button opslaanKnop;
+    private Text reeksText;
 
     @FXML
-    private CheckBox deelnameSelector;
+    private Text scheidsText;
 
     @FXML
-    private AnchorPane gespeeldeAnchorpane;
+    private ListView<String> spelersList;
+
+    @FXML
+    private CheckBox supporterSelector;
 
     @FXML
     private Text thuisScoreText;
+
+    @FXML
+    private ListView<String> toernooienList;
 
     @FXML
     private Text uitScoreText;
@@ -72,6 +83,7 @@ public class BekijkMatchesController {
 
     private ArrayList<Matchen> matchens = new ArrayList<>();
     private ArrayList<Toernooien> toernooien = new ArrayList<>();
+    private ArrayList<Reeksen> reeksen = new ArrayList<>();
 
     @FXML
     void initialize() {
@@ -88,7 +100,8 @@ public class BekijkMatchesController {
         toernooiService = new ToernooiService(new ToernooienDAO());
         matchenService = new MatchenService(new MatchenDAO());
         toernooien.addAll(tennisclubService.getToernooien(speler.getTennisclubID()));
-        positiesList.getItems().setAll(Arrays.toString(Posities.values()));
+
+        positiesList.getItems().setAll(Posities.values());
 
         positiesText.setVisible(ballenraperSelector.isSelected());
         positiesList.setVisible(ballenraperSelector.isSelected());
@@ -103,29 +116,58 @@ public class BekijkMatchesController {
 
         toernooienList.setOnMouseClicked(e -> {
             updateMatches(toernooien.get(toernooienList.getSelectionModel().getSelectedIndex()));
-            finaleAnchorpane.setVisible(matchens.get(matchesList.getSelectionModel().getSelectedIndex()) instanceof Finales);
         });
 
         matchesList.setOnMouseClicked(e -> {
+            finaleAnchorpane.setVisible(matchens.get(matchesList.getSelectionModel().getSelectedIndex()) instanceof Finales);
+            reeksText.setText(matchens.get(matchesList.getSelectionModel().getSelectedIndex()).getReeks().getReeks().toString());
+            reeksNiveauText.setText(matchens.get(matchesList.getSelectionModel().getSelectedIndex()).getReeks().getNiveau().toString());
+            undoSelectors();
+
             if(matchens.get(matchesList.getSelectionModel().getSelectedIndex()).getUitslag() == null) {
                 nietGespeeldAnchorpane.setVisible(true);
                 gespeeldeAnchorpane.setVisible(false);
+                updateSpelerList(matchens.get(matchesList.getSelectionModel().getSelectedIndex()));
+                deelnemenSelector.setVisible(getDeelnameVisiblity(matchens.get(matchesList.getSelectionModel().getSelectedIndex())));
             }
             else {
                 nietGespeeldAnchorpane.setVisible(false);
                 gespeeldeAnchorpane.setVisible(true);
                 Matchen match = matchens.get(matchesList.getSelectionModel().getSelectedIndex());
+                updateSpelerList(match);
                 thuisScoreText.setText(match.getScorethus().toString());
                 uitScoreText.setText(match.getScoreuit().toString());
                 uiteindelijkeScoreText.setText(match.getUitslag().toString());
             }
         });
 
-        deelnameSelector.setOnAction(e -> neemDeel());
+        deelnemenSelector.setOnAction(e -> neemDeel());
         supporterSelector.setOnAction(e -> wordtSupporter());
         ballenraperSelector.setOnAction(e -> wordtBallenraper());
 
         opslaanKnop.setOnAction(e -> opslaanVoorMatch());
+    }
+
+    private void updateSpelerList(Matchen matchen) {
+        spelersList.getItems().clear();
+        matchen.getDeelnamens().forEach(d -> {
+            spelersList.getItems().add(
+                    "Deelnemer: " + d.getSpelerID().getNaam()
+            );
+        });
+    }
+
+    private boolean getDeelnameVisiblity(Matchen match) {
+        if(speler.getRanking() > match.getReeks().getNiveau()) {
+            return false;
+        }
+        else if(match.getDeelnamens().size() >= 2) {
+            return false;
+        }
+        else if(!match.getIsFirstMatch()) {
+            return false;
+        }
+        return new ReeksenService(new ReeksenDAO()).canJoinReeks(speler, match.getReeks());
     }
 
     public void updateMatches(Toernooien toernooi) {
@@ -134,9 +176,16 @@ public class BekijkMatchesController {
         matchens.addAll(toernooi.getMatchen());
 
         for (Matchen match : matchens) {
-            matchesList.getItems().add(matchens.indexOf(match) + " :  " +
-                    match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar() + "/"
-            );
+            if(match instanceof Finales) {
+                matchesList.getItems().add(matchens.indexOf(match) + " Finale " + " :  " +
+                        match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar()
+                );
+            }
+            else {
+                matchesList.getItems().add(matchens.indexOf(match) + " :  " +
+                        match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar()
+                );
+            }
         }
     }
 
@@ -144,8 +193,8 @@ public class BekijkMatchesController {
         if(ballenraperSelector.isSelected()) {
             ballenraperService.createBallenraper(speler, (Finales) matchens.get(matchesList.getSelectionModel().getSelectedIndex()));
         }
-        else if(deelnameSelector.isSelected()) {
-            deelnameService.createDeelname(speler, (Finales) matchens.get(matchesList.getSelectionModel().getSelectedIndex()));
+        else if(deelnemenSelector.isSelected()) {
+            deelnameService.createDeelname(speler, matchens.get(matchesList.getSelectionModel().getSelectedIndex()));
         }
 
         else if(supporterSelector.isSelected()) {
@@ -155,17 +204,23 @@ public class BekijkMatchesController {
 
     public void wordtSupporter() {
         ballenraperSelector.setSelected(false);
-        deelnameSelector.setSelected(false);
+        deelnemenSelector.setSelected(false);
     }
 
     public void wordtBallenraper() {
         supporterSelector.setSelected(false);
-        deelnameSelector.setSelected(false);
+        deelnemenSelector.setSelected(false);
     }
 
     public void neemDeel() {
         supporterSelector.setSelected(false);
         ballenraperSelector.setSelected(false);
+    }
+
+    public void undoSelectors() {
+        supporterSelector.setSelected(false);
+        ballenraperSelector.setSelected(false);
+        deelnemenSelector.setSelected(false);
     }
 
 }

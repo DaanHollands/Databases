@@ -79,11 +79,11 @@ public class BekijkDeelnamesController {
         });
 
         matchenList.setOnMouseClicked(e -> {
-//            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getWedstrijdleider().getSpeler().equals(speler)) {
-//                rangText.setText("wedstrijdleider");
-//                rang = TypeRang.WEDSTRIJDLEIDER;
-//                wedstrijdleiderAnchorpane.setVisible(true);
-//            }
+            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID().getWedstrijdleider().getSpeler().equals(speler)) {
+                rangText.setText("wedstrijdleider");
+                rang = TypeRang.WEDSTRIJDLEIDER;
+                wedstrijdleiderAnchorpane.setVisible(true);
+            }
 
             if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
                 rangText.setText("speler");

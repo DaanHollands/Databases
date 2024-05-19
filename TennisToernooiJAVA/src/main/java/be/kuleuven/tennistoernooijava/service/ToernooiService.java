@@ -1,13 +1,16 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
-import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
-import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
-import be.kuleuven.tennistoernooijava.dao.WedstrijdleiderDAO;
+import be.kuleuven.tennistoernooijava.Exceptions.IlligalWedstrijdleiderException;
+import be.kuleuven.tennistoernooijava.dao.*;
+import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;
+import javafx.css.Match;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class ToernooiService {
@@ -40,6 +43,9 @@ public class ToernooiService {
         }
         if (eindJaar<=2023 ){
             throw new IllegalDateException("Ongeldige eindjaar");
+        }
+        if(new WedstrijdleiderDAO().find(nieuweWestrijdleider.getSpelerID()) != null) {
+            throw new IlligalWedstrijdleiderException("Je bent al een wedstrijdleider van een toernooi");
         }
         valideerDatum(beginDag,beginMaand,beginJaar,eindDag,eindMaand,eindJaar);
 
@@ -75,16 +81,19 @@ public class ToernooiService {
         return toernooien;
     }
 
-    public Set<Reeksen> addReeks(Toernooien toernooi, String reeksNiveau) {
-        Reeksen reeks = new ReeksenService(new ReeksenDAO()).getReeks(reeksNiveau);
-        toernooi.addReeks(reeks);
-        Toernooien newToernooi = toernooienDAO.update(toernooi);
-        return newToernooi.getReeksen();
-    }
-
     public Set<Matchen> getAllMatchen(Toernooien toernooi) {
         return toernooi.getMatchen();
     }
+
+    public Matchen addSpelerToReeks(Deelnamen deelnamen, Reeksen reeks, Toernooien toernooi) {
+        Optional<Matchen> match = toernooi.getMatchen().stream()
+                .filter(e -> e.getIsFirstMatch() && e.getDeelnamens().size() != 2)
+                .peek(m -> m.addDeelname(deelnamen))
+                .findFirst();
+
+        return match.orElse(null);
+    }
+
 
     public static void valideerDatum(Integer beginDag, Integer beginMaand, Integer beginJaar,
                                      Integer eindDag, Integer eindMaand, Integer eindJaar){

@@ -1,19 +1,25 @@
 package be.kuleuven.tennistoernooijava.controller;
 
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalReeksException;
+import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
+import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
 import be.kuleuven.tennistoernooijava.models.Toernooien;
-import be.kuleuven.tennistoernooijava.service.ChangeScene;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
-import be.kuleuven.tennistoernooijava.service.ToernooiService;
+import be.kuleuven.tennistoernooijava.service.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OrganiseerToernooiController {
     @FXML
@@ -23,36 +29,52 @@ public class OrganiseerToernooiController {
     private DatePicker eindDatumInput;
 
     @FXML
-    private VBox reeksenVBox;
-
-    @FXML
-    private TextField reeksInput1;
-
-    @FXML
-    private TextField reeksInput2;
-
-    @FXML
-    private TextField reeksInput3;
-
-    @FXML
-    private TextField reeksInput4;
-
-    @FXML
-    private Button extraReeksKnop;
+    private TextField beginMatchenInput;
 
     @FXML
     private Button opslaanKnop;
+
+    @FXML
+    private TextField reeksNiveauInput;
+
+    @FXML
+    private Button reeksToevoegenKnop;
+
+    @FXML
+    private ListView<ReeksenWaardes> reeksenList;
+
+    @FXML
+    private VBox reeksenVBox;
+
 
     private ToernooiService service;
     private Spelers speler = SpelerSessie.getSessie().getSpeler();
     private Tennisclubs club;
 
-    private ArrayList<TextField> reeksen = new ArrayList<>();
+    private Map<ReeksenWaardes, Integer> reeksen = new HashMap<>();
     @FXML
     void initialize() {
-        reeksen.add(reeksInput1);reeksen.add(reeksInput2);reeksen.add(reeksInput3);reeksen.add(reeksInput4);
         service = new ToernooiService(new ToernooienDAO());
         club = speler.getTennisclubID();
+        reeksenList.getItems().addAll(ReeksenWaardes.values());
+
+        reeksToevoegenKnop.setOnAction(event -> {
+            if(reeksNiveauInput.getText().isEmpty()) {
+                throw new IllegalReeksException("Je moet eerst een niveau kiezen");
+            }
+            if(reeksNiveauInput.getText().contains("[a-zA-Z]+")) {
+                throw new IllegalNumberException("Je mag enkel nummers ingeven hier");
+            }
+            if(Integer.parseInt(reeksNiveauInput.getText()) < 0) {
+                throw new IllegalNumberException("Het mag geen negatief nummer zijn");
+            }
+            if(reeksenList.getSelectionModel().getSelectedItem() == null) {
+                throw new IllegalReeksException("Je moet eerst een reeks kiezen");
+            }
+
+            addReeks(reeksenList.getSelectionModel().getSelectedItem(), Integer.parseInt(reeksNiveauInput.getText()));
+        });
+
         opslaanKnop.setOnAction(event -> {
             saveToernooi();
             try {
@@ -61,30 +83,34 @@ public class OrganiseerToernooiController {
                 System.out.println(e);
             }
         });
-        extraReeksKnop.setOnAction(e -> addReeks());
     }
 
     private void saveToernooi() {
+        if(reeksen.size() < 4) {
+            throw new IllegalReeksException("Je moet minimaal 4 reeksen selecteren!");
+        }
+        if(Integer.parseInt(beginMatchenInput.getText()) < 4) {
+            throw new IllegalReeksException("Je moet minimaal 4 matches hebben!");
+        }
         try{
-        Toernooien toernooi = service.createToernooi(club,
-            beginDatumInput.getValue().getDayOfMonth(), beginDatumInput.getValue().getMonthValue(), beginDatumInput.getValue().getYear(),
-            eindDatumInput.getValue().getDayOfMonth(), eindDatumInput.getValue().getMonthValue(), eindDatumInput.getValue().getYear(),
-            speler
-        );
+            Toernooien toernooi = service.createToernooi(club,
+                beginDatumInput.getValue().getDayOfMonth(), beginDatumInput.getValue().getMonthValue(), beginDatumInput.getValue().getYear(),
+                eindDatumInput.getValue().getDayOfMonth(), eindDatumInput.getValue().getMonthValue(), eindDatumInput.getValue().getYear(),
+                speler
+            );
+            Map<Map<String, List<Integer>>, Map<ReeksenWaardes, Integer>> map = new HashMap<>();
+            map.put(new MatchenService(new MatchenDAO()).calculateMatches(Integer.parseInt(beginMatchenInput.getText())), reeksen);
+            MatchenHolderService.getInstance().setData(map);
 
-        reeksen.forEach(e -> {
-            service.addReeks(toernooi, e.getText());
-        });
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
     }
 
-    public void addReeks() {
-        reeksen.add(new TextField());
-        reeksenVBox.getChildren().clear();
-        reeksen.forEach(e -> {
-            reeksenVBox.getChildren().add(e);
-        });
+    public void addReeks(ReeksenWaardes reeks, Integer niveau) {
+        Text text = new Text();
+        text.setText(reeks.toString() + " - " + niveau.toString());
+        reeksen.put(reeks, niveau);
+        reeksenVBox.getChildren().add(text);
     }
 }

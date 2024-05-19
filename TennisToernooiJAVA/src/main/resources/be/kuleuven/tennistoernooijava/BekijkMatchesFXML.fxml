@@ -7,52 +7,33 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.BekijkMatchesController">
+<AnchorPane prefHeight="419.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.BekijkMatchesController">
    <children>
        <fx:include source="Header.fxml" />
-      <ListView fx:id="toernooienList" layoutX="14.0" layoutY="75.0" prefHeight="311.0" prefWidth="232.0" />
-      <Text layoutX="74.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alle toernooien:">
+      <ListView fx:id="toernooienList" layoutX="14.0" layoutY="75.0" prefHeight="311.0" prefWidth="126.0" />
+      <Text layoutX="14.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alle toernooien:">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <ListView fx:id="matchesList" layoutX="254.0" layoutY="75.0" prefHeight="311.0" prefWidth="232.0" />
-      <Text layoutX="314.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alle matches:">
+      <ListView fx:id="matchesList" layoutX="152.0" layoutY="75.0" prefHeight="311.0" prefWidth="120.0" />
+      <Text layoutX="158.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alle matchen:">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <AnchorPane fx:id="nietGespeeldAnchorpane" layoutX="500.0" layoutY="102.0" prefHeight="284.0" prefWidth="321.0">
-         <children>
-            <AnchorPane fx:id="finaleAnchorpane" layoutX="12.0" layoutY="28.0" prefHeight="247.0" prefWidth="297.0">
-               <children>
-                  <CheckBox fx:id="supporterSelector" layoutX="18.0" layoutY="16.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="183.0" text="Wordt supporter">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </CheckBox>
-                  <CheckBox fx:id="ballenraperSelector" layoutX="18.0" layoutY="58.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="193.0" text="Wordt ballenraper">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </CheckBox>
-                  <ListView fx:id="positiesList" layoutX="18.0" layoutY="119.0" prefHeight="117.0" prefWidth="193.0" />
-                  <Text fx:id="positiesText" layoutX="75.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posities:">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            <CheckBox fx:id="deelnameSelector" layoutX="28.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="183.0" text="Deelnemen">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </CheckBox>
-            <Button fx:id="opslaanKnop" layoutX="233.0" layoutY="52.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="70.0" text="Opslaan" textOverrun="CLIP" />
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="gespeeldeAnchorpane" layoutX="499.0" layoutY="91.0" prefHeight="200.0" prefWidth="312.0">
+      <ListView fx:id="spelersList" layoutX="427.0" layoutY="84.0" prefHeight="47.0" prefWidth="158.0" />
+      <Text layoutX="421.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spelers:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="293.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Is van reeks:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <AnchorPane fx:id="gespeeldeAnchorpane" layoutX="489.0" layoutY="124.0" prefHeight="200.0" prefWidth="312.0">
          <children>
             <Text layoutX="75.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score thuis:">
                <font>
@@ -86,5 +67,56 @@
             </Text>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="nietGespeeldAnchorpane" layoutX="452.0" layoutY="33.0" prefHeight="383.0" prefWidth="352.0">
+         <children>
+            <AnchorPane fx:id="finaleAnchorpane" layoutY="100.0" prefHeight="200.0" prefWidth="297.0">
+               <children>
+                  <CheckBox fx:id="supporterSelector" layoutX="18.0" layoutY="73.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="183.0" text="Wordt supporter">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </CheckBox>
+                  <CheckBox fx:id="ballenraperSelector" layoutX="18.0" layoutY="104.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="193.0" text="Wordt ballenraper">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </CheckBox>
+                  <ListView fx:id="positiesList" layoutX="18.0" layoutY="158.0" prefHeight="117.0" prefWidth="193.0" />
+                  <Text fx:id="positiesText" layoutX="18.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posities:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="scheidsText" layoutX="87.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="scheids" wrappingWidth="61.1279296875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="15.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scheids:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <Text layoutX="60.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Je kan enkel deelnemen aan matchen met nog geen 2 spelers en als je voldoet aan de vereisten van de reek" wrappingWidth="307.68359375" />
+            <CheckBox fx:id="deelnemenSelector" layoutX="139.0" layoutY="72.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="149.0" text="Deelnemen">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </CheckBox>
+            <Button fx:id="opslaanKnop" layoutX="272.0" layoutY="315.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="70.0" text="Opslaan" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <Text fx:id="reeksText" layoutX="293.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reeks text">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="reeksNiveauText" layoutX="293.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reeks niveau">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

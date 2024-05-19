@@ -28,28 +28,8 @@ public class Toernooien {
     @JoinColumn(name = "wedstrijdLeider",  referencedColumnName = "wedstrijdleiderID", nullable = false)
     private Wedstrijdleider wedstrijdleider;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "toernooienReeksen",
-            joinColumns = {
-                @JoinColumn(name = "toernooiID", referencedColumnName = "toernooiID", nullable = false)
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "reeksID", referencedColumnName = "reeksID", nullable = false),
-                    @JoinColumn(name = "niveau", referencedColumnName = "niveau", nullable = false)
-            }
-    )
-    private Set<Reeksen> reeksen = new HashSet<>();
-
     @OneToMany(mappedBy = "matchID", cascade = CascadeType.ALL, orphanRemoval = true )
     private Set<Matchen> matchen = new HashSet<>();
-
-    public void addReeks(Reeksen reeks) {
-        reeksen.add(reeks);
-    }
-
-    public Set<Reeksen> getReeksen() {
-        return reeksen;
-    }
 
     public Integer getToernooiID() {
         return toernooiID;

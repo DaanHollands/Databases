@@ -1,38 +1,47 @@
 package be.kuleuven.tennistoernooijava.models;
 
 
+import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "reeksen")
-@IdClass(ReeksenPK.class)
 public class Reeksen {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reeksID", nullable = false)
     private Integer reeksID;
 
-    @Id
+    @Column(name = "reeks", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ReeksenWaardes reeks;
+
     @Column(name = "niveau", nullable = false)
-    private String niveau;
+    private Integer niveau;
 
-    @OneToMany(mappedBy = "reeksID", cascade = CascadeType.ALL, orphanRemoval = true )
-    private Set<Spelers> spelers = new HashSet<>();
-
-    @ManyToMany(mappedBy = "reeksen", fetch = FetchType.LAZY)
-    private Set<Toernooien> toernooien = new HashSet<>();
+    @OneToMany(mappedBy = "reeks", fetch = FetchType.LAZY)
+    private Set<Matchen> match = new HashSet<>();
 
     public Integer getReeksID() {
         return reeksID;
     }
 
-    public String getNiveau() {
+    public Integer getNiveau() {
         return niveau;
     }
 
-    public void setNiveau(String niveau) {
+    public void setNiveau(Integer niveau) {
         this.niveau = niveau;
+    }
+
+    public ReeksenWaardes getReeks() {
+        return reeks;
+    }
+
+    public void setReeks(ReeksenWaardes reeks) {
+        this.reeks = reeks;
     }
 }

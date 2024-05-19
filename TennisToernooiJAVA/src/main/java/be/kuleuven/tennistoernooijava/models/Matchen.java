@@ -19,6 +19,9 @@ public class Matchen {
     @Enumerated(EnumType.STRING)
     private Uitslagen uitslag;
 
+    @Column(name = "firstmatches", nullable = false)
+    private Boolean isFirstMatch;
+
     @Column(name = "scoreuit")
     private Integer scoreuit;
 
@@ -39,6 +42,26 @@ public class Matchen {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "veldID", referencedColumnName = "veldID", nullable = false)
     private Velden veldID;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "reeksID", referencedColumnName = "reeksID", nullable = false)
+    private Reeksen reeks;
+
+    public Reeksen getReeks() {
+        return reeks;
+    }
+
+    public void setReeks(Reeksen reeks) {
+        this.reeks = reeks;
+    }
+
+    public Boolean getIsFirstMatch() {
+        return isFirstMatch;
+    }
+
+    public void setIsFirstMatch(Boolean firstMatches) {
+        this.isFirstMatch = firstMatches;
+    }
 
     public Velden getVeldID() {
         return veldID;
@@ -99,4 +122,6 @@ public class Matchen {
     public void addDeelname(Deelnamen deelnamen) {
         deelnamens.add(deelnamen);
     }
+
+
 }

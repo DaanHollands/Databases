@@ -1,9 +1,9 @@
 package be.kuleuven.tennistoernooijava.service;
 
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalReeksException;
 import be.kuleuven.tennistoernooijava.dao.DeelnamenDAO;
-import be.kuleuven.tennistoernooijava.models.Deelnamen;
-import be.kuleuven.tennistoernooijava.models.Matchen;
-import be.kuleuven.tennistoernooijava.models.Spelers;
+import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
+import be.kuleuven.tennistoernooijava.models.*;
 
 import java.util.List;
 import java.util.Set;
@@ -16,10 +16,13 @@ public class DeelnameService {
     }
 
     public void createDeelname(Spelers speler, Matchen match) {
+        if(speler.getRanking() > match.getReeks().getNiveau()) {
+            throw new IllegalReeksException("Je mag niet inschrijven voor deze reeks, je het ranking is hoger dan de reeks niveau nummer");
+        }
         Deelnamen deelnamen = new Deelnamen();
-        deelnamen.setMatchID(match);
         deelnamen.setSpelerID(speler);
-        deelnamen = deelnamenDAO.create(deelnamen);
+        deelnamen.setMatchID(match);
+        deelnamen = new DeelnamenDAO().create(deelnamen);
         match.addDeelname(deelnamen);
     }
 

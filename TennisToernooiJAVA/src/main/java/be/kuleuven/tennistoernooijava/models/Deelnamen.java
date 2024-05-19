@@ -37,8 +37,8 @@ public class Deelnamen {
         return spelerID;
     }
 
-    public void setSpelerID(Spelers datumID) {
-        this.spelerID = datumID;
+    public void setSpelerID(Spelers speler) {
+        this.spelerID = speler;
     }
 
     public Matchen getMatchID() {

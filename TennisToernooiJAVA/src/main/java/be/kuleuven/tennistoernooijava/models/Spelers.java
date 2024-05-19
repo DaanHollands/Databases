@@ -46,16 +46,6 @@ public class Spelers {
     @JoinColumn(name = "tennisclubID",  referencedColumnName = "clubID")
     private Tennisclubs tennisclubID;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns({
-            @JoinColumn(name = "reeksID", referencedColumnName = "reeksID"),
-            @JoinColumn(name = "niveau", referencedColumnName = "niveau")
-    })
-    private Reeksen reeksID;
-
-    @OneToMany(mappedBy = "deelnameID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Deelnamen> deelnamens = new HashSet<>();
-
     public Set<SpelerEmailadressen> getEmails() {
         return emails;
     }
