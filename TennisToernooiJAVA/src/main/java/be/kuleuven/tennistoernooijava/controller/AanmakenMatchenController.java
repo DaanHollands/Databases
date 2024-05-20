@@ -88,7 +88,7 @@ public class AanmakenMatchenController {
             public void handle(MouseEvent mouseEvent) {
                 if(matchenList.getSelectionModel().getSelectedItem().contains("Match:")) {
                     matchSettingAnchorpane.setVisible(true);
-                    if(matchenList.getSelectionModel().getSelectedItem().contains("final") && !matchenList.getSelectionModel().getSelectedItem().contains("semifinals")) {
+                    if(matchenList.getSelectionModel().getSelectedItem().contains("Finale")) {
                         scheidsText.setVisible(true);
                         spelerListScheids.setVisible(true);
                     }
@@ -106,13 +106,13 @@ public class AanmakenMatchenController {
         okeKnop.setOnAction(event -> {
             try {
                 Map<ReeksenWaardes, Integer> reeksen = (Map<ReeksenWaardes, Integer>) MatchenHolderService.getInstance().getData().values().toArray()[0];
-                if(matchenList.getSelectionModel().getSelectedItem().contains("final") && !matchenList.getSelectionModel().getSelectedItem().contains("semifinals")) {
+                if(matchenList.getSelectionModel().getSelectedItem().contains("Finale")) {
                     for(Map.Entry<ReeksenWaardes, Integer> map : reeksen.entrySet()) {
                         finaleService.voegFinaleAanToernooi(
                                 toernooi, clubService.getOrCreateVeld(veldList.getSelectionModel().getSelectedItem(), speler.getTennisclubID()),
                                 datumPicker.getValue().getDayOfMonth(), datumPicker.getValue().getMonthValue(), datumPicker.getValue().getYear(),
                                 Integer.parseInt(uurInput.getText()), Integer.parseInt(minuutInput.getText()), spelers.get(spelerListScheids.getSelectionModel().getSelectedIndex()),
-                                map
+                                map, Integer.parseInt(matchenList.getSelectionModel().getSelectedItem().split("->")[0].trim().split(":")[1].trim())
                         );
                     }
                 }
@@ -121,7 +121,7 @@ public class AanmakenMatchenController {
                         matchenService.voegMatchAanToernooi(
                                 toernooi, clubService.getOrCreateVeld(veldList.getSelectionModel().getSelectedItem(), speler.getTennisclubID()),
                                 datumPicker.getValue().getDayOfMonth(), datumPicker.getValue().getMonthValue(), datumPicker.getValue().getYear(),
-                                Integer.parseInt(uurInput.getText()), Integer.parseInt(minuutInput.getText()), matchenList.getSelectionModel().getSelectedItem().contains("startingMatches"),
+                                Integer.parseInt(uurInput.getText()), Integer.parseInt(minuutInput.getText()), Integer.parseInt(matchenList.getSelectionModel().getSelectedItem().split("->")[0].trim().split(":")[1].trim()),
                                 map
                         );
                     }
@@ -142,14 +142,18 @@ public class AanmakenMatchenController {
 
     }
 
-    private void displayMatchenList(Set<Map<String, List<Integer>>> matches) {
+    private void displayMatchenList(Set<Map<Integer, List<Integer>>> matches) {
         matchenList.getItems().clear();
+        Map<Integer, List<Integer>> map = matches.iterator().next();
+        Optional<Integer> maxKey = map.keySet().stream().max(Integer::compare);
 
-        for(Map<String, List<Integer>> map : matches) {
-            for(Map.Entry<String, List<Integer>> match : map.entrySet()) {
-                for(Integer aantal : match.getValue()) {
-                    for(int i = 0; i < aantal; i++) {
-                        matchenList.getItems().add(match.getKey() + " -> " + "Match: " + (i+1));
+        for(Map.Entry<Integer, List<Integer>> match : map.entrySet()) {
+            for(Integer aantal : match.getValue()) {
+                for(int i = 0; i < aantal; i++) {
+                    if(maxKey.get().equals(match.getKey())) {
+                        matchenList.getItems().add("Finale: " + match.getKey() + " -> " + "Match: " + (i+1));
+                    } else {
+                        matchenList.getItems().add("Ronde: " + match.getKey() + " -> " + "Match: " + (i+1));
                     }
                 }
             }

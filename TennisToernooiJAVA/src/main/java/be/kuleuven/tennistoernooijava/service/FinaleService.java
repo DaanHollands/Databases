@@ -1,7 +1,5 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
 import be.kuleuven.tennistoernooijava.dao.*;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;
@@ -20,7 +18,7 @@ public class FinaleService {
     public Finales voegFinaleAanToernooi(Toernooien toernooi, Velden veld,
                                       Integer startDag, Integer startMaand, Integer startJaar,
                                       Integer startdUur, Integer startMinuut, Spelers scheids,
-                                     Map.Entry<ReeksenWaardes, Integer> reeks
+                                     Map.Entry<ReeksenWaardes, Integer> reeks, Integer ronde
     ) {
         Finales finale = new Finales();
         Datums startDatum = new Datums();
@@ -31,7 +29,7 @@ public class FinaleService {
         startDatum.setMinuten(startMinuut);
         startDatum = new DatumsDAO().create(startDatum);
         finale.setDatumID(startDatum);
-        finale.setIsFirstMatch(false);
+        finale.setMatchRonde(ronde);
         Scheidsen nieuweScheids = new ScheidenDAO().find(scheids.getSpelerID());
 
         if(nieuweScheids == null) {

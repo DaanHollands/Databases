@@ -47,6 +47,7 @@ public class BekijkDeelnamesController {
     private FinaleService finaleService;
     private SupporterService supporterService;
     private BallenraperService ballenraperService;
+    private ToernooiService toernooiService;
     private Spelers speler = SpelerSessie.getSessie().getSpeler();
     private ArrayList<Matchen> matchen = new ArrayList<>();
 
@@ -59,6 +60,7 @@ public class BekijkDeelnamesController {
         ballenraperService = new BallenraperService(new BallenraperDAO());
         matchenService = new MatchenService(new MatchenDAO());
         deelnameService = new DeelnameService(new DeelnamenDAO());
+        toernooiService = new ToernooiService(new ToernooienDAO());
         uitlsagenList.getItems().addAll(Uitslagen.values());
         List<Matchen> matchens = matchenService.getMatchesFrom(speler);
         List<Finales> finales = finaleService.getFinalesFrom(speler);
@@ -76,6 +78,8 @@ public class BekijkDeelnamesController {
         scoresOpslaanKnop.setOnAction(e -> {
             matchenService.updateScores(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), Integer.parseInt(scoreThuisInput.getText()), Integer.parseInt(scoreUitInput.getText()),
                     uitlsagenList.getSelectionModel().getSelectedItem());
+            toernooiService.updateMatchen(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID());
+
         });
 
         matchenList.setOnMouseClicked(e -> {

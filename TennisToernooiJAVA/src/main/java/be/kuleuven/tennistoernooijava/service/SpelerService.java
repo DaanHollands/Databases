@@ -55,11 +55,12 @@ public class SpelerService {
         speler.setNaam(naam);
         speler.setTelefoonnummer(telefoonnummer);
         speler.setGewicht(gewicht);
-        Datums geboorteDatums = new Datums();
-        geboorteDatums.setDag(geboorteDag);
-        geboorteDatums.setJaar(Integer.parseInt(geboorteJaar));
-        geboorteDatums.setMaand(geboorteMaand);
-        speler.setDatumID(new DatumsDAO().create(geboorteDatums));
+        Datums geboorteDatum = new Datums();
+        geboorteDatum.setDag(geboorteDag);
+        geboorteDatum.setJaar(Integer.parseInt(geboorteJaar));
+        geboorteDatum.setMaand(geboorteMaand);
+        geboorteDatum = new DatumsDAO().create(geboorteDatum);
+        speler.setDatumID(geboorteDatum);
         speler.setGeslacht(geslacht);
         speler.setRanking(ranking);
         speler.setLengte(lengte);

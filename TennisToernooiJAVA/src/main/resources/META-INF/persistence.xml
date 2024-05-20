@@ -1,5 +1,6 @@
 <persistence version="2.1"
-             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="be.kuleuven.tennistoernooijava.databasePU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
@@ -21,22 +22,19 @@
         <class>be.kuleuven.tennistoernooijava.models.Deelnamen</class>
 
         <properties>
+            <property name="javax.persistence.sql-load-script-source" value="insert.sql"/>
+            <property name="hibernate.dialect" value="org.sqlite.hibernate.dialect.SQLiteDialect"/>
             <property name="show_sql" value="true"/>
             <property name="format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.generate_statistics" value="true"/>
-
-
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="hibernate.connection.url" value="jdbc:sqlite:target/Database.db"/>
-
-            <property name="hibernate.dialect" value="org.sqlite.hibernate.dialect.SQLiteDialect"/>
-
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.connection.driver_class" value="org.sqlite.JDBC"/>
         </properties>
     </persistence-unit>

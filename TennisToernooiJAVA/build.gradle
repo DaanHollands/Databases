@@ -43,6 +43,12 @@ dependencies {
     implementation group:'com.github.gwenn', name:'sqlite-dialect', version:'0.1.2'
     implementation group:'net.bytebuddy', name: 'byte-buddy', version: '1.13.0'
 
+
+
+
+
+
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

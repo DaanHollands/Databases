@@ -1,4 +1,6 @@
 package be.kuleuven.tennistoernooijava.models;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +9,8 @@ import java.util.Set;
 @Table(name = "datums")
 public class Datums {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "datumID", nullable = false)
     private Integer datumID;
 
@@ -26,7 +29,7 @@ public class Datums {
     @Column(name = "minuten", nullable = true)
     private Integer minuten;
 
-    @OneToMany(mappedBy = "spelerID", cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany(mappedBy = "datumID", cascade = CascadeType.ALL, orphanRemoval = true )
     private Set<Spelers> spelers = new HashSet<>();
 
     public Integer getDag() {

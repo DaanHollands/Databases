@@ -1,5 +1,7 @@
 package be.kuleuven.tennistoernooijava.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +10,8 @@ import java.util.Set;
 @Table(name = "toernooien")
 public class Toernooien {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "toernooiID", nullable = false)
     private Integer toernooiID;
 
@@ -28,7 +31,7 @@ public class Toernooien {
     @JoinColumn(name = "wedstrijdLeider",  referencedColumnName = "wedstrijdleiderID", nullable = false)
     private Wedstrijdleider wedstrijdleider;
 
-    @OneToMany(mappedBy = "matchID", cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany(mappedBy = "toernooiID", cascade = CascadeType.ALL, orphanRemoval = true )
     private Set<Matchen> matchen = new HashSet<>();
 
     public Integer getToernooiID() {

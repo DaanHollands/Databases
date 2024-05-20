@@ -98,7 +98,7 @@ public class OrganiseerToernooiController {
                 eindDatumInput.getValue().getDayOfMonth(), eindDatumInput.getValue().getMonthValue(), eindDatumInput.getValue().getYear(),
                 speler
             );
-            Map<Map<String, List<Integer>>, Map<ReeksenWaardes, Integer>> map = new HashMap<>();
+            Map<Map<Integer, List<Integer>>, Map<ReeksenWaardes, Integer>> map = new HashMap<>();
             map.put(new MatchenService(new MatchenDAO()).calculateMatches(Integer.parseInt(beginMatchenInput.getText())), reeksen);
             MatchenHolderService.getInstance().setData(map);
 

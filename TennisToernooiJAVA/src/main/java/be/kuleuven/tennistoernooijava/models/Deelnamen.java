@@ -1,12 +1,15 @@
 package be.kuleuven.tennistoernooijava.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "deelnamen")
 public class Deelnamen {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "deelnameID", nullable = false)
     private Integer deelnameID;
 

@@ -4,6 +4,7 @@ import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
 import be.kuleuven.tennistoernooijava.Exceptions.IlligalWedstrijdleiderException;
 import be.kuleuven.tennistoernooijava.dao.*;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
+import be.kuleuven.tennistoernooijava.enums.Uitslagen;
 import be.kuleuven.tennistoernooijava.models.*;
 import javafx.css.Match;
 
@@ -81,19 +82,30 @@ public class ToernooiService {
         return toernooien;
     }
 
-    public Set<Matchen> getAllMatchen(Toernooien toernooi) {
-        return toernooi.getMatchen();
+    public void updateMatchen(Toernooien toernooien) {
+        Set<Matchen> matchen = toernooien.getMatchen();
+        for(Matchen match : matchen) {
+            if(match.getUitslag() != null) {
+                Deelnamen gewonne;
+                Deelnamen verloren;
+                if(match.getUitslag().equals(Uitslagen.GEWONNEN)) {
+                    gewonne = (Deelnamen) match.getDeelnamens().toArray()[0];
+                    verloren = (Deelnamen) match.getDeelnamens().toArray()[1];
+                } else if(match.getUitslag().equals(Uitslagen.VERLOREN)) {
+                    gewonne = (Deelnamen) match.getDeelnamens().toArray()[1];
+                    verloren = (Deelnamen) match.getDeelnamens().toArray()[0];
+                } else {
+                    continue;
+                }
+                for(Matchen newMatch : matchen) {
+                    if((newMatch.getMatchRonde() == match.getMatchRonde()+1) && (newMatch.getDeelnamens().size() < 2)) {
+                        newMatch.addDeelname(gewonne);
+                        break;
+                    }
+                }
+            }
+        }
     }
-
-    public Matchen addSpelerToReeks(Deelnamen deelnamen, Reeksen reeks, Toernooien toernooi) {
-        Optional<Matchen> match = toernooi.getMatchen().stream()
-                .filter(e -> e.getIsFirstMatch() && e.getDeelnamens().size() != 2)
-                .peek(m -> m.addDeelname(deelnamen))
-                .findFirst();
-
-        return match.orElse(null);
-    }
-
 
     public static void valideerDatum(Integer beginDag, Integer beginMaand, Integer beginJaar,
                                      Integer eindDag, Integer eindMaand, Integer eindJaar){

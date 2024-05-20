@@ -1,6 +1,7 @@
 package be.kuleuven.tennistoernooijava.models;
 
 import be.kuleuven.tennistoernooijava.enums.Uitslagen;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,7 +12,8 @@ import java.util.Set;
 @Table(name = "matchen")
 public class Matchen {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "matchID", nullable = false)
     private Integer matchID;
 
@@ -19,8 +21,8 @@ public class Matchen {
     @Enumerated(EnumType.STRING)
     private Uitslagen uitslag;
 
-    @Column(name = "firstmatches", nullable = false)
-    private Boolean isFirstMatch;
+    @Column(name = "matchRonde", nullable = false)
+    private Integer matchRonde;
 
     @Column(name = "scoreuit")
     private Integer scoreuit;
@@ -32,7 +34,7 @@ public class Matchen {
     @JoinColumn(name = "datumID",  referencedColumnName = "datumID", nullable = false)
     private Datums datumID;
 
-    @OneToMany(mappedBy = "deelnameID", cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany(mappedBy = "matchID", cascade = CascadeType.ALL, orphanRemoval = true )
     private Set<Deelnamen> deelnamens = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -55,12 +57,12 @@ public class Matchen {
         this.reeks = reeks;
     }
 
-    public Boolean getIsFirstMatch() {
-        return isFirstMatch;
+    public Integer getMatchRonde() {
+        return matchRonde;
     }
 
-    public void setIsFirstMatch(Boolean firstMatches) {
-        this.isFirstMatch = firstMatches;
+    public void setMatchRonde(Integer firstMatches) {
+        this.matchRonde = firstMatches;
     }
 
     public Velden getVeldID() {

@@ -2,6 +2,7 @@ package be.kuleuven.tennistoernooijava.models;
 
 
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,7 +12,8 @@ import java.util.Set;
 @Table(name = "reeksen")
 public class Reeksen {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "reeksID", nullable = false)
     private Integer reeksID;
 

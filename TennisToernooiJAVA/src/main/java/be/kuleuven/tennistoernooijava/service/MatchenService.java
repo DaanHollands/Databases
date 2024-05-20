@@ -23,7 +23,7 @@ public class MatchenService {
 
     public Matchen voegMatchAanToernooi(Toernooien toernooi, Velden veld,
                                 Integer startDag, Integer startMaand, Integer startJaar,
-                                Integer startdUur, Integer startMinuut, Boolean firstMatch,
+                                Integer startdUur, Integer startMinuut, Integer ronde,
                                 Map.Entry<ReeksenWaardes, Integer> reeks
     ) {
         if (startDag<=0 || startDag >31 ){
@@ -56,7 +56,7 @@ public class MatchenService {
         match.setDatumID(startDatum);
         match.setToernooiID(toernooi);
         match.setVeldID(veld);
-        match.setIsFirstMatch(firstMatch);
+        match.setMatchRonde(ronde);
         Reeksen newReeks = new ReeksenService(new ReeksenDAO()).getReeks(reeks.getValue(), reeks.getKey());
         match.setReeks(newReeks);
         match = matchenDAO.create(match);
@@ -88,26 +88,20 @@ public class MatchenService {
         matchenDAO.update(match);
     }
 
-    public Map<String, List<Integer>> calculateMatches(Integer aantalMatchen) {
+    public Map<Integer, List<Integer>> calculateMatches(Integer aantalMatchen) {
         int aantal = aantalMatchen;
 
         if(aantal%2 != 0) {
             throw new IllegalNumberException("Het aantal matchen moet een geheel getal zijn");
         }
-        Map<String, List<Integer>> matchStages = new LinkedHashMap<>();
-        List<Integer> betweenMatches = new ArrayList<>();
+        Map<Integer, List<Integer>> matchStages = new LinkedHashMap<>();
+        int round = 1;
 
-        matchStages.put("startingMatches", Collections.singletonList(aantal));
-
-        aantal /= 2;
-        while(aantal > 2) {
-            betweenMatches.add(aantal);
+        while(aantal >= 1) {
+            matchStages.put(round, Collections.singletonList(aantal));
             aantal /= 2;
+            round++;
         }
-
-        matchStages.put("betweenMatches", betweenMatches);
-        matchStages.put("semifinals", Collections.singletonList(2));
-        matchStages.put("final", Collections.singletonList(1));
 
         return matchStages;
     }

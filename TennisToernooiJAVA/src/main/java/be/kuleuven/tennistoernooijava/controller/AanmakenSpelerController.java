@@ -9,7 +9,6 @@ import be.kuleuven.tennistoernooijava.enums.Geslachten;
 import be.kuleuven.tennistoernooijava.service.ChangeScene;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
-import be.kuleuven.tennistoernooijava.view.AanmakenSpelerView;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,7 +67,6 @@ public class AanmakenSpelerController
     private ChangeScene switchScene = new ChangeScene();
 
     private SpelerService service;
-    private AanmakenSpelerView view;
 
     @FXML
     void initialize() {

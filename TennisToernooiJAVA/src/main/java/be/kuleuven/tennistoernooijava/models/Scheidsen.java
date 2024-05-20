@@ -16,7 +16,7 @@ public class Scheidsen implements Serializable {
     @Column(name = "arbiterRanking", nullable = true)
     private String arbiterRanking;
 
-    @OneToMany(mappedBy = "matchID", cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany(mappedBy = "scheidsID", cascade = CascadeType.ALL, orphanRemoval = true )
     private Set<Finales> finales = new HashSet<>();
 
     public Spelers getScheids() {

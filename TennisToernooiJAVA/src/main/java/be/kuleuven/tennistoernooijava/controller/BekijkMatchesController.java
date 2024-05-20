@@ -11,9 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class BekijkMatchesController {
     @FXML
@@ -164,7 +161,7 @@ public class BekijkMatchesController {
         else if(match.getDeelnamens().size() >= 2) {
             return false;
         }
-        else if(!match.getIsFirstMatch()) {
+        else if(match.getMatchRonde() != 1) {
             return false;
         }
         return new ReeksenService(new ReeksenDAO()).canJoinReeks(speler, match.getReeks());
