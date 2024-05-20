@@ -13,14 +13,31 @@ public class FinaleDAO implements BaseDAO<Finales, Integer> {
         return Finales.class;
     }
 
+//    public List<Finales> getFinalesEveythingFromSpeler(Spelers speler) {
+//        TypedQuery<Finales> query = entityManager.createQuery(
+//                "SELECT f FROM Finales f " +
+//                        "LEFT JOIN f.deelnamens d " +
+//                        "LEFT JOIN f.ballenrapers b " +
+//                        "LEFT JOIN f.supporters s " +
+//                        "WHERE d.spelerID.spelerID = :spelerID " +
+//                        "OR f.scheidsID.scheids.spelerID = :spelerID " +
+//                        "OR b.speler.spelerID = :spelerID " +
+//                        "OR s.supporterID.spelerID = :spelerID " +
+//                        "OR f.toernooiID.wedstrijdleider.speler.spelerID = :spelerID ",
+//                Finales.class);
+//        query.setParameter("spelerID", speler.getSpelerID());
+//        try {
+//            return query.getResultList();
+//        } catch (NoResultException e) {
+//            return null;
+//        }
+//    }
+
     public List<Finales> getFinalesFromSpeler(Spelers speler) {
         TypedQuery<Finales> query = entityManager.createQuery(
                 "SELECT f FROM Finales f " +
                         "LEFT JOIN f.deelnamens d " +
-                        "LEFT JOIN f.ballenrapers b " +
-                        "WHERE d.spelerID.spelerID = :spelerID " +
-                        "OR f.scheidsID.scheids.spelerID = :spelerID " +
-                        "OR b.speler.spelerID = :spelerID",
+                        "WHERE d.spelerID.spelerID = :spelerID ",
                 Finales.class);
         query.setParameter("spelerID", speler.getSpelerID());
         try {

@@ -22,9 +22,6 @@ public class BekijkDeelnamesController {
     private ListView<String> matchenList;
 
     @FXML
-    private Button afmeldenAlsSpelerButton;
-
-    @FXML
     private Text rangText;
 
     @FXML
@@ -40,11 +37,13 @@ public class BekijkDeelnamesController {
     private Button scoresOpslaanKnop;
 
     @FXML
+    private ListView<String> spelerList;
+
+    @FXML
     private ListView<Uitslagen> uitlsagenList;
 
     private DeelnameService deelnameService;
     private MatchenService matchenService;
-    private FinaleService finaleService;
     private SupporterService supporterService;
     private BallenraperService ballenraperService;
     private ToernooiService toernooiService;
@@ -55,18 +54,14 @@ public class BekijkDeelnamesController {
 
     @FXML
     void initialize() {
-        finaleService = new FinaleService(new FinaleDAO());
         supporterService = new SupporterService(new SupporterDAO());
         ballenraperService = new BallenraperService(new BallenraperDAO());
         matchenService = new MatchenService(new MatchenDAO());
         deelnameService = new DeelnameService(new DeelnamenDAO());
         toernooiService = new ToernooiService(new ToernooienDAO());
         uitlsagenList.getItems().addAll(Uitslagen.values());
-        List<Matchen> matchens = matchenService.getMatchesFrom(speler);
-        List<Finales> finales = finaleService.getFinalesFrom(speler);
-
+        List<Matchen> matchens = matchenService.getMatchesFromEverything(speler);
         matchens.forEach(m -> matchen.add(m));
-        finales.forEach(f -> matchen.add(f));
         wedstrijdleiderAnchorpane.setVisible(false);
 
         for (Matchen match : matchen) {
@@ -83,13 +78,14 @@ public class BekijkDeelnamesController {
         });
 
         matchenList.setOnMouseClicked(e -> {
+            updateSpelerList(matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
             if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID().getWedstrijdleider().getSpeler().equals(speler)) {
                 rangText.setText("wedstrijdleider");
                 rang = TypeRang.WEDSTRIJDLEIDER;
                 wedstrijdleiderAnchorpane.setVisible(true);
             }
 
-            if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+            else if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
                 rangText.setText("speler");
                 rang = TypeRang.SPELER;
             }
@@ -103,6 +99,10 @@ public class BekijkDeelnamesController {
                     rangText.setText("ballenraper");
                     rang = TypeRang.BALLENRAPER;
                 }
+                else if((((Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex())).getScheidsID().getScheids().equals(speler))) {
+                    rangText.setText("scheids");
+                    rang = TypeRang.SCHEIDS;
+                }
             }
 
             else {
@@ -110,20 +110,14 @@ public class BekijkDeelnamesController {
             }
         });
 
-        afmeldenAlsSpelerButton.setOnAction(e -> {
-            if(rang == TypeRang.WEDSTRIJDLEIDER) {
-                throw new IllegalArgumentException("Dit is niet mogelijk als wedstrijdleider");
-            }
-            else if(rang == TypeRang.SUPPORTER) {
-                supporterService.removeSupporter(speler, (Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
-            }
-            else if(rang == TypeRang.SPELER) {
-                deelnameService.removeDeelname(speler, matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
-            }
-            else if(rang == TypeRang.BALLENRAPER) {
-                ballenraperService.removeBallenraper(speler, (Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
-            }
-        });
-
     }
+    private void updateSpelerList(Matchen matchen) {
+        spelerList.getItems().clear();
+        matchen.getDeelnamens().forEach(d -> {
+            spelerList.getItems().add(
+                    "Deelnemer: " + d.getSpelerID().getNaam()
+            );
+        });
+    }
+
 }

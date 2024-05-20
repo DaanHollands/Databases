@@ -65,18 +65,21 @@ public class MatchenService {
     }
 
     public List<Matchen> getMatchesFrom(Spelers speler) {
-        List<Matchen> matchen = new ArrayList<>();
-        Wedstrijdleider wedstrijdleider = new  WedstrijdleiderDAO().find(speler.getSpelerID());
-        if(wedstrijdleider != null) {
-            matchen.addAll(wedstrijdleider.getToernooi().getMatchen());
-        }
-        matchen.addAll(matchenDAO.getMatchenFrom(speler));
+        List<Matchen> matchen = new ArrayList<>(matchenDAO.getMatchenFrom(speler));
         return matchen;
     }
 
+    public List<Matchen> getMatchesFromEverything(Spelers speler) {
+        List<Matchen> matchen = new ArrayList<>(matchenDAO.getMatchenFromEverything(speler));
+        return matchen;
+    }
+
+
+
     public Matchen getHigestMatch(Spelers speler) {
-        List<Matchen> matchen = this.getMatchesFrom(speler);
-        return matchen.stream()
+        List<Matchen> match = this.getMatchesFrom(speler);
+        return match.stream()
+                .filter(m -> m.getScorethus() != null)
                 .max(Comparator.comparing(Matchen::getScorethus))
                 .orElse(null);
     }

@@ -69,9 +69,6 @@ public class BekijkMatchesController {
 
 
     private final Spelers speler = SpelerSessie.getSessie().getSpeler();
-    private MatchenService matchenService;
-    private FinaleService finaleService;
-    private ToernooiService toernooiService;
 
     private BallenraperService ballenraperService;
     private SupporterService supporterService;
@@ -80,8 +77,6 @@ public class BekijkMatchesController {
 
     private ArrayList<Matchen> matchens = new ArrayList<>();
     private ArrayList<Toernooien> toernooien = new ArrayList<>();
-    private ArrayList<Reeksen> reeksen = new ArrayList<>();
-
     @FXML
     void initialize() {
         finaleAnchorpane.setVisible(false);
@@ -91,11 +86,7 @@ public class BekijkMatchesController {
         ballenraperService = new BallenraperService(new BallenraperDAO());
         supporterService = new SupporterService(new SupporterDAO());
         deelnameService = new DeelnameService(new DeelnamenDAO());
-
-        finaleService = new FinaleService(new FinaleDAO());
         tennisclubService = new TennisclubService(new TennisclubDAO());
-        toernooiService = new ToernooiService(new ToernooienDAO());
-        matchenService = new MatchenService(new MatchenDAO());
         toernooien.addAll(tennisclubService.getToernooien(speler.getTennisclubID()));
 
         positiesList.getItems().setAll(Posities.values());
@@ -116,7 +107,15 @@ public class BekijkMatchesController {
         });
 
         matchesList.setOnMouseClicked(e -> {
-            finaleAnchorpane.setVisible(matchens.get(matchesList.getSelectionModel().getSelectedIndex()) instanceof Finales);
+            finaleAnchorpane.setVisible(false);
+            if(matchens.get(matchesList.getSelectionModel().getSelectedIndex()) instanceof Finales) {
+                finaleAnchorpane.setVisible(true);
+                Finales finale = (Finales)matchens.get(matchesList.getSelectionModel().getSelectedIndex());
+                scheidsText.setText(finale.getScheidsID().getScheids().getNaam());
+                if(finale.getBallenrapers().stream().anyMatch(b -> b.getSpeler().equals(speler)) || finale.getSupporters().stream().anyMatch(s -> s.getSupporterID().equals(speler))) {
+                    finaleAnchorpane.setVisible(false);
+                }
+            }
             reeksText.setText(matchens.get(matchesList.getSelectionModel().getSelectedIndex()).getReeks().getReeks().toString());
             reeksNiveauText.setText(matchens.get(matchesList.getSelectionModel().getSelectedIndex()).getReeks().getNiveau().toString());
             undoSelectors();
@@ -164,6 +163,9 @@ public class BekijkMatchesController {
         else if(match.getMatchRonde() != 1) {
             return false;
         }
+        else if(match.getToernooiID().getMatchen().stream().anyMatch(m -> m.getDeelnamens().stream().anyMatch(d -> d.getSpelerID().equals(speler)))) {
+            return false;
+        }
         return new ReeksenService(new ReeksenDAO()).canJoinReeks(speler, match.getReeks());
     }
 
@@ -188,7 +190,7 @@ public class BekijkMatchesController {
 
     public void opslaanVoorMatch() {
         if(ballenraperSelector.isSelected()) {
-            ballenraperService.createBallenraper(speler, (Finales) matchens.get(matchesList.getSelectionModel().getSelectedIndex()));
+            ballenraperService.createBallenraper(speler, (Finales) matchens.get(matchesList.getSelectionModel().getSelectedIndex()), positiesList.getSelectionModel().getSelectedItem());
         }
         else if(deelnemenSelector.isSelected()) {
             deelnameService.createDeelname(speler, matchens.get(matchesList.getSelectionModel().getSelectedIndex()));
@@ -202,16 +204,19 @@ public class BekijkMatchesController {
     public void wordtSupporter() {
         ballenraperSelector.setSelected(false);
         deelnemenSelector.setSelected(false);
+        positiesList.setVisible(false);
     }
 
     public void wordtBallenraper() {
         supporterSelector.setSelected(false);
         deelnemenSelector.setSelected(false);
+        positiesList.setVisible(true);
     }
 
     public void neemDeel() {
         supporterSelector.setSelected(false);
         ballenraperSelector.setSelected(false);
+        positiesList.setVisible(false);
     }
 
     public void undoSelectors() {

@@ -10,6 +10,6 @@
       <Label layoutX="113.0" layoutY="116.0" text="SpelerID:" />
       <Button fx:id="loginKnop" layoutX="143.0" layoutY="213.0" mnemonicParsing="false" text="Login" />
       <Button fx:id="nieuweSpelerKnop" layoutX="208.0" layoutY="213.0" mnemonicParsing="false" text="Maak nieuwe speler" />
-      <TextField fx:id="spelerIDInput" layoutX="178.0" layoutY="111.0" prefHeight="28.0" prefWidth="100.0" text="12345678" />
+      <TextField fx:id="spelerIDInput" layoutX="178.0" layoutY="111.0" prefHeight="28.0" prefWidth="100.0" text="90123456" />
    </children>
 </AnchorPane>

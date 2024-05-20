@@ -1,5 +1,6 @@
 package be.kuleuven.tennistoernooijava.service;
 
+import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
 import be.kuleuven.tennistoernooijava.dao.SupporterDAO;
 import be.kuleuven.tennistoernooijava.models.*;
 
@@ -18,8 +19,10 @@ public class SupporterService {
         supporter.addFinale(finale);
         supporter.setSupporterID(speler);
         supporter.setClubID(club);
+        supporter.addFinale(finale); // Voeg deze regel toe
         supporter = supporterDAO.create(supporter);
         finale.addSupporter(supporter);
+        new FinaleDAO().update(finale);
     }
 
     public void removeSupporter(Spelers speler, Finales finale) {

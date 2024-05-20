@@ -2,6 +2,8 @@ package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalReeksException;
 import be.kuleuven.tennistoernooijava.dao.DeelnamenDAO;
+import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
+import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
 import be.kuleuven.tennistoernooijava.models.*;
 
@@ -24,6 +26,7 @@ public class DeelnameService {
         deelnamen.setMatchID(match);
         deelnamen = new DeelnamenDAO().create(deelnamen);
         match.addDeelname(deelnamen);
+        new MatchenDAO().update(match);
     }
 
     public void removeDeelname(Spelers speler, Matchen match) {

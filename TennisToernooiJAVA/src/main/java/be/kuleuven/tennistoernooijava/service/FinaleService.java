@@ -55,6 +55,7 @@ public class FinaleService {
     public Finales getHighestFinal(Spelers speler) {
         List<Finales> finales = this.getFinalesFrom(speler);
         return finales.stream()
+                .filter(f -> f.getScorethus() != null)
                 .max(Comparator.comparing(Finales::getScorethus))
                 .orElse(null);
     }

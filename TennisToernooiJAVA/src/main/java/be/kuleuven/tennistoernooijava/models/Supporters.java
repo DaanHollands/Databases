@@ -17,7 +17,7 @@ public class Supporters implements Serializable {
     @JoinColumn(name = "clubID", referencedColumnName = "clubID", nullable = false)
     private Tennisclubs clubID;
 
-    @ManyToMany(mappedBy = "supporters" )
+    @ManyToMany(mappedBy = "supporters")
     private Set<Finales> finales = new HashSet<>();
 
     public Spelers getSupporterID() {

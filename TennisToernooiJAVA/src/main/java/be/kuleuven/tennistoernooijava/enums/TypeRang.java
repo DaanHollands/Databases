@@ -4,5 +4,6 @@ public enum TypeRang {
     WEDSTRIJDLEIDER,
     SUPPORTER,
     BALLENRAPER,
-    SPELER
+    SPELER,
+    SCHEIDS
 }

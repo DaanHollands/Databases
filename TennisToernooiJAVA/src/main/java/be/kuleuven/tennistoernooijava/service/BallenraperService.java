@@ -1,6 +1,9 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.dao.BallenraperDAO;
+import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
+import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
+import be.kuleuven.tennistoernooijava.enums.Posities;
 import be.kuleuven.tennistoernooijava.models.*;
 
 import java.util.List;
@@ -13,12 +16,14 @@ public class BallenraperService {
         this.ballenraperDAO = ballenraperDAO;
     }
 
-    public void createBallenraper(Spelers speler, Finales finale) {
+    public void createBallenraper(Spelers speler, Finales finale, Posities positie) {
         Ballenrapers ballenraper = new Ballenrapers();
         ballenraper.setSpeler(speler);
+        ballenraper.setPlaats(positie);
         ballenraper.addFinale(finale);
         ballenraper = ballenraperDAO.create(ballenraper);
         finale.addBallenraper(ballenraper);
+        new FinaleDAO().update(finale);
     }
 
     public void removeBallenraper(Spelers speler, Finales finale) {
