@@ -26,16 +26,6 @@ public class BallenraperService {
         new FinaleDAO().update(finale);
     }
 
-    public void removeBallenraper(Spelers speler, Finales finale) {
-        List<Ballenrapers> ballenrapers = ballenraperDAO.getBallenraperFromSpeler(speler);
-        ballenrapers.forEach(e -> {
-            if(e.getFinales().equals(finale)) {
-                finale.getDeelnamens().remove(e);
-                ballenraperDAO.delete(e);
-            }
-        });
-    }
-
     public boolean isBallenraper(Finales finale, Spelers speler) {
         Set<Ballenrapers> ballenrapers = finale.getBallenrapers();
         var gevonden = ballenrapers.stream()
@@ -43,6 +33,4 @@ public class BallenraperService {
                 .findFirst();
         return gevonden.isPresent();
     }
-
-
 }
