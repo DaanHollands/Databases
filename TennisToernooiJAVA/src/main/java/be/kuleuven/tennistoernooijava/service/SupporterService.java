@@ -25,16 +25,6 @@ public class SupporterService {
         new FinaleDAO().update(finale);
     }
 
-    public void removeSupporter(Spelers speler, Finales finale) {
-        List<Supporters> supporterslist = supporterDAO.getSupporterFromSpeler(speler);
-        supporterslist.forEach(e -> {
-            if(e.getFinales().equals(finale)) {
-                finale.getDeelnamens().remove(e);
-                supporterDAO.delete(e);
-            }
-        });
-    }
-
     public boolean isSupporter(Finales finale, Spelers speler) {
         Set<Supporters> supporters = finale.getSupporters();
         var gevonden = supporters.stream()

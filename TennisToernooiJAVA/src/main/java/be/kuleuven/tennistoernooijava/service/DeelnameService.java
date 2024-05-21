@@ -29,16 +29,6 @@ public class DeelnameService {
         new MatchenDAO().update(match);
     }
 
-    public void removeDeelname(Spelers speler, Matchen match) {
-        List<Deelnamen> deelnamenlist = deelnamenDAO.getDeelnamenFromSpeler(speler);
-        deelnamenlist.forEach(e -> {
-            if(e.getMatchID().equals(match)) {
-                match.getDeelnamens().remove(e);
-                deelnamenDAO.delete(e);
-            }
-        });
-    }
-
     public boolean isDeelnemer(Matchen match, Spelers speler) {
         Set<Deelnamen> deelnamen = match.getDeelnamens();
         var gevonden = deelnamen.stream()
