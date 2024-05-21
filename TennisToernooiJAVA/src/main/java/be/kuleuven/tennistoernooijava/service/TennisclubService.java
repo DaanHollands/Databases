@@ -22,7 +22,7 @@ public class TennisclubService {
         Adressen adres = new AdresService(new AdresDAO()).getOrCreate(postcode,straatnaam,straatnummer);
 
         //Exceptions
-        if(adres.getPostcode() <= 0){
+        if(adres.getPostcode() <= 0 || adres.getPostcode() > 9999){
             throw new IllegalNumberException("Ongeldige postcode!");
         }
         if(!onlyLetters(adres.getStraatnaam())){
