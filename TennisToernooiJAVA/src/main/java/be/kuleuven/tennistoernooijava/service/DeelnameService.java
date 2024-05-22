@@ -19,7 +19,7 @@ public class DeelnameService {
 
     public void createDeelname(Spelers speler, Matchen match) {
         if(speler.getRanking() > match.getReeks().getNiveau()) {
-            throw new IllegalReeksException("Je mag niet inschrijven voor deze reeks, je het ranking is hoger dan de reeks niveau nummer");
+            throw new IllegalReeksException("Je mag niet inschrijven voor deze reeks, je huidige ranking is hoger dan de reeks niveau nummer");
         }
         Deelnamen deelnamen = new Deelnamen();
         deelnamen.setSpelerID(speler);

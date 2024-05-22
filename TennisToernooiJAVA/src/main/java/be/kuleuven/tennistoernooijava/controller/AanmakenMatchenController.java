@@ -98,7 +98,7 @@ public class AanmakenMatchenController {
                     }
                 }
                 else {
-                matchSettingAnchorpane.setVisible(false);
+                    matchSettingAnchorpane.setVisible(false);
                 }
             }
         });
@@ -145,12 +145,12 @@ public class AanmakenMatchenController {
     private void displayMatchenList(Set<Map<Integer, List<Integer>>> matches) {
         matchenList.getItems().clear();
         Map<Integer, List<Integer>> map = matches.iterator().next();
-        Optional<Integer> maxKey = map.keySet().stream().max(Integer::compare);
+        Integer maxKey = map.keySet().stream().max(Integer::compare).orElse(-1);
 
         for(Map.Entry<Integer, List<Integer>> match : map.entrySet()) {
             for(Integer aantal : match.getValue()) {
                 for(int i = 0; i < aantal; i++) {
-                    if(maxKey.get().equals(match.getKey())) {
+                    if(maxKey.equals(match.getKey())) {
                         matchenList.getItems().add("Finale: " + match.getKey() + " -> " + "Match: " + (i+1));
                     } else {
                         matchenList.getItems().add("Ronde: " + match.getKey() + " -> " + "Match: " + (i+1));
