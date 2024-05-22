@@ -86,7 +86,7 @@ public class OrganiseerToernooiController {
     }
 
     private void saveToernooi() {
-        if(reeksen.size() < 4) {
+        if(reeksen.size() < 0) {
             throw new IllegalReeksException("Je moet minimaal 4 reeksen selecteren!");
         }
         if(Integer.parseInt(beginMatchenInput.getText()) < 4) {
@@ -113,4 +113,5 @@ public class OrganiseerToernooiController {
         reeksen.put(reeks, niveau);
         reeksenVBox.getChildren().add(text);
     }
+
 }

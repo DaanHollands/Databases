@@ -1,5 +1,9 @@
 package be.kuleuven.tennistoernooijava.controller;
 
+import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalMatchInToernooiException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
 import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
@@ -131,7 +135,7 @@ public class AanmakenMatchenController {
                     MatchenHolderService.clearInstance();
                 }
             }
-            catch (Exception e) {
+            catch (IllegalDateException | IllegalTimeException | IllegalMatchInToernooiException | EmptyInputException e) {
                 System.out.println(e.getMessage());
             }
         });

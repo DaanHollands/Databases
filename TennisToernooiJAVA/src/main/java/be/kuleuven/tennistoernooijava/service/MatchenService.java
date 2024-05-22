@@ -1,9 +1,6 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
+import be.kuleuven.tennistoernooijava.Exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
@@ -44,6 +41,17 @@ public class MatchenService {
         if(veld == null) {
             throw new EmptyInputException("Het veld input mag niet leeg zijn!");
         }
+        if(matchInToernooi(toernooi,startDag,startMaand,startJaar)){
+            throw new IllegalDateException("De data komen niet overeen.");
+        }
+
+
+        toernooi.getBeginDatumID().getDag();
+        toernooi.getBeginDatumID().getMaand();
+        toernooi.getBeginDatumID().getJaar();
+        toernooi.getEindDatumID().getDag();
+        toernooi.getEindDatumID().getMaand();
+        toernooi.getEindDatumID().getJaar();
 
 
 
@@ -109,5 +117,22 @@ public class MatchenService {
         }
 
         return matchStages;
+    }
+
+    public boolean matchInToernooi(Toernooien toernooi, Integer startDag, Integer startMaand, Integer startJaar){
+        Datums toernooiBeginDatum = toernooi.getBeginDatumID();
+        Datums toenooiEindDatum = toernooi.getEindDatumID();
+
+        if (startJaar< toernooiBeginDatum.getJaar() || startJaar> toenooiEindDatum.getJaar()) {
+            return false;
+        }
+        if (startMaand< toernooiBeginDatum.getMaand() || startMaand > toenooiEindDatum.getMaand()){
+            return false;
+        }
+        if (startDag < toernooiBeginDatum.getDag() || startDag > toenooiEindDatum.getMaand()){
+            return false;
+        }
+
+        return true;
     }
 }
