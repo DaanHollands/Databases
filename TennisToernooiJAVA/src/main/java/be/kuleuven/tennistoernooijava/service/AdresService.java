@@ -12,10 +12,10 @@ public class AdresService {
     public Adressen create(Integer postcode, String straatnaam, Integer straatnummer) {
         Adressen adres = new Adressen();
 
-        if(adres.getPostcode() == null || adres.getPostcode() <0 || adres.getPostcode() > 9999){
+        if(postcode == null || postcode <0 || postcode > 9999){
             throw new IllegalNumberException("Ongeldige postcode");
         }
-        if(adres.getStraatnummer() == null || adres.getStraatnummer() < 0 ){
+        if(straatnummer== null || straatnummer < 0 ){
             throw new IllegalNumberException("Ongeldige straatnummer");
         }
 
