@@ -23,17 +23,19 @@ INSERT INTO "datums" (datumID, dag, jaar, maand, minuten, uur) VALUES (10, 5, 20
 INSERT INTO "datums" (datumID, dag, jaar, maand, minuten, uur) VALUES (11, 17, 2003, 4, null, null);
 
 -- Spelers
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (12345678, 'M', 75, 195, 'Vince', 1, 0484360325, 1, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (98765432, 'M', 82, 190, 'Daan', 1, 0484360325, 2, 2);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (97865342, 'M', 65, 180, 'Thibo', 1, 0484360325, 3, 3);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (23456789, 'V', 60, 170, 'Anna', 2, 0484360326, 4, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (34567890, 'M', 78, 185, 'Tom', 3, 0484360327, 5, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (45678901, 'V', 55, 165, 'Lies', 4, 0484360328, 6, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (56789012, 'M', 80, 192, 'Jan', 5, 0484360329, 7, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (67890123, 'V', 68, 175, 'Eva', 6, 0484360330, 8, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (78901234, 'M', 77, 178, 'Kurt', 7, 0484360331, 9, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (89012345, 'V', 62, 168, 'Sara', 8, 0484360332, 10, 1);
-INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (90123456, 'M', 85, 193, 'Bram', 9, 0484360333, 11, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (12345678, 'M', 75, 195, 'Vince', 1, '0484360325', 1, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (98765432, 'M', 82, 190, 'Daan', 1, '0484360325', 2, 2);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (97865342, 'M', 65, 180, 'Thibo', 1, '0484360325', 3, 3);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (23456789, 'V', 60, 170, 'Anna', 2, '0484360326', 4, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (34567890, 'M', 78, 185, 'Tom', 3, '0484360327', 5, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (45678901, 'V', 55, 165, 'Lies', 4, '0484360328', 6, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (56789012, 'M', 80, 192, 'Jan', 5, '0484360329', 7, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (67890123, 'V', 68, 175, 'Eva', 6, '0484360330', 8, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (78901234, 'M', 77, 178, 'Kurt', 7, '0484360331', 9, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (15678954, 'V', 68, 175, 'Eva', 6, '0484360330', 9, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (54863289, 'M', 77, 178, 'Kurt', 7, '0484360331', 10, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (89012345, 'V', 62, 168, 'Sara', 8, '0484360332', 10, 1);
+INSERT INTO "spelers" (spelerID, geslacht, gewicht, lengte, naam, ranking, telefoonnummer, datumID, tennisclubID) VALUES (90123456, 'M', 85, 193, 'Bram', 9, '0484360333', 11, 1);
 
 --Speler emails
 INSERT INTO "emailAdressen" (email, spelerID) VALUES ('vince.driesen@gmail.com', 12345678);
@@ -47,6 +49,8 @@ INSERT INTO "emailAdressen" (email, spelerID) VALUES ('eva.vandamme@gmail.com', 
 INSERT INTO "emailAdressen" (email, spelerID) VALUES ('kurt.maes@gmail.com', 78901234);
 INSERT INTO "emailAdressen" (email, spelerID) VALUES ('sara.vermeulen@gmail.com', 89012345);
 INSERT INTO "emailAdressen" (email, spelerID) VALUES ('bram.deboeck@gmail.com', 90123456);
+INSERT INTO "emailAdressen" (email, spelerID) VALUES ('eva.vandamme@gmail.com', 15678954);
+INSERT INTO "emailAdressen" (email, spelerID) VALUES ('kurt.maes@gmail.com', 54863289);
 
 --Toernooi datums
 INSERT INTO "datums" (datumID, dag, jaar, maand, minuten, uur) VALUES (12, 1, 2024, 5, null, null);
@@ -107,7 +111,14 @@ INSERT INTO matchen (matchID, matchRonde, scorethuis, scoreuit, uitslag, datumID
 INSERT INTO Finales (matchID, scheidsID) VALUES (28, 89012345);
 
 
-
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (1, null, 1, 23456789);
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (2, null, 1, 34567890);
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (3, null, 2, 45678901);
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (4, null, 2, 56789012);
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (5, null, 3, 67890123);
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (6, null, 3, 78901234);
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (7, null, 4, 54863289);
+INSERT INTO deelnamen (deelnameID, vraag, matchID, spelerID) VALUES (8, null, 4, 15678954);
 
 
 

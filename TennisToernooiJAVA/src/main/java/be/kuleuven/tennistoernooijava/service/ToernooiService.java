@@ -98,8 +98,14 @@ public class ToernooiService {
                     continue;
                 }
                 for(Matchen newMatch : matchen) {
-                    if((newMatch.getMatchRonde() == match.getMatchRonde()+1) && (newMatch.getDeelnamens().size() < 2)) {
+                    if((newMatch.getMatchRonde() == match.getMatchRonde()+1) && (newMatch.getDeelnamens().size() < 2) && (newMatch.getReeks().equals(match.getReeks()))) {
+                        if(matchen.stream().filter(m -> m.getMatchRonde() == match.getMatchRonde()+1).anyMatch(nm -> nm.getDeelnamens().contains(gewonne))) {
+                            break;
+                        }
+                        gewonne.setMatchID(newMatch);
                         newMatch.addDeelname(gewonne);
+                        new MatchenDAO().update(newMatch);
+                        new DeelnamenDAO().update(gewonne);
                         break;
                     }
                 }

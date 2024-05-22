@@ -29,16 +29,12 @@ public class MatchenDAO implements BaseDAO<Matchen, Integer> {
 
     public List<Matchen> getMatchenFromEverything(Spelers speler) {
         TypedQuery<Matchen> query = entityManager.createQuery(
-                "SELECT m FROM Matchen m " +
-                        "LEFT JOIN m.deelnamens d " +
+                "SELECT DISTINCT m FROM Matchen m " +
+                        "LEFT JOIN FETCH m.deelnamens d " +
                         "WHERE d.spelerID.spelerID = :spelerID " +
                         "OR m.toernooiID.wedstrijdleider.speler.spelerID = :spelerID",
                 Matchen.class);
         query.setParameter("spelerID", speler.getSpelerID());
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return query.getResultList();
     }
 }
