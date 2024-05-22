@@ -66,7 +66,7 @@ public class BekijkDeelnamesController {
 
         for (Matchen match : matchen) {
             matchenList.getItems().add(matchen.indexOf(match) + " :  " +
-                    match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar() + "/"
+                    match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar() + "/" + " Reeks: " + match.getReeks().getReeks() + " " + match.getReeks().getNiveau() +" Ronde: " + match.getMatchRonde()
             );
         }
 
@@ -79,6 +79,10 @@ public class BekijkDeelnamesController {
 
         matchenList.setOnMouseClicked(e -> {
             updateSpelerList(matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
+            scoresOpslaanKnop.setVisible(true);
+            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getUitslag() != null) {
+                scoresOpslaanKnop.setVisible(false);
+            }
             if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID().getWedstrijdleider().getSpeler().equals(speler)) {
                 rangText.setText("wedstrijdleider");
                 rang = TypeRang.WEDSTRIJDLEIDER;
