@@ -13,7 +13,8 @@ import javafx.scene.text.Text;
 
 import java.util.Set;
 
-public class BekijkClubController {
+public class BekijkClubController extends BaseController
+{
     @FXML
     private Text clubnaam;
 

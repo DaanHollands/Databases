@@ -96,7 +96,7 @@ public class SpelerService {
     public Spelers getSpeler(Integer spelerID) {
         Spelers speler = spelersDAO.find(spelerID);
         if(speler == null) {
-            throw new SpelerNotFoundException("Speler bestaat nog niet");
+            throw new SpelerNotFoundException("Speler bestaat niet");
         }
         return speler;
     }

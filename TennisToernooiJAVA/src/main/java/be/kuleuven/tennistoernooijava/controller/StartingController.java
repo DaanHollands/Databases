@@ -13,7 +13,8 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 
-public class StartingController {
+public class StartingController extends BaseController
+{
     @FXML
     private Button loginKnop;
 
@@ -50,7 +51,7 @@ public class StartingController {
                 System.out.println(e.getMessage());
             }
         } catch (SpelerNotFoundException e) {
-            System.out.println(e.getMessage());
+            showAlert("Error", e.getMessage());
         }
     }
 }

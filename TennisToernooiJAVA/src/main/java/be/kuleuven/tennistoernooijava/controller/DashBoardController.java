@@ -14,7 +14,8 @@ import be.kuleuven.tennistoernooijava.service.SpelerService;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-public class DashBoardController {
+public class DashBoardController extends BaseController
+{
     @FXML
     private Text idField;
 

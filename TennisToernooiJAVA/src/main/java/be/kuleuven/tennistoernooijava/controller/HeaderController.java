@@ -7,7 +7,8 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 
-public class HeaderController {
+public class HeaderController extends BaseController
+{
     @FXML
     private MenuBar menuBar;
 
@@ -26,7 +27,7 @@ public class HeaderController {
     private MenuItem bekijkDeelnames = null;
     private MenuItem bekijkMatches = null;
 
-    private ChangeScene switchScene = new ChangeScene();
+    private final ChangeScene switchScene = new ChangeScene();
     @FXML
     void initialize() {
         menuBar.getMenus().clear();
@@ -135,5 +136,4 @@ public class HeaderController {
             });
         }
     }
-
 }

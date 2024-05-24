@@ -17,7 +17,8 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BekijkDeelnamesController {
+public class BekijkDeelnamesController extends BaseController
+{
     @FXML
     private ListView<String> matchenList;
 

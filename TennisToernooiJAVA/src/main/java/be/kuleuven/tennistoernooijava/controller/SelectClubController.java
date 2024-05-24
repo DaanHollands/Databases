@@ -15,7 +15,8 @@ import javafx.scene.text.Text;
 
 import java.util.Optional;
 
-public class SelectClubController {
+public class SelectClubController extends BaseController
+{
     @FXML
     private ListView<String> clubsList;
 

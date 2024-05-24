@@ -7,6 +7,7 @@ import be.kuleuven.tennistoernooijava.enums.Uitslagen;
 import be.kuleuven.tennistoernooijava.models.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Set;
 
 public class ToernooiService {
@@ -16,65 +17,31 @@ public class ToernooiService {
         this.toernooienDAO = toernooienDAO;
     }
 
-    public Toernooien createToernooi(
+    public void createToernooi(
             Tennisclubs organisatorClub,
             Integer beginDag, Integer beginMaand, Integer beginJaar,
             Integer eindDag, Integer eindMaand, Integer eindJaar,
             Spelers nieuweWestrijdleider
     ) {
-        if (beginDag<=0 || beginDag >31 ){
-            throw new IllegalDateException("Ongeldige begindag");
+        Optional<RuntimeException> exception = validateExceptions(organisatorClub, beginDag, beginMaand, beginJaar, eindDag, eindMaand, eindJaar, nieuweWestrijdleider);
+        if(exception.isPresent()) {
+            throw exception.get();
         }
-        if (beginMaand<=0 || beginMaand >12 ){
-            throw new IllegalDateException("Ongeldige beginmaand");
-        }
-        if (beginJaar<=2023 ){
-            throw new IllegalDateException("Ongeldig beginjaar");
-        }
-        if (eindDag<=0 || eindDag >31){
-            throw new IllegalDateException("Ongeldige einddag");
-        }
-        if (eindMaand<=0 || eindMaand >12 ){
-            throw new IllegalDateException("Ongeldige eindmaand");
-        }
-        if (eindJaar<=2023 ){
-            throw new IllegalDateException("Ongeldige eindjaar");
-        }
-        if(new WedstrijdleiderDAO().find(nieuweWestrijdleider.getSpelerID()) != null) {
-            throw new IllegalWedstrijdleiderException("Je bent al een wedstrijdleider van een toernooi");
-        }
-        valideerDatum(beginDag,beginMaand,beginJaar,eindDag,eindMaand,eindJaar);
-
 
         Toernooien toernooien = new Toernooien();
-        Datums beginDatum = new Datums();
-        beginDatum.setDag(beginDag);
-        beginDatum.setMaand(beginMaand);
-        beginDatum.setJaar(beginJaar);
-
-        Datums eindDatum = new Datums();
-        eindDatum.setDag(eindDag);
-        eindDatum.setMaand(eindMaand);
-        eindDatum.setJaar(eindJaar);
-        DatumsDAO datumsDAO = new DatumsDAO();
-        beginDatum = datumsDAO.create(beginDatum);
-        eindDatum = datumsDAO.create(eindDatum);
-
         Wedstrijdleider wedstrijdleider = new Wedstrijdleider();
         wedstrijdleider.setSpeler(nieuweWestrijdleider);
         wedstrijdleider = new WedstrijdleiderDAO().create(wedstrijdleider);
 
         toernooien.setWedstrijdleider(wedstrijdleider);
-        toernooien.setBeginDatumID(beginDatum);
-        toernooien.setEindDatumID(eindDatum);
+        toernooien.setBeginDatumID(createNewDatum(beginDag, beginMaand, beginJaar));
+        toernooien.setEindDatumID(createNewDatum(eindDag, eindMaand, eindJaar));
 
         toernooien.setClubOrganistorID(organisatorClub);
         toernooien = toernooienDAO.create(toernooien);
 
-
         wedstrijdleider.setToernooi(toernooien);
         organisatorClub.addToernooi(toernooien);
-        return toernooien;
     }
 
     public void updateMatchen(Toernooien toernooien) {
@@ -108,14 +75,54 @@ public class ToernooiService {
         }
     }
 
-    public static void valideerDatum(Integer beginDag, Integer beginMaand, Integer beginJaar,
+    public Optional<RuntimeException> valideerDatum(Integer beginDag, Integer beginMaand, Integer beginJaar,
                                      Integer eindDag, Integer eindMaand, Integer eindJaar){
         LocalDate eersteDatum = LocalDate.of(beginJaar,beginMaand,beginDag );
         LocalDate tweedeDatum = LocalDate.of(eindJaar, eindMaand, eindDag);
 
         if(tweedeDatum.isBefore(eersteDatum)){
-            throw new IllegalDateException("Tweede datum komt voor de eerste datum!");
+            return Optional.of(new IllegalDateException("Tweede datum komt voor de eerste datum!"));
         }
+        return Optional.empty();
+    }
+
+    private Datums createNewDatum(Integer dag, Integer maand, Integer jaar) {
+        Datums datum = new Datums();
+        datum.setDag(dag);
+        datum.setMaand(maand);
+        datum.setJaar(jaar);
+        return new DatumsDAO().create(datum);
+    }
+
+    private Optional<RuntimeException> validateExceptions(
+            Tennisclubs organisatorClub,
+            Integer beginDag, Integer beginMaand, Integer beginJaar,
+            Integer eindDag, Integer eindMaand, Integer eindJaar,
+            Spelers nieuweWestrijdleider
+    )
+    {
+        if (beginDag<=0 || beginDag >31 ){
+            return Optional.of(new IllegalDateException("Ongeldige begindag"));
+        }
+        if (beginMaand<=0 || beginMaand >12 ){
+            return Optional.of(new IllegalDateException("Ongeldige beginmaand"));
+        }
+        if (beginJaar<=2023 ){
+            return Optional.of(new IllegalDateException("Ongeldig beginjaar"));
+        }
+        if (eindDag<=0 || eindDag >31){
+            return Optional.of(new IllegalDateException("Ongeldige einddag"));
+        }
+        if (eindMaand<=0 || eindMaand >12 ){
+            return Optional.of(new IllegalDateException("Ongeldige eindmaand"));
+        }
+        if (eindJaar<=2023 ){
+            return Optional.of(new IllegalDateException("Ongeldig eindjaar"));
+        }
+        if(new WedstrijdleiderDAO().find(nieuweWestrijdleider.getSpelerID()) != null) {
+            return Optional.of(new IllegalWedstrijdleiderException("Je bent al een wedstrijdleider van een toernooi"));
+        }
+        return valideerDatum(beginDag,beginMaand,beginJaar,eindDag,eindMaand,eindJaar);
     }
 
 }

@@ -18,7 +18,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class SpelerSettingsController {
+public class SpelerSettingsController extends BaseController
+{
     @FXML
     private TextField naamInput;
 

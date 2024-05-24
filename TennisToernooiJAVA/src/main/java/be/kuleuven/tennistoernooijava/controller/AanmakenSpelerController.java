@@ -20,11 +20,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class AanmakenSpelerController
+public class AanmakenSpelerController extends BaseController
 {
-    @FXML
-    private AnchorPane anchorPane;
-
     @FXML
     private Button terugKnop;
 
@@ -99,7 +96,7 @@ public class AanmakenSpelerController
                 System.out.println(e.getMessage());
             }
         } catch (InvalidPhoneNumberException | InvalidEmailException | EmptyInputException | IllegalDateException | InvalidInputException e){
-            System.out.println(e.getMessage());
+            showAlert("Error", e.getMessage());
         }
     }
 

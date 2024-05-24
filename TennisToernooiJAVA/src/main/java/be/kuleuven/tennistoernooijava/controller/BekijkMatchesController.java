@@ -12,7 +12,8 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-public class BekijkMatchesController {
+public class BekijkMatchesController extends BaseController
+{
     @FXML
     private CheckBox ballenraperSelector;
 

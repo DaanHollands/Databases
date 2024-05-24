@@ -15,7 +15,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class AanmakenClubController {
+public class AanmakenClubController extends BaseController
+{
     @FXML
     private Button maakClubKnop;
 
@@ -51,7 +52,7 @@ public class AanmakenClubController {
                 System.out.println(e.getMessage());
             }
         } catch (EmptyInputException | IllegalAdresException | IllegalStateException e) {
-            System.out.println(e.getMessage());
+            showAlert("Error", e.getMessage());
         }
     }
 }

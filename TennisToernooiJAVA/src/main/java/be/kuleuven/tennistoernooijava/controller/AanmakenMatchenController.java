@@ -25,7 +25,8 @@ import javafx.scene.text.Text;
 
 import java.util.*;
 
-public class AanmakenMatchenController {
+public class AanmakenMatchenController extends BaseController
+{
 
     @FXML
     private DatePicker datumPicker;
