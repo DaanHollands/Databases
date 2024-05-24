@@ -117,17 +117,6 @@ public class SpelerService {
         }
     }
 
-    public void leaveClub(Integer spelerID, Tennisclubs club) {
-        Spelers gevondenSpeler = spelersDAO.find(spelerID);
-        if(gevondenSpeler.getTennisclubID().getClubID().equals(club.getClubID())) {
-            gevondenSpeler.setTennisclubID(null);
-            spelersDAO.update(gevondenSpeler);
-        }
-        else {
-            throw new IllegalArgumentException("Er is een probleem om de huidige club te verwijderen");
-        }
-    }
-
     public Optional<InvalidEmailException> checkEmailException(String email) {
         String[] parts = email.split("@");
         if (parts.length != 2) {

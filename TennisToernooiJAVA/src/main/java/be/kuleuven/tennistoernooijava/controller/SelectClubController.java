@@ -1,6 +1,7 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalClubRequest;
+import be.kuleuven.tennistoernooijava.Exceptions.ClubNotFoundException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalClubException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
@@ -11,6 +12,8 @@ import be.kuleuven.tennistoernooijava.service.TennisclubService;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+
+import java.util.Optional;
 
 public class SelectClubController {
     @FXML
@@ -28,68 +31,47 @@ public class SelectClubController {
     @FXML
     private Button joinClubKnop;
 
-
-    private SpelerService spelerService;
     private TennisclubService clubService;
 
     @FXML
     void initialize() {
-        spelerService = new SpelerService(new SpelersDAO());
         clubService = new TennisclubService(new TennisclubDAO());
 
         Tennisclubs club = SpelerSessie.getSessie().getSpeler().getTennisclubID();
         update(club);
-        verlaatClubKnop.setOnAction(e -> {
-            leaveClub(club);
-            update(null);
-        });
-
+        verlaatClubKnop.setOnAction(e -> leaveClub(club));
         clubsList.setOnMouseClicked(event -> {
             clubNameInput.setText(clubsList.getSelectionModel().getSelectedItem());
         });
 
-        joinClubKnop.setOnAction(e -> {
-//            huidigeClub.setText(joinClub(clubsList.getSelectionModel().getSelectedItem()));
-            Tennisclubs nieuweclub = joinClub(clubsList.getSelectionModel().getSelectedItem());
-            update(nieuweclub);
-        });
+        joinClubKnop.setOnAction(e -> joinClub(clubsList.getSelectionModel().getSelectedItem()));
 
     }
 
-    public void update(Tennisclubs club) {
+    private void update(Tennisclubs club) {
         if(club != null) {
             huidigeClub.setText(club.getNaam());
-        }
-        else {
+        } else {
             huidigeClub.setText("Je zit nog niet bij een club");
         }
-
         clubsList.getItems().clear();
         clubService.getClubNames().forEach(e -> {
             clubsList.getItems().add(e);
         });
     }
 
-
-    public void leaveClub(Tennisclubs tennisclub) {
-        try {
-            spelerService.leaveClub(SpelerSessie.getSessie().getSpeler().getSpelerID(), tennisclub);
-            huidigeClub.setText("Je zit nog niet bij een club");
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    private void leaveClub(Tennisclubs tennisclub) {
+        clubService.leaveClub(SpelerSessie.getSessie().getSpeler(), tennisclub);
+        huidigeClub.setText("Je zit nog niet bij een club");
+        update(null);
     }
 
-    public Tennisclubs joinClub(String tennisclubnaam) {
-        if(!clubService.getClubNames().contains(tennisclubnaam)) {
-            throw new IllegalClubRequest("Dit is niet een geldige tennisclub naam");
-        }
-        else {
-            return clubService.addSpelerToClub(
-                    SpelerSessie.getSessie().getSpeler(),
-                    clubService.getClubFromName(tennisclubnaam)
-            );
+    public void joinClub(String tennisclubnaam) {
+        try {
+            Tennisclubs nieuweclub = clubService.addSpelerToClub(SpelerSessie.getSessie().getSpeler(), tennisclubnaam);
+            update(nieuweclub);
+        } catch (IllegalClubException | ClubNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

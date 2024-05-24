@@ -1,9 +1,6 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalAdresException;
+import be.kuleuven.tennistoernooijava.Exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.dao.VeldenDAO;
@@ -54,10 +51,23 @@ public class TennisclubService {
         return null;
     }
 
-    public Tennisclubs addSpelerToClub(Spelers speler, Tennisclubs club) {
-        tennisclubDAO.find(club.getClubID()).addSpeler(speler);
+    public Tennisclubs addSpelerToClub(Spelers speler, String tennisclubnaam) {
+        if(speler.getTennisclubID() != null) {
+            throw new IllegalClubException("Je zit al bij een club, je moet deze club eerst verlaten!");
+        }
+        if(!this.getClubNames().contains(tennisclubnaam)) {
+            throw new ClubNotFoundException("De tennisclub die u wilt toe behoren bestaat niet");
+        }
+        Tennisclubs club = this.getClubFromName(tennisclubnaam);
+        club.addSpeler(speler);
         speler.setTennisclubID(club);
         return tennisclubDAO.update(club);
+    }
+
+    public void leaveClub(Spelers speler, Tennisclubs club) {
+        speler.setTennisclubID(null);
+        club.getSpelers().remove(speler);
+        tennisclubDAO.update(club);
     }
 
     public Toernooien getToernooiVanSpeler(Tennisclubs club, Spelers speler) {
@@ -109,7 +119,7 @@ public class TennisclubService {
     private Optional<RuntimeException> checkForCreateException(Spelers speler, String straatnaam, String straatnummer, String postcode, String clubNaam)
     {
         if(speler.getTennisclubID() != null) {
-            return Optional.of(new IllegalStateException("Je zit al bij een club, je moet deze club eerst verlaten!"));
+            return Optional.of(new IllegalClubException("Je zit al bij een club, je moet deze club eerst verlaten!"));
         }
         if(clubNaam.isEmpty()) {
             return Optional.of(new EmptyInputException("De clubnaam is leeg!"));
