@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
+import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalReeksException;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +62,10 @@ public class OrganiseerToernooiController {
                 throw new IllegalReeksException("Je moet eerst een niveau kiezen");
             }
             if(reeksNiveauInput.getText().contains("[a-zA-Z]+")) {
-                throw new IllegalNumberException("Je mag enkel nummers ingeven hier");
+                throw new InvalidPhoneNumberException("Je mag enkel nummers ingeven hier");
             }
             if(Integer.parseInt(reeksNiveauInput.getText()) < 0) {
-                throw new IllegalNumberException("Het mag geen negatief nummer zijn");
+                throw new InvalidPhoneNumberException("Het mag geen negatief nummer zijn");
             }
             if(reeksenList.getSelectionModel().getSelectedItem() == null) {
                 throw new IllegalReeksException("Je moet eerst een reeks kiezen");

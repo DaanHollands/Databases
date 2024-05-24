@@ -1,8 +1,6 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalEmailException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalSexException;
+import be.kuleuven.tennistoernooijava.Exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
@@ -20,7 +18,6 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class AanmakenSpelerController
@@ -82,35 +79,34 @@ public class AanmakenSpelerController
             try {
                 switchScene.switchToScene( (Node)event.getSource(),"StartingFXML");
             } catch (IOException e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }}
         );
     }
 
     private void maakSpeler(ActionEvent event) {
-        if(geslachtSelector.getValue().isEmpty()){
-            throw new IllegalArgumentException("Geen geslacht geselecteerd!");
-        }
-
-        Geslachten selectedGeslacht = Geslachten.valueOf(geslachtSelector.getValue());
-
         try {
             Spelers speler = service.createSpeler(
                     naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),
                     maandInput.getValue(), jaarInput.getText(),
-                    Integer.parseInt(gewichtInput.getText()), Integer.parseInt(lengteInput.getText()),
-                    Integer.parseInt(rankingInput.getText()), selectedGeslacht, emailInput.getText()
+                    gewichtInput.getText(), lengteInput.getText(),
+                    rankingInput.getText(), getGeslachtFrom(geslachtSelector.getValue()), emailInput.getText()
             );
                     SpelerSessie.getSessie().setSpeler(speler);
-                    try {
-                        switchScene.switchToScene((Node) event.getSource(), "DashboardFXML");
-                    }
-                    catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            try {
+                switchScene.switchToScene((Node) event.getSource(), "DashboardFXML");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (InvalidPhoneNumberException | InvalidEmailException | EmptyInputException | IllegalDateException | InvalidInputException e){
+            System.out.println(e.getMessage());
         }
-        catch (IllegalNumberException | IllegalEmailException | IllegalSexException e){
-            System.out.print(e.getMessage());
+    }
+
+    private Geslachten getGeslachtFrom(String geselecteerdGeslacht) {
+        if(geselecteerdGeslacht == null || geselecteerdGeslacht.isEmpty()){
+            throw new EmptyInputException("Je moet een geslacht selecteren voor verder gaan");
         }
+        return Geslachten.valueOf(geslachtSelector.getValue());
     }
 }

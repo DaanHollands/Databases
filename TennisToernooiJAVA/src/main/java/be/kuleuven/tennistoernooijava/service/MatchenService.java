@@ -4,7 +4,6 @@ import be.kuleuven.tennistoernooijava.Exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
-import be.kuleuven.tennistoernooijava.dao.WedstrijdleiderDAO;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.Uitslagen;
@@ -105,7 +104,7 @@ public class MatchenService {
         int aantal = aantalMatchen;
 
         if(aantal%2 != 0) {
-            throw new IllegalNumberException("Het aantal matchen moet een geheel getal zijn");
+            throw new InvalidPhoneNumberException("Het aantal matchen moet een geheel getal zijn");
         }
         Map<Integer, List<Integer>> matchStages = new LinkedHashMap<>();
         int round = 1;

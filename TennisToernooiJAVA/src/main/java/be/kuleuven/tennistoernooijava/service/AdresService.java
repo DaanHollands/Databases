@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
+import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.models.Adressen;
 
@@ -13,10 +13,10 @@ public class AdresService {
         Adressen adres = new Adressen();
 
         if(postcode == null || postcode <0 || postcode > 9999){
-            throw new IllegalNumberException("Ongeldige postcode");
+            throw new InvalidPhoneNumberException("Ongeldige postcode");
         }
         if(straatnummer== null || straatnummer < 0 ){
-            throw new IllegalNumberException("Ongeldige straatnummer");
+            throw new InvalidPhoneNumberException("Ongeldige straatnummer");
         }
 
         adres.setPostcode(postcode);

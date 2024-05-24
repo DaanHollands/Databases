@@ -1,5 +1,5 @@
 package be.kuleuven.tennistoernooijava.controller;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
+import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreetException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
@@ -50,7 +50,7 @@ public class AanmakenClubController {
             Tennisclubs tennisclub = service.create(SpelerSessie.getSessie().getSpeler(), straatnaamInput.getText(), Integer.parseInt(straatnummerInput.getText()), Integer.parseInt(postcodeInput.getText()), clubNaamInput.getText());
             spelerService.joinClub(tennisclub, SpelerSessie.getSessie().getSpeler());
         }
-        catch (IllegalNumberException | IllegalStreetException e) {
+        catch (InvalidPhoneNumberException | IllegalStreetException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.SpelerNietGevondenException;
+import be.kuleuven.tennistoernooijava.Exceptions.SpelerNotFoundException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.service.ChangeScene;
@@ -49,7 +49,7 @@ public class StartingController {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-        } catch (SpelerNietGevondenException e) {
+        } catch (SpelerNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -1,9 +1,6 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalEmailException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalSexException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalSpelerRequest;
+import be.kuleuven.tennistoernooijava.Exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
@@ -13,6 +10,7 @@ import be.kuleuven.tennistoernooijava.enums.Geslachten;
 import be.kuleuven.tennistoernooijava.models.Datums;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class SpelerService {
@@ -22,38 +20,26 @@ public class SpelerService {
         this.spelersDAO = spelersDAO;
     }
 
-    public Spelers createSpeler(String naam,
-                                String telefoonnummer,
-                                Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
-                                Integer gewicht, Integer lengte, Integer ranking,
-                                Geslachten geslacht,
-                                String email) {
-        if (Integer.parseInt(telefoonnummer) < 0 || telefoonnummer.length() != 10 || telefoonnummer.contains("[a-zA-Z]+")){
-            throw new IllegalNumberException("Ongeldige telefoonnummer!");
+    public Spelers createSpeler(
+            String naam,
+            String telefoonnummer,
+            Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
+            String gewicht, String lengte, String ranking,
+            Geslachten geslacht,
+            String email
+    )
+    {
+        Optional<InvalidEmailException> emailException = checkEmailException(email);
+        if(emailException.isPresent()) {
+            throw emailException.get();
         }
-        if (gewicht <0){
-            throw new IllegalNumberException("Ongeldige gewicht!");
-        }
-        if(lengte <0){
-            throw new IllegalNumberException("Ongeldige lengte!");
-        }
-        if(Integer.parseInt(geboorteJaar) < 0 || geboorteJaar.contains("[a-zA-Z]+")){
-            throw new IllegalNumberException("Ongeldige geboorteJaar!");
-        }
-        if(geslacht == null){
-            throw new IllegalSexException("Ongeldige geslacht!");
-        }
-        if (!isValidEmail(email)){
-            throw new IllegalEmailException("Ongeldige email!");
-        }
-        if(ranking < 0){
-            throw new IllegalNumberException("Ongeldige ranking!");
+        Optional<RuntimeException> exception = checkDefaultExceptions(naam, telefoonnummer, geboorteDag, geboorteMaand, geboorteJaar, gewicht, lengte, ranking);
+        if(exception.isPresent()) {
+            throw exception.get();
         }
 
         Spelers speler = new Spelers();
-
-        updateSpeler(speler, naam, telefoonnummer, geboorteDag, geboorteMaand, geboorteJaar, gewicht, lengte, ranking, geslacht);
-
+        speler = initializeSpeler(speler, naam, telefoonnummer, geboorteDag, geboorteMaand, geboorteJaar, gewicht, lengte, ranking, geslacht);
         speler = spelersDAO.create(speler);
 
         SpelerEmailadressen spelerEmailadressen = new SpelerEmailadressen();
@@ -66,10 +52,51 @@ public class SpelerService {
         return speler;
     }
 
+    public Spelers updateSpeler(
+            Spelers speler,
+            String naam,
+            String telefoonnummer,
+            Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
+            String gewicht, String lengte, String ranking,
+            Geslachten geslacht
+    )
+    {
+        Optional<RuntimeException> exception = checkDefaultExceptions(naam, telefoonnummer, geboorteDag, geboorteMaand, geboorteJaar, gewicht, lengte, ranking);
+        if(exception.isPresent()) {
+            throw exception.get();
+        }
+        speler = spelersDAO.update(initializeSpeler(speler, naam, telefoonnummer, geboorteDag, geboorteMaand, geboorteJaar, gewicht, lengte, ranking, geslacht));
+        return speler;
+    }
+
+    public Spelers initializeSpeler(
+            Spelers speler,
+            String naam,
+            String telefoonnummer,
+            Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
+            String gewicht, String lengte, String ranking,
+            Geslachten geslacht
+    )
+    {
+        speler.setNaam(naam);
+        speler.setTelefoonnummer(telefoonnummer);
+        speler.setGewicht(Integer.parseInt(gewicht));
+        Datums geboorteDatums = new Datums();
+        geboorteDatums.setDag(geboorteDag);
+        geboorteDatums.setJaar(Integer.parseInt(geboorteJaar));
+        geboorteDatums.setMaand(geboorteMaand);
+        speler.setDatumID(new DatumsDAO().create(geboorteDatums));
+        speler.setGeslacht(geslacht);
+        speler.setRanking(Integer.parseInt(ranking));
+        speler.setLengte(Integer.parseInt(lengte));
+        speler.setTennisclubID(speler.getTennisclubID());
+        return speler;
+    }
+
     public Spelers getSpeler(Integer spelerID) {
         Spelers speler = spelersDAO.find(spelerID);
         if(speler == null) {
-            throw new SpelerNietGevondenException("Speler bestaat nog niet");
+            throw new SpelerNotFoundException("Speler bestaat nog niet");
         }
         return speler;
     }
@@ -80,7 +107,6 @@ public class SpelerService {
     }
 
     public void removeEmailFromSpeler(Integer spelerID, String email) {
-        SpelerEmailadressenDAO emailadressenDAO = new SpelerEmailadressenDAO();
         Set<SpelerEmailadressen> emailadressen = spelersDAO.find(spelerID).getEmails();
         for (SpelerEmailadressen spelerEmailadres : emailadressen) {
             if(spelerEmailadres.getEmail().equals(email)) {
@@ -102,60 +128,47 @@ public class SpelerService {
         }
     }
 
-    public Spelers updateSpeler(Spelers speler,
-                                String naam,
-                                String telefoonnummer,
-                                Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
-                                Integer gewicht, Integer lengte, Integer ranking,
-                                Geslachten geslacht
-                                ) {
-        if (Integer.parseInt(telefoonnummer) < 0 || telefoonnummer.length() != 10 || telefoonnummer.contains("[a-zA-Z]+")){
-            throw new IllegalNumberException("Ongeldige telefoonnummer!");
-        }
-        if (gewicht <0){
-            throw new IllegalNumberException("Ongeldige gewicht!");
-        }
-        if(lengte <0){
-            throw new IllegalNumberException("Ongeldige lengte!");
-        }
-        //Datum in orde
-        if(Integer.parseInt(geboorteJaar) < 0 || geboorteJaar.contains("[a-zA-Z]+")){
-            throw new IllegalNumberException("Ongeldige geboorteJaar!");
-        }
-        if(geslacht == null){
-            throw new IllegalSexException("Ongeldige geslacht!");
-        }
-
-        if(ranking < 0){
-            throw new IllegalNumberException("Ongeldige ranking!");
-        }
-        if(geboorteMaand == 2 && geboorteDag > 29){
-            throw new IllegalDateException("Ongeldige dag geselecteerd!");
-        }
-        speler.setNaam(naam);
-        speler.setTelefoonnummer(telefoonnummer);
-        speler.setGewicht(gewicht);
-        Datums geboorteDatums = new Datums();
-        geboorteDatums.setDag(geboorteDag);
-        geboorteDatums.setJaar(Integer.parseInt(geboorteJaar));
-        geboorteDatums.setMaand(geboorteMaand);
-        speler.setDatumID(new DatumsDAO().create(geboorteDatums));
-        speler.setGeslacht(geslacht);
-        speler.setRanking(ranking);
-        speler.setLengte(lengte);
-        speler.setTennisclubID(speler.getTennisclubID());
-
-        speler = spelersDAO.update(speler);
-
-        return speler;
-    }
-
-    public static boolean isValidEmail(String email) {
+    public Optional<InvalidEmailException> checkEmailException(String email) {
         String[] parts = email.split("@");
         if (parts.length != 2) {
-            return false;
+            return Optional.of(new InvalidEmailException("Ongeldige email!"));
         }
         String domain = parts[1];
-        return domain.contains(".");
+        if(!domain.contains(".")) {
+            return Optional.of(new InvalidEmailException("Ongeldige email!"));
+        }
+        return Optional.empty();
+    }
+
+    private Optional<RuntimeException> checkDefaultExceptions(
+            String naam, String telefoonnummer, Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
+            String gewicht, String lengte, String ranking
+    )
+    {
+        if(naam.isEmpty()) {
+            return Optional.of(new EmptyInputException("Geen naam ingegeven!"));
+        }
+        if (telefoonnummer == null || telefoonnummer.contains("[a-zA-Z]+")) {
+            return Optional.of(new InvalidPhoneNumberException("Ongeldige telefoonnummer!"));
+        }
+        if (gewicht == null || gewicht.isEmpty() || gewicht.contains("[a-zA-Z]+") || Integer.parseInt(gewicht) < 0) {
+            return Optional.of(new InvalidInputException("Ongeldige gewicht!"));
+        }
+        if (lengte == null || lengte.isEmpty() || lengte.contains("[a-zA-Z]+") || Integer.parseInt(lengte) < 0) {
+            return Optional.of(new InvalidInputException("Ongeldige lengte!"));
+        }
+        if (geboorteJaar == null || geboorteJaar.isEmpty() || geboorteJaar.contains("[a-zA-Z]+") || Integer.parseInt(geboorteJaar) < 0) {
+            return Optional.of(new IllegalDateException("Ongeldige geboorteJaar!"));
+        }
+        if (ranking == null || ranking.isEmpty() || ranking.contains("[a-zA-Z]+") || Integer.parseInt(ranking) < 0) {
+            return Optional.of(new InvalidInputException("Ongeldige ranking!"));
+        }
+        if(geboorteDag == null || geboorteDag < 1 || geboorteDag > 31 || geboorteMaand == null || geboorteMaand < 1 || geboorteMaand > 12) {
+            return Optional.of(new IllegalDateException("Ongeldige dag geselecteerd!"));
+        }
+        if (geboorteMaand == 2 && geboorteDag > 29) {
+            return Optional.of(new IllegalDateException("Ongeldige dag geselecteerd!"));
+        }
+        return Optional.empty();
     }
 }

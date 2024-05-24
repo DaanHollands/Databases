@@ -1,8 +1,6 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalEmailException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalSexException;
+import be.kuleuven.tennistoernooijava.Exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
@@ -125,10 +123,10 @@ public class SpelerSettingsController {
             service.updateSpeler(
                     speler, naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),
                     maandInput.getValue(), jaarInput.getText(),
-                    Integer.parseInt(gewichtInput.getText()), Integer.parseInt(lengteInput.getText()),
-                    Integer.parseInt(rankingInput.getText()), selectedGeslacht
+                    gewichtInput.getText(), lengteInput.getText(),
+                    rankingInput.getText(), selectedGeslacht
             );
-        }catch(IllegalNumberException | IllegalEmailException | IllegalSexException e){
+        } catch (InvalidPhoneNumberException | InvalidEmailException | EmptyInputException | IllegalDateException | InvalidInputException e){
             System.out.println(e.getMessage());
         }
     }
