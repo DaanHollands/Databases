@@ -1,17 +1,12 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.Exceptions.IlligalWedstrijdleiderException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalWedstrijdleiderException;
 import be.kuleuven.tennistoernooijava.dao.*;
-import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.enums.Uitslagen;
 import be.kuleuven.tennistoernooijava.models.*;
-import javafx.css.Match;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public class ToernooiService {
@@ -46,7 +41,7 @@ public class ToernooiService {
             throw new IllegalDateException("Ongeldige eindjaar");
         }
         if(new WedstrijdleiderDAO().find(nieuweWestrijdleider.getSpelerID()) != null) {
-            throw new IlligalWedstrijdleiderException("Je bent al een wedstrijdleider van een toernooi");
+            throw new IllegalWedstrijdleiderException("Je bent al een wedstrijdleider van een toernooi");
         }
         valideerDatum(beginDag,beginMaand,beginJaar,eindDag,eindMaand,eindJaar);
 

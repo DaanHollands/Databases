@@ -40,12 +40,12 @@ public class ReeksenService {
             return speler.getGeslacht() == Geslachten.X;
         }
         if(reeks.getReeks().equals(ReeksenWaardes.KINDEREN)) {
-            return berekenLeeftijg(speler.getDatumID()) < 18;
+            return berekenLeeftijd(speler.getDatumID()) < 18;
         }
         return false;
     }
 
-    private int berekenLeeftijg(Datums datumID) {
+    private int berekenLeeftijd(Datums datumID) {
         LocalDate nu = LocalDate.now();
         LocalDate geboortedatum = LocalDate.of(datumID.getJaar(), datumID.getMaand(), datumID.getDag());
         return Period.between(geboortedatum, nu).getYears();

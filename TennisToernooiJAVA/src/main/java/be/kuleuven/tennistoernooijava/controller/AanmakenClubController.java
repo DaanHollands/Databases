@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.controller;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreeException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreetException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 
 public class AanmakenClubController {
     @FXML
@@ -51,7 +50,7 @@ public class AanmakenClubController {
             Tennisclubs tennisclub = service.create(SpelerSessie.getSessie().getSpeler(), straatnaamInput.getText(), Integer.parseInt(straatnummerInput.getText()), Integer.parseInt(postcodeInput.getText()), clubNaamInput.getText());
             spelerService.joinClub(tennisclub, SpelerSessie.getSessie().getSpeler());
         }
-        catch (IllegalNumberException | IllegalStreeException e) {
+        catch (IllegalNumberException | IllegalStreetException e) {
             System.out.println(e.getMessage());
         }
     }

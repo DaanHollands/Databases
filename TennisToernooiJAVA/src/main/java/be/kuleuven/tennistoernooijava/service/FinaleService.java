@@ -1,5 +1,8 @@
 package be.kuleuven.tennistoernooijava.service;
 
+import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
 import be.kuleuven.tennistoernooijava.dao.*;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;
@@ -20,6 +23,25 @@ public class FinaleService {
                                       Integer startdUur, Integer startMinuut, Spelers scheids,
                                      Map.Entry<ReeksenWaardes, Integer> reeks, Integer ronde
     ) {
+        if (startDag<=0 || startDag >31 ){
+            throw new IllegalDateException("Ongeldige begindag");
+        }
+        if (startMaand<=0 || startMaand >12 ){
+            throw new IllegalDateException("Ongeldige beginmaand");
+        }
+        if (startJaar<=2023 ){
+            throw new IllegalDateException("Ongeldig beginjaar");
+        }
+        if (startdUur<=0 || startdUur >24 ){
+            throw new IllegalTimeException("Ongeldig Startuur");
+        }
+        if (startMinuut <0 || startMinuut >=60 ){
+            throw new IllegalTimeException("Ongeldig Startuur");
+        }
+        if(veld == null) {
+            throw new EmptyInputException("Het veld input mag niet leeg zijn!");
+        }
+
         Finales finale = new Finales();
         Datums startDatum = new Datums();
         startDatum.setDag(startDag);

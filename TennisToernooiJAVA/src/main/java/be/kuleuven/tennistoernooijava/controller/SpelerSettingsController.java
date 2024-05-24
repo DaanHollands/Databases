@@ -16,7 +16,9 @@ import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class SpelerSettingsController {
     @FXML
@@ -58,9 +60,9 @@ public class SpelerSettingsController {
     @FXML
     private TextField jaarInput;
 
-    private String geslachten[]  = {"man", "vrouw", "in de war"};
-    private Integer dagen[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-    private Integer maanden[] = {1,2,3,4,5,6,7,8,9,10,11,12};
+    private String geslachten[] = Arrays.stream(Geslachten.values()).map(Enum::toString).toArray(String[]::new);
+    private Integer dagen[] =  IntStream.rangeClosed(1, 31).boxed().toArray(Integer[]::new);
+    private Integer maanden[] =  IntStream.rangeClosed(1, 12).boxed().toArray(Integer[]::new);
 
     private SpelerService service;
     private SpelerSettingsView view;
@@ -117,19 +119,8 @@ public class SpelerSettingsController {
     }
 
     public void opslaan() {
-        Geslachten selectedGeslacht;
-        if(Objects.equals(geslachtSelector.getValue(), "man")) {
-            selectedGeslacht = Geslachten.M;
-        }
-        else if(Objects.equals(geslachtSelector.getValue(), "vrouw")) {
-            selectedGeslacht = Geslachten.V;
-        }
-        else if(Objects.equals(geslachtSelector.getValue(), "in de war")) {
-            selectedGeslacht = Geslachten.X;
-        }
-        else {
-            throw new IllegalArgumentException("Geen valid gesalcht is gekozen!");
-        }
+        Geslachten selectedGeslacht = Geslachten.valueOf(geslachtSelector.getValue());
+
         try {
             service.updateSpeler(
                     speler, naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),

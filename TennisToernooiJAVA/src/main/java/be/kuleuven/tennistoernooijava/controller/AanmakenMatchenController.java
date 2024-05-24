@@ -1,5 +1,9 @@
 package be.kuleuven.tennistoernooijava.controller;
 
+import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalMatchInToernooiException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
 import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
@@ -98,7 +102,7 @@ public class AanmakenMatchenController {
                     }
                 }
                 else {
-                matchSettingAnchorpane.setVisible(false);
+                    matchSettingAnchorpane.setVisible(false);
                 }
             }
         });
@@ -131,7 +135,7 @@ public class AanmakenMatchenController {
                     MatchenHolderService.clearInstance();
                 }
             }
-            catch (Exception e) {
+            catch (IllegalDateException | IllegalTimeException | IllegalMatchInToernooiException | EmptyInputException e) {
                 System.out.println(e.getMessage());
             }
         });
@@ -145,12 +149,12 @@ public class AanmakenMatchenController {
     private void displayMatchenList(Set<Map<Integer, List<Integer>>> matches) {
         matchenList.getItems().clear();
         Map<Integer, List<Integer>> map = matches.iterator().next();
-        Optional<Integer> maxKey = map.keySet().stream().max(Integer::compare);
+        Integer maxKey = map.keySet().stream().max(Integer::compare).orElse(-1);
 
         for(Map.Entry<Integer, List<Integer>> match : map.entrySet()) {
             for(Integer aantal : match.getValue()) {
                 for(int i = 0; i < aantal; i++) {
-                    if(maxKey.get().equals(match.getKey())) {
+                    if(maxKey.equals(match.getKey())) {
                         matchenList.getItems().add("Finale: " + match.getKey() + " -> " + "Match: " + (i+1));
                     } else {
                         matchenList.getItems().add("Ronde: " + match.getKey() + " -> " + "Match: " + (i+1));

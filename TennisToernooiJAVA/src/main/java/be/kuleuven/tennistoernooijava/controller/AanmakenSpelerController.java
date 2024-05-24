@@ -19,7 +19,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class AanmakenSpelerController
 {
@@ -61,9 +63,9 @@ public class AanmakenSpelerController
     @FXML
     private Button voegToeKnop;
 
-    private String geslachten[]  = {"man", "vrouw", "in de war"};
-    private Integer dagen[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-    private Integer maanden[] = {1,2,3,4,5,6,7,8,9,10,11,12};
+    private String geslachten[] = Arrays.stream(Geslachten.values()).map(Enum::toString).toArray(String[]::new);
+    private Integer dagen[] =  IntStream.rangeClosed(1, 31).boxed().toArray(Integer[]::new);
+    private Integer maanden[] =  IntStream.rangeClosed(1, 12).boxed().toArray(Integer[]::new);
     private ChangeScene switchScene = new ChangeScene();
 
     private SpelerService service;
@@ -86,20 +88,12 @@ public class AanmakenSpelerController
     }
 
     private void maakSpeler(ActionEvent event) {
-        Geslachten selectedGeslacht;
-        if(Objects.equals(geslachtSelector.getValue(), "man")) {
-            selectedGeslacht = Geslachten.M;
-        }
-        else if(Objects.equals(geslachtSelector.getValue(), "vrouw")) {
-            selectedGeslacht = Geslachten.V;
-        }
-        else if(Objects.equals(geslachtSelector.getValue(), "in de war")) {
-            selectedGeslacht = Geslachten.X;
+        if(geslachtSelector.getValue().isEmpty()){
+            throw new IllegalArgumentException("Geen geslacht geselecteerd!");
         }
 
-        else {
-            throw new IllegalArgumentException("Geen valid gesalcht is gekozen!");
-        }
+        Geslachten selectedGeslacht = Geslachten.valueOf(geslachtSelector.getValue());
+
         try {
             Spelers speler = service.createSpeler(
                     naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),
@@ -114,10 +108,9 @@ public class AanmakenSpelerController
                     catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-
         }
         catch (IllegalNumberException | IllegalEmailException | IllegalSexException e){
-            System.out.println(e.getMessage());
+            System.out.print(e.getMessage());
         }
     }
 }

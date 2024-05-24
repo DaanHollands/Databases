@@ -3,7 +3,7 @@ package be.kuleuven.tennistoernooijava.service;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalEmailException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalSexException;
-import be.kuleuven.tennistoernooijava.Exceptions.SpelerNietGevondenException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalSpelerRequest;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
@@ -22,9 +22,11 @@ public class SpelerService {
         this.spelersDAO = spelersDAO;
     }
 
-    public Spelers createSpeler(String naam, String telefoonnummer,
+    public Spelers createSpeler(String naam,
+                                String telefoonnummer,
                                 Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
-                                Integer gewicht, Integer lengte, Integer ranking, Geslachten geslacht,
+                                Integer gewicht, Integer lengte, Integer ranking,
+                                Geslachten geslacht,
                                 String email) {
         if (Integer.parseInt(telefoonnummer) < 0 || telefoonnummer.length() != 10 || telefoonnummer.contains("[a-zA-Z]+")){
             throw new IllegalNumberException("Ongeldige telefoonnummer!");
@@ -50,20 +52,7 @@ public class SpelerService {
 
         Spelers speler = new Spelers();
 
-
-        speler.setNaam(naam);
-        speler.setTelefoonnummer(telefoonnummer);
-        speler.setGewicht(gewicht);
-        Datums geboorteDatum = new Datums();
-        geboorteDatum.setDag(geboorteDag);
-        geboorteDatum.setJaar(Integer.parseInt(geboorteJaar));
-        geboorteDatum.setMaand(geboorteMaand);
-        geboorteDatum = new DatumsDAO().create(geboorteDatum);
-        speler.setDatumID(geboorteDatum);
-        speler.setGeslacht(geslacht);
-        speler.setRanking(ranking);
-        speler.setLengte(lengte);
-        speler.setTennisclubID(null);
+        updateSpeler(speler, naam, telefoonnummer, geboorteDag, geboorteMaand, geboorteJaar, gewicht, lengte, ranking, geslacht);
 
         speler = spelersDAO.create(speler);
 
@@ -113,9 +102,12 @@ public class SpelerService {
         }
     }
 
-    public Spelers updateSpeler(Spelers speler, String naam, String telefoonnummer,
+    public Spelers updateSpeler(Spelers speler,
+                                String naam,
+                                String telefoonnummer,
                                 Integer geboorteDag, Integer geboorteMaand, String geboorteJaar,
-                                Integer gewicht, Integer lengte, Integer ranking, Geslachten geslacht
+                                Integer gewicht, Integer lengte, Integer ranking,
+                                Geslachten geslacht
                                 ) {
         if (Integer.parseInt(telefoonnummer) < 0 || telefoonnummer.length() != 10 || telefoonnummer.contains("[a-zA-Z]+")){
             throw new IllegalNumberException("Ongeldige telefoonnummer!");
@@ -136,6 +128,9 @@ public class SpelerService {
 
         if(ranking < 0){
             throw new IllegalNumberException("Ongeldige ranking!");
+        }
+        if(geboorteMaand == 2 && geboorteDag > 29){
+            throw new IllegalDateException("Ongeldige dag geselecteerd!");
         }
         speler.setNaam(naam);
         speler.setTelefoonnummer(telefoonnummer);

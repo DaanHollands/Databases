@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreeException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreetException;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.dao.VeldenDAO;
@@ -23,10 +23,11 @@ public class TennisclubService {
 
         //Exceptions
         if(adres.getPostcode() <= 0 || adres.getPostcode() > 9999){
+            System.out.println(adres.getPostcode());
             throw new IllegalNumberException("Ongeldige postcode!");
         }
         if(!onlyLetters(adres.getStraatnaam())){
-            throw new IllegalStreeException("Ongeldige straatnaam!");
+            throw new IllegalStreetException("Ongeldige straatnaam!");
         }
         if(adres.getStraatnummer() < 0){
             throw new IllegalNumberException("Ongeldige straatnummer!");
