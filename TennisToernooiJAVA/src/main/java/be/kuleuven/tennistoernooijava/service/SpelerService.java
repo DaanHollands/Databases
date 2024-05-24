@@ -3,7 +3,7 @@ package be.kuleuven.tennistoernooijava.service;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalEmailException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalNumberException;
 import be.kuleuven.tennistoernooijava.Exceptions.IllegalSexException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalSpelerRequest;
+import be.kuleuven.tennistoernooijava.Exceptions.SpelerNietGevondenException;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelerEmailadressenDAO;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
@@ -35,7 +35,6 @@ public class SpelerService {
         if(lengte <0){
             throw new IllegalNumberException("Ongeldige lengte!");
         }
-        //Datum in orde
         if(Integer.parseInt(geboorteJaar) < 0 || geboorteJaar.contains("[a-zA-Z]+")){
             throw new IllegalNumberException("Ongeldige geboorteJaar!");
         }
@@ -81,7 +80,7 @@ public class SpelerService {
     public Spelers getSpeler(Integer spelerID) {
         Spelers speler = spelersDAO.find(spelerID);
         if(speler == null) {
-            throw new IllegalSpelerRequest("Speler bestaat nog niet");
+            throw new SpelerNietGevondenException("Speler bestaat nog niet");
         }
         return speler;
     }

@@ -1,6 +1,8 @@
 package be.kuleuven.tennistoernooijava.controller;
 
+import be.kuleuven.tennistoernooijava.Exceptions.SpelerNietGevondenException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
+import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.service.ChangeScene;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
@@ -27,25 +29,28 @@ public class StartingController {
     @FXML
     void initialize() {
         spelerService = new SpelerService(new SpelersDAO());
-        loginKnop.setOnAction(event -> login(event));
+        loginKnop.setOnAction(this::login);
 
         nieuweSpelerKnop.setOnAction(event -> {
             try {
-                switchScene.switchToScene( (Node)event.getSource(),"AanmakenSpelerFXML");
+                switchScene.switchToScene(nieuweSpelerKnop,"AanmakenSpelerFXML");
             } catch (IOException e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }}
         );
     }
 
     private void login(ActionEvent event) {
-        if(spelerService.getSpeler(Integer.parseInt(spelerIDInput.getText())) != null) {
+        try {
+            Spelers speler = spelerService.getSpeler(Integer.parseInt(spelerIDInput.getText()));
             try {
-                SpelerSessie.getSessie().setSpeler(spelerService.getSpeler(Integer.parseInt(spelerIDInput.getText())));
+                SpelerSessie.getSessie().setSpeler(speler);
                 switchScene.switchToScene( (Node)event.getSource(),"DashboardFXML");
             } catch (IOException e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
+        } catch (SpelerNietGevondenException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
