@@ -23,7 +23,7 @@ public class ToernooiService {
             Integer eindDag, Integer eindMaand, Integer eindJaar,
             Spelers nieuweWestrijdleider
     ) {
-        Optional<RuntimeException> exception = validateExceptions(organisatorClub, beginDag, beginMaand, beginJaar, eindDag, eindMaand, eindJaar, nieuweWestrijdleider);
+        Optional<RuntimeException> exception = validateExceptions(beginDag, beginMaand, beginJaar, eindDag, eindMaand, eindJaar, nieuweWestrijdleider);
         if(exception.isPresent()) {
             throw exception.get();
         }
@@ -95,7 +95,6 @@ public class ToernooiService {
     }
 
     private Optional<RuntimeException> validateExceptions(
-            Tennisclubs organisatorClub,
             Integer beginDag, Integer beginMaand, Integer beginJaar,
             Integer eindDag, Integer eindMaand, Integer eindJaar,
             Spelers nieuweWestrijdleider

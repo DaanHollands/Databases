@@ -52,6 +52,7 @@ public class OrganiseerToernooiController extends BaseController
     private Tennisclubs club;
 
     private Map<ReeksenWaardes, Integer> reeksen = new HashMap<>();
+
     @FXML
     void initialize() {
         reeksenService = new ReeksenService(null);
@@ -101,7 +102,7 @@ public class OrganiseerToernooiController extends BaseController
             reeksen.put(reeks, Integer.parseInt(niveau));
             reeksenVBox.getChildren().add(text);
         } catch (EmptyInputException | InvalidInputException | IllegalReeksException e) {
-            System.out.println(e.getMessage());
+            showAlert("Error", e.getMessage());
         }
     }
 
