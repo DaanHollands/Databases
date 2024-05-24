@@ -5,17 +5,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.AanmakenClubController">
+<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.AanmakenClubController">
    <children>
       <fx:include source="Header.fxml" />
       <Button fx:id="maakClubKnop" layoutX="422.0" layoutY="173.0" mnemonicParsing="false" text="Maak club" />
       <Label layoutX="120.0" layoutY="87.0" text="Club naam" />
-      <TextField fx:id="clubNaamInput" layoutX="200.0" layoutY="87.0" prefHeight="28.0" prefWidth="132.0" text="NieuweClub" />
+      <TextField fx:id="clubNaamInput" layoutX="200.0" layoutY="87.0" prefHeight="28.0" prefWidth="132.0" />
       <Label layoutX="125.0" layoutY="142.0" text="Postcode" />
-      <TextField fx:id="postcodeInput" layoutX="200.0" layoutY="137.0" prefHeight="28.0" prefWidth="132.0" text="3530" />
+      <TextField fx:id="postcodeInput" layoutX="200.0" layoutY="137.0" prefHeight="28.0" prefWidth="132.0" />
       <Label layoutX="110.0" layoutY="192.0" text="Straatnaam" />
-      <TextField fx:id="straatnaamInput" layoutX="200.0" layoutY="187.0" prefHeight="28.0" prefWidth="132.0" text="Jajajaj" />
+      <TextField fx:id="straatnaamInput" layoutX="200.0" layoutY="187.0" prefHeight="28.0" prefWidth="132.0" />
       <Label layoutX="89.0" layoutY="242.0" text="Straat nummer" />
-      <TextField fx:id="straatnummerInput" layoutX="200.0" layoutY="237.0" prefHeight="28.0" prefWidth="132.0" text="10" />
+      <TextField fx:id="straatnummerInput" layoutX="200.0" layoutY="237.0" prefHeight="28.0" prefWidth="132.0" />
    </children>
 </AnchorPane>

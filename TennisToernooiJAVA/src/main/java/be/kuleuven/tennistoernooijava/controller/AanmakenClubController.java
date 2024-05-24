@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.controller;
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreetException;
+import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalAdresException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
@@ -9,7 +9,9 @@ import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -29,28 +31,26 @@ public class AanmakenClubController {
     @FXML
     private TextField straatnummerInput;
 
-    private TennisclubService service;
+    private TennisclubService tennisclubService;
     private SpelerService spelerService;
     @FXML
     void initialize() {
-        service = new TennisclubService(new TennisclubDAO());
+        tennisclubService = new TennisclubService(new TennisclubDAO());
         spelerService = new SpelerService(new SpelersDAO());
-        maakClubKnop.setOnMouseClicked(event -> {
-            maakClub();
-            try {
-                new ChangeScene().switchToScene(maakClubKnop, "ClubFXML");
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-        });
+        maakClubKnop.setOnMouseClicked(this::maakClub);
     }
 
-    void maakClub() {
+    private void maakClub(MouseEvent event) {
         try {
-            Tennisclubs tennisclub = service.create(SpelerSessie.getSessie().getSpeler(), straatnaamInput.getText(), Integer.parseInt(straatnummerInput.getText()), Integer.parseInt(postcodeInput.getText()), clubNaamInput.getText());
+            Tennisclubs tennisclub = tennisclubService.create(SpelerSessie.getSessie().getSpeler(), straatnaamInput.getText(), straatnummerInput.getText(), postcodeInput.getText(), clubNaamInput.getText());
             spelerService.joinClub(tennisclub, SpelerSessie.getSessie().getSpeler());
-        }
-        catch (InvalidPhoneNumberException | IllegalStreetException e) {
+
+            try {
+                new ChangeScene().switchToScene((Node) event.getSource(), "ClubFXML");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (EmptyInputException | IllegalAdresException | IllegalStateException e) {
             System.out.println(e.getMessage());
         }
     }

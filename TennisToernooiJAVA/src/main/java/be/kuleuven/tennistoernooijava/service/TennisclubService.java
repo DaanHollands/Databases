@@ -1,7 +1,9 @@
 package be.kuleuven.tennistoernooijava.service;
 
+import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.Exceptions.InvalidInputException;
 import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalStreetException;
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalAdresException;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.dao.VeldenDAO;
@@ -10,6 +12,7 @@ import be.kuleuven.tennistoernooijava.enums.VeldSoort;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class TennisclubService {
@@ -17,22 +20,15 @@ public class TennisclubService {
 
     public TennisclubService(TennisclubDAO tennisclubDAO) {this.tennisclubDAO = tennisclubDAO;}
 
-    public Tennisclubs create(Spelers speler, String straatnaam, Integer straatnummer, Integer postcode, String naam){
+    public Tennisclubs create(Spelers speler, String straatnaam, String straatnummer, String postcode, String naam) {
+
+        Optional<RuntimeException> exception = checkForCreateException(speler, straatnaam, straatnummer, postcode, naam);
+        if(exception.isPresent()) {
+            throw exception.get();
+        }
+
         Tennisclubs tennisclub = new Tennisclubs();
-        Adressen adres = new AdresService(new AdresDAO()).getOrCreate(postcode,straatnaam,straatnummer);
-
-        //Exceptions
-        if(adres.getPostcode() <= 0 || adres.getPostcode() > 9999){
-            System.out.println(adres.getPostcode());
-            throw new InvalidPhoneNumberException("Ongeldige postcode!");
-        }
-        if(!onlyLetters(adres.getStraatnaam())){
-            throw new IllegalStreetException("Ongeldige straatnaam!");
-        }
-        if(adres.getStraatnummer() < 0){
-            throw new InvalidPhoneNumberException("Ongeldige straatnummer!");
-        }
-
+        Adressen adres = new AdresService(new AdresDAO()).getOrCreate(Integer.parseInt(postcode),straatnaam, Integer.parseInt(straatnummer));
         tennisclub.setAdresID(adres);
         tennisclub.setNaam(naam);
         tennisclub = tennisclubDAO.create(tennisclub);
@@ -67,8 +63,8 @@ public class TennisclubService {
     public Toernooien getToernooiVanSpeler(Tennisclubs club, Spelers speler) {
         Set<Toernooien> toernooien = club.getToernooien();
         return toernooien.stream()
-                .filter(a -> a.getWedstrijdleider().getSpeler().equals(speler)).findFirst()
-                .orElse(null);
+            .filter(a -> a.getWedstrijdleider().getSpeler().equals(speler)).findFirst()
+            .orElse(null);
     }
 
     public Set<Toernooien> getToernooien(Tennisclubs club) {
@@ -100,7 +96,7 @@ public class TennisclubService {
         return gevondenClub.getSpelers();
     }
 
-    public boolean onlyLetters(String name) {
+    private boolean onlyLetters(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
             if (!Character.isLetter(c)) {
@@ -108,5 +104,26 @@ public class TennisclubService {
             }
         }
         return true;
+    }
+
+    private Optional<RuntimeException> checkForCreateException(Spelers speler, String straatnaam, String straatnummer, String postcode, String clubNaam)
+    {
+        if(speler.getTennisclubID() != null) {
+            return Optional.of(new IllegalStateException("Je zit al bij een club, je moet deze club eerst verlaten!"));
+        }
+        if(clubNaam.isEmpty()) {
+            return Optional.of(new EmptyInputException("De clubnaam is leeg!"));
+        }
+        if(postcode == null || postcode.isEmpty() || postcode.contains("[a-zA-Z]+") || Integer.parseInt(postcode) <= 0 || Integer.parseInt(postcode) >= 9999) {
+            return Optional.of(new IllegalAdresException("Ongeldige postcode!"));
+        }
+        if(straatnaam == null || !onlyLetters(straatnaam)) {
+            return Optional.of(new IllegalAdresException("Ongeldige straatnaam!"));
+        }
+        if(straatnummer == null || straatnummer.isEmpty() || straatnummer.contains("[a-zA-Z]+") || Integer.parseInt(postcode) <= 0) {
+            return Optional.of(new IllegalAdresException("Ongeldige straatnummer!"));
+        }
+
+        return Optional.empty();
     }
 }
