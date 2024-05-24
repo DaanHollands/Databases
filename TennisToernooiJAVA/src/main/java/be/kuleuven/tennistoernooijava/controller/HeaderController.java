@@ -96,7 +96,7 @@ public class HeaderController {
         if(bekijkClub != null) {
             bekijkClub.setOnAction(actionEvent -> {
                 try {
-                    switchScene.switchToScene(menuBar, "ClubFXML");
+                    switchScene.switchToScene(menuBar, "BekijkClubFXML");
                 } catch (IOException e) {
                     System.out.println(e);
                 }

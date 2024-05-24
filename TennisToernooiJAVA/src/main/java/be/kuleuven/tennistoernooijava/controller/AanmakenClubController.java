@@ -46,7 +46,7 @@ public class AanmakenClubController {
             spelerService.joinClub(tennisclub, SpelerSessie.getSessie().getSpeler());
 
             try {
-                new ChangeScene().switchToScene((Node) event.getSource(), "ClubFXML");
+                new ChangeScene().switchToScene((Node) event.getSource(), "BekijkClubFXML");
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

@@ -78,7 +78,6 @@ public class TennisclubService {
     }
 
     public Set<Toernooien> getToernooien(Tennisclubs club) {
-        club = tennisclubDAO.find(club.getClubID());
         return club.getToernooien();
     }
 
@@ -102,8 +101,7 @@ public class TennisclubService {
     }
 
     public Set<Spelers> getAlleSpelers(Tennisclubs club) {
-        Tennisclubs gevondenClub = tennisclubDAO.find(club.getClubID());
-        return gevondenClub.getSpelers();
+        return club.getSpelers();
     }
 
     private boolean onlyLetters(String name) {

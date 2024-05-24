@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.ClubController">
+<AnchorPane prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.tennistoernooijava.controller.BekijkClubController">
     <children>
         <fx:include source="Header.fxml" />
       <Text layoutX="39.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Club naam:">
@@ -40,7 +40,6 @@
          </font>
       </Text>
       <ListView fx:id="toernooien" layoutX="34.0" layoutY="214.0" prefHeight="265.0" prefWidth="375.0" />
-
 
     </children>
 </AnchorPane>

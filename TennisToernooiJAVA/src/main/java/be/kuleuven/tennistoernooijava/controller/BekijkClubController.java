@@ -11,7 +11,9 @@ import javafx.fxml.*;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
-public class ClubController {
+import java.util.Set;
+
+public class BekijkClubController {
     @FXML
     private Text clubnaam;
 
@@ -24,26 +26,35 @@ public class ClubController {
     @FXML
     private ListView<String> toernooien;
 
-    private TennisclubService service;
+    private TennisclubService tennisclubService;
     private Spelers speler = SpelerSessie.getSessie().getSpeler();
+
     @FXML
     void initialize() {
-        service = new TennisclubService(new TennisclubDAO());
-        Tennisclubs club = service.getClubFromName(speler.getTennisclubID().getNaam());
+        tennisclubService = new TennisclubService(new TennisclubDAO());
+
+        Tennisclubs club = tennisclubService.getClubFromName(speler.getTennisclubID().getNaam());
         clubnaam.setText(club.getNaam());
+
         Adressen adres = club.getAdresID();
         clubadres.setText(adres.getStraatnaam() + " " + adres.getStraatnummer() + "  postcode: " + adres.getPostcode());
+        updateSpelers(tennisclubService.getAlleSpelers(club));
+        updateToernooien(tennisclubService.getToernooien(club));
+    }
 
-        club.getSpelers().forEach(speler -> {
-            allespelerList.getItems().add(speler.getNaam());
-        });
-
-        for (Toernooien toernooi : club.getToernooien()) {
+    private void updateToernooien(Set<Toernooien> toernooienLijst) {
+        for (Toernooien toernooi : toernooienLijst) {
             toernooien.getItems().add(
                     toernooi.getBeginDatumID().getDag() + "/" + toernooi.getBeginDatumID().getMaand() + "/" + toernooi.getBeginDatumID().getMaand()
-                    + " tot " +
+                            + " tot " +
                     toernooi.getEindDatumID().getDag() + "/" + toernooi.getEindDatumID().getMaand() + "/" + toernooi.getEindDatumID().getMaand()
             );
         }
+    }
+
+    private void updateSpelers(Set<Spelers> spelers) {
+        spelers.forEach(speler -> {
+            allespelerList.getItems().add(speler.getNaam());
+        });
     }
 }
