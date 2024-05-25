@@ -75,6 +75,7 @@ public class SpelerSettingsController extends BaseController
     }
 
     private void initializeEmailList() {
+        view.update();
         emailList.getChildren().add(view);
     }
 
@@ -99,6 +100,7 @@ public class SpelerSettingsController extends BaseController
         try {
             spelerService.addEmailToSpeler(speler, email);
             view.update();
+            emailList.getChildren().clear();
             emailList.getChildren().add(view);
         } catch (InvalidEmailException e) {
             showAlert("Error", e.getMessage());
