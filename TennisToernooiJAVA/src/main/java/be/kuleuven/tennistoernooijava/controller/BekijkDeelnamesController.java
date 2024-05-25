@@ -1,10 +1,10 @@
 package be.kuleuven.tennistoernooijava.controller;
 
+import be.kuleuven.tennistoernooijava.Exceptions.IllegalScoreException;
 import be.kuleuven.tennistoernooijava.dao.*;
 import be.kuleuven.tennistoernooijava.models.Finales;
 import be.kuleuven.tennistoernooijava.models.Matchen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
-import be.kuleuven.tennistoernooijava.enums.TypeRang;
 import be.kuleuven.tennistoernooijava.enums.Uitslagen;
 import be.kuleuven.tennistoernooijava.service.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.*;
@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class BekijkDeelnamesController extends BaseController
 {
@@ -48,10 +49,15 @@ public class BekijkDeelnamesController extends BaseController
     private SupporterService supporterService;
     private BallenraperService ballenraperService;
     private ToernooiService toernooiService;
-    private Spelers speler = SpelerSessie.getSessie().getSpeler();
+    private final Spelers speler = SpelerSessie.getSessie().getSpeler();
     private ArrayList<Matchen> matchen = new ArrayList<>();
 
-    private TypeRang rang = null;
+    private static final String WEDSTRIJDLEIDER = "wedstrijdleider";
+    private static final String SPELER  = "speler";
+    private static final String SUPPORTER = "supporter";
+    private static final String BALLENRAPER = "ballenraper";
+    private static final String SCHEIDS = "scheids";
+    private static final String NO_MATCH_SELECTED = "Nog geen match geselecteerd!";
 
     @FXML
     void initialize() {
@@ -60,62 +66,55 @@ public class BekijkDeelnamesController extends BaseController
         matchenService = new MatchenService(new MatchenDAO());
         deelnameService = new DeelnameService(new DeelnamenDAO());
         toernooiService = new ToernooiService(new ToernooienDAO());
-        uitlsagenList.getItems().addAll(Uitslagen.values());
+
         List<Matchen> matchens = matchenService.getMatchesFromEverything(speler);
+
+        uitlsagenList.getItems().addAll(Uitslagen.values());
         matchens.forEach(m -> matchen.add(m));
+        updateMatchen(matchens);
+
         wedstrijdleiderAnchorpane.setVisible(false);
 
-        for (Matchen match : matchen) {
-            matchenList.getItems().add(matchen.indexOf(match) + " :  " +
-                    match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar() + "/" + " Reeks: " + match.getReeks().getReeks() + " " + match.getReeks().getNiveau() +" Ronde: " + match.getMatchRonde()
-            );
-        }
+        scoresOpslaanKnop.setOnAction(e -> saveScores());
 
-        scoresOpslaanKnop.setOnAction(e -> {
-            matchenService.updateScores(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), Integer.parseInt(scoreThuisInput.getText()), Integer.parseInt(scoreUitInput.getText()),
-                    uitlsagenList.getSelectionModel().getSelectedItem());
-            toernooiService.updateMatchen(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID());
-
-        });
-
-        matchenList.setOnMouseClicked(e -> {
-            updateSpelerList(matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
-            scoresOpslaanKnop.setVisible(true);
-            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getUitslag() != null) {
-                scoresOpslaanKnop.setVisible(false);
-            }
-            if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID().getWedstrijdleider().getSpeler().equals(speler)) {
-                rangText.setText("wedstrijdleider");
-                rang = TypeRang.WEDSTRIJDLEIDER;
-                wedstrijdleiderAnchorpane.setVisible(true);
-            }
-
-            else if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
-                rangText.setText("speler");
-                rang = TypeRang.SPELER;
-            }
-
-            else if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()) instanceof Finales) {
-                if(supporterService.isSupporter((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
-                    rangText.setText("supporter");
-                    rang = TypeRang.SUPPORTER;
-                }
-                else if(ballenraperService.isBallenraper((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
-                    rangText.setText("ballenraper");
-                    rang = TypeRang.BALLENRAPER;
-                }
-                else if((((Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex())).getScheidsID().getScheids().equals(speler))) {
-                    rangText.setText("scheids");
-                    rang = TypeRang.SCHEIDS;
-                }
-            }
-
-            else {
-                rangText.setText("Nog geen match geselecteerd!");
-            }
-        });
+        matchenList.setOnMouseClicked(e -> clickedOnMatch());
 
     }
+
+    private void clickedOnMatch() {
+        updateSpelerList(matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
+        scoresOpslaanKnop.setVisible(true);
+        if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()) instanceof Finales) {
+            changeForFinale();
+        } else if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()) != null) {
+            changeForMatch();
+        } else {
+            rangText.setText(NO_MATCH_SELECTED);
+        }
+    }
+
+    private void changeForFinale() {
+        if(supporterService.isSupporter((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+            rangText.setText(SUPPORTER);
+        } else if(ballenraperService.isBallenraper((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+            rangText.setText(BALLENRAPER);
+        } else if((((Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex())).getScheidsID().getScheids().equals(speler))) {
+            rangText.setText(SCHEIDS);
+        }
+    }
+
+    private void changeForMatch() {
+        if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getUitslag() != null) {
+            scoresOpslaanKnop.setVisible(false);
+        }
+        if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID().getWedstrijdleider().getSpeler().equals(speler)) {
+            rangText.setText(WEDSTRIJDLEIDER);
+            wedstrijdleiderAnchorpane.setVisible(true);
+        } else if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+            rangText.setText(SPELER);
+        }
+    }
+
     private void updateSpelerList(Matchen matchen) {
         spelerList.getItems().clear();
         matchen.getDeelnamens().forEach(d -> {
@@ -124,5 +123,27 @@ public class BekijkDeelnamesController extends BaseController
             );
         });
     }
+
+    private void updateMatchen(List<Matchen> matchen) {
+        for (Matchen match : matchen) {
+            matchenList.getItems().add(matchen.indexOf(match) + " :  " +
+                    match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar() + "/" + " Reeks: " + match.getReeks().getReeks() + " " + match.getReeks().getNiveau() +" Ronde: " + match.getMatchRonde()
+            );
+        }
+    }
+
+    private void saveScores() {
+        try {
+            matchenService.updateScores(
+                    matchen.get(matchenList.getSelectionModel().getSelectedIndex()),
+                    scoreThuisInput.getText(),
+                    scoreUitInput.getText(),
+                    uitlsagenList.getSelectionModel().getSelectedItem()
+            );
+            toernooiService.updateMatchen(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID());
+        } catch (IllegalScoreException e) {
+            showAlert("Error", e.getMessage());
+        }
+     }
 
 }

@@ -50,9 +50,16 @@ public class MatchenService extends FinaleMatchenHelper {
                 .orElse(null);
     }
 
-    public void updateScores(Matchen match, Integer scoreThuis, Integer scoreUit, Uitslagen uitslagen) {
-        match.setScoreuit(scoreUit);
-        match.setScorethus(scoreThuis);
+    public void updateScores(Matchen match, String scoreThuis, String scoreUit, Uitslagen uitslagen) {
+        if(scoreThuis == null || scoreThuis.isEmpty() || scoreThuis.contains("[a-zA-Z]+") || Integer.parseInt(scoreThuis) < 0) {
+            throw new IllegalScoreException("De thuis score is geen geldige score");
+        }
+        if(scoreUit == null || scoreUit.isEmpty() || scoreUit.contains("[a-zA-Z]+") || Integer.parseInt(scoreUit) < 0) {
+            throw new IllegalScoreException("De score uit is geen geldige score");
+        }
+
+        match.setScoreuit(Integer.parseInt(scoreUit));
+        match.setScorethus(Integer.parseInt(scoreThuis));
         match.setUitslag(uitslagen);
         matchenDAO.update(match);
     }

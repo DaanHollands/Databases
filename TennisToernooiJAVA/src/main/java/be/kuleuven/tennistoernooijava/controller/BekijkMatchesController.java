@@ -78,6 +78,7 @@ public class BekijkMatchesController extends BaseController
 
     private ArrayList<Matchen> matchens = new ArrayList<>();
     private ArrayList<Toernooien> toernooien = new ArrayList<>();
+
     @FXML
     void initialize() {
         finaleAnchorpane.setVisible(false);

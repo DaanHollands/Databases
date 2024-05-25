@@ -19,7 +19,7 @@ public class SupporterService {
         supporter.addFinale(finale);
         supporter.setSupporterID(speler);
         supporter.setClubID(club);
-        supporter.addFinale(finale); // Voeg deze regel toe
+        supporter.addFinale(finale);
         supporter = supporterDAO.create(supporter);
         finale.addSupporter(supporter);
         new FinaleDAO().update(finale);
