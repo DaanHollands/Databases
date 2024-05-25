@@ -61,89 +61,109 @@ public class BekijkDeelnamesController extends BaseController
 
     @FXML
     void initialize() {
-        supporterService = new SupporterService(new SupporterDAO());
-        ballenraperService = new BallenraperService(new BallenraperDAO());
-        matchenService = new MatchenService(new MatchenDAO());
-        deelnameService = new DeelnameService(new DeelnamenDAO());
-        toernooiService = new ToernooiService(new ToernooienDAO());
-
-        List<Matchen> matchens = matchenService.getMatchesFromEverything(speler);
-
-        uitlsagenList.getItems().addAll(Uitslagen.values());
-        matchens.forEach(m -> matchen.add(m));
-        updateMatchen(matchens);
-
+        initializeServices();
+        loadMatchen();
+        setupEventHandlers();
         wedstrijdleiderAnchorpane.setVisible(false);
-
-        scoresOpslaanKnop.setOnAction(e -> saveScores());
-
-        matchenList.setOnMouseClicked(e -> clickedOnMatch());
-
+        uitlsagenList.getItems().addAll(Uitslagen.values());
     }
 
-    private void clickedOnMatch() {
-        updateSpelerList(matchen.get(matchenList.getSelectionModel().getSelectedIndex()));
-        scoresOpslaanKnop.setVisible(true);
-        if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()) instanceof Finales) {
-            changeForFinale();
-        } else if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()) != null) {
-            changeForMatch();
+    private void initializeServices() {
+        deelnameService = new DeelnameService(new DeelnamenDAO());
+        matchenService = new MatchenService(new MatchenDAO());
+        supporterService = new SupporterService(new SupporterDAO());
+        ballenraperService = new BallenraperService(new BallenraperDAO());
+        toernooiService = new ToernooiService(new ToernooienDAO());
+    }
+
+    private void loadMatchen() {
+        List<Matchen> matchens = matchenService.getMatchesFromEverything(speler);
+        matchens.forEach(matchen::add);
+        updateMatchenList(matchens);
+    }
+
+    private void setupEventHandlers() {
+        scoresOpslaanKnop.setOnAction(e -> saveScores());
+        matchenList.setOnMouseClicked(e -> handleMatchSelection());
+    }
+
+    private void handleMatchSelection() {
+        int selectedIndex = matchenList.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            Matchen selectedMatch = matchen.get(selectedIndex);
+            updateSpelerList(selectedMatch);
+            scoresOpslaanKnop.setVisible(true);
+
+            if (selectedMatch instanceof Finales) {
+                updateForFinale((Finales) selectedMatch);
+            } else {
+                updateForMatch(selectedMatch);
+            }
         } else {
             rangText.setText(NO_MATCH_SELECTED);
+            wedstrijdleiderAnchorpane.setVisible(false);
         }
     }
 
-    private void changeForFinale() {
-        if(supporterService.isSupporter((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+    private void updateForFinale(Finales finale) {
+        if (supporterService.isSupporter(finale, speler)) {
             rangText.setText(SUPPORTER);
-        } else if(ballenraperService.isBallenraper((Finales)matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+        } else if (ballenraperService.isBallenraper(finale, speler)) {
             rangText.setText(BALLENRAPER);
-        } else if((((Finales) matchen.get(matchenList.getSelectionModel().getSelectedIndex())).getScheidsID().getScheids().equals(speler))) {
+        } else if (finale.getScheidsID().getScheids().equals(speler)) {
             rangText.setText(SCHEIDS);
         }
     }
 
-    private void changeForMatch() {
-        if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getUitslag() != null) {
+    private void updateForMatch(Matchen match) {
+        if (match.getUitslag() != null) {
             scoresOpslaanKnop.setVisible(false);
         }
-        if(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID().getWedstrijdleider().getSpeler().equals(speler)) {
+
+        if (match.getToernooiID().getWedstrijdleider().getSpeler().equals(speler)) {
             rangText.setText(WEDSTRIJDLEIDER);
             wedstrijdleiderAnchorpane.setVisible(true);
-        } else if(deelnameService.isDeelnemer(matchen.get(matchenList.getSelectionModel().getSelectedIndex()), speler)) {
+        } else if (deelnameService.isDeelnemer(match, speler)) {
             rangText.setText(SPELER);
         }
     }
 
-    private void updateSpelerList(Matchen matchen) {
+    private void updateSpelerList(Matchen match) {
         spelerList.getItems().clear();
-        matchen.getDeelnamens().forEach(d -> {
-            spelerList.getItems().add(
-                    "Deelnemer: " + d.getSpelerID().getNaam()
-            );
-        });
+        match.getDeelnamens().forEach(d -> spelerList.getItems().add("Deelnemer: " + d.getSpelerID().getNaam()));
     }
 
-    private void updateMatchen(List<Matchen> matchen) {
-        for (Matchen match : matchen) {
-            matchenList.getItems().add(matchen.indexOf(match) + " :  " +
-                    match.getDatumID().getDag() + "/" + match.getDatumID().getMaand() + "/" + match.getDatumID().getJaar() + "/" + " Reeks: " + match.getReeks().getReeks() + " " + match.getReeks().getNiveau() +" Ronde: " + match.getMatchRonde()
-            );
+    private void updateMatchenList(List<Matchen> matchens) {
+        matchenList.getItems().clear();
+        for (Matchen match : matchens) {
+            matchenList.getItems().add(String.format("%d : %d/%d/%d Reeks: %s %s Ronde: %s",
+                    matchens.indexOf(match),
+                    match.getDatumID().getDag(),
+                    match.getDatumID().getMaand(),
+                    match.getDatumID().getJaar(),
+                    match.getReeks().getReeks(),
+                    match.getReeks().getNiveau(),
+                    match.getMatchRonde()
+            ));
         }
     }
 
     private void saveScores() {
         try {
-            matchenService.updateScores(
-                    matchen.get(matchenList.getSelectionModel().getSelectedIndex()),
-                    scoreThuisInput.getText(),
-                    scoreUitInput.getText(),
-                    uitlsagenList.getSelectionModel().getSelectedItem()
-            );
-            toernooiService.updateMatchen(matchen.get(matchenList.getSelectionModel().getSelectedIndex()).getToernooiID());
+            int selectedIndex = matchenList.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0) {
+                Matchen selectedMatch = matchen.get(selectedIndex);
+                matchenService.updateScores(
+                        selectedMatch,
+                        scoreThuisInput.getText(),
+                        scoreUitInput.getText(),
+                        uitlsagenList.getSelectionModel().getSelectedItem()
+                );
+                toernooiService.updateMatchen(selectedMatch.getToernooiID());
+            }
         } catch (IllegalScoreException e) {
             showAlert("Error", e.getMessage());
         }
-     }
+    }
 
 }

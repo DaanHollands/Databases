@@ -72,7 +72,7 @@ public class SelectClubController extends BaseController
             Tennisclubs nieuweclub = clubService.addSpelerToClub(SpelerSessie.getSessie().getSpeler(), tennisclubnaam);
             update(nieuweclub);
         } catch (IllegalClubException | ClubNotFoundException e) {
-            System.out.println(e.getMessage());
+            showAlert("Error", e.getMessage());
         }
     }
 }

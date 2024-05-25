@@ -53,7 +53,6 @@ public class SpelerSettingsView extends Region {
 
     public void deleteEmail(String email) {
         service.removeEmailFromSpeler(SpelerSessie.getSessie().getSpeler().getSpelerID(), email);
-//        SpelerSessie.getSessie().getSpeler().removeEmailAdres();
         update();
     }
 

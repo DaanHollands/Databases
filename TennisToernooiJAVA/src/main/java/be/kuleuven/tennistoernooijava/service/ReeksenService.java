@@ -34,7 +34,7 @@ public class ReeksenService {
         return newReeks;
     }
 
-    public boolean canJoinReeks(Spelers speler, Reeksen reeks) {
+    public static boolean canJoinReeks(Spelers speler, Reeksen reeks) {
         if(reeks.getReeks().equals(ReeksenWaardes.MANNEN)) {
             return speler.getGeslacht() == Geslachten.M;
         }
@@ -50,7 +50,7 @@ public class ReeksenService {
         return false;
     }
 
-    private int berekenLeeftijd(Datums datumID) {
+    private static int berekenLeeftijd(Datums datumID) {
         LocalDate nu = LocalDate.now();
         LocalDate geboortedatum = LocalDate.of(datumID.getJaar(), datumID.getMaand(), datumID.getDag());
         return Period.between(geboortedatum, nu).getYears();

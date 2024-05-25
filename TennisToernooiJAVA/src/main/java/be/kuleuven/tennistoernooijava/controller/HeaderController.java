@@ -12,6 +12,8 @@ public class HeaderController extends BaseController
     @FXML
     private MenuBar menuBar;
 
+    private final ChangeScene switchScene = new ChangeScene();
+
     private Menu home = new Menu("Home");
     private Menu club = new Menu("Club");
     private Menu instellingen = new Menu("Instellingen");
@@ -27,113 +29,65 @@ public class HeaderController extends BaseController
     private MenuItem bekijkDeelnames = null;
     private MenuItem bekijkMatches = null;
 
-    private final ChangeScene switchScene = new ChangeScene();
     @FXML
     void initialize() {
+        setupMenu();
+    }
+
+
+    private void setupMenu() {
         menuBar.getMenus().clear();
+        setupHomeMenu();
+        setupClubMenu();
+        setupInstellingenMenu();
+        menuBar.getMenus().addAll(home, club, instellingen);
+    }
+
+    private void setupInstellingenMenu() {
+        instellingen.getItems().addAll(veranderProfiel, signOut);
+        veranderProfiel.setOnAction(event -> switchScene("SpelerSettingsFXML"));
+        signOut.setOnAction(event -> {
+            SpelerSessie.getSessie().verwijderSessie();
+            switchScene("StartingFXML");
+        });
+    }
+
+    private void setupHomeMenu() {
         home.getItems().add(dashboard);
-        club.getItems().add(maakClub);
-        club.getItems().add(selectClubs);
+        dashboard.setOnAction(event -> switchScene("DashboardFXML"));
+    }
+
+    private void setupClubMenu() {
+        club.getItems().addAll(maakClub, selectClubs);
+        maakClub.setOnAction(event -> switchScene("AanmakenClubFXML"));
+        selectClubs.setOnAction(event -> switchScene("SelectClubFXML"));
 
         if (SpelerSessie.getSessie().getSpeler().getTennisclubID() != null) {
-            bekijkClub = new MenuItem("Bekijk club");
-            organiseerToernooi = new MenuItem("Organiseer toernooi");
-            aanmakenMatch = new MenuItem("Aanmaken match");
-            bekijkDeelnames = new MenuItem("Bekijk deelnames");
-            bekijkMatches = new MenuItem("Bekijk matches");
-
-            club.getItems().add(bekijkClub);
-            club.getItems().add(organiseerToernooi);
-            club.getItems().add(aanmakenMatch);
-            club.getItems().add(bekijkDeelnames);
-            club.getItems().add(bekijkMatches);
+            addClubMenuItems();
         }
+    }
 
-        instellingen.getItems().add(veranderProfiel);
-        instellingen.getItems().add(signOut);
-        menuBar.getMenus().addAll(home, club, instellingen);
+    private void addClubMenuItems() {
+        bekijkClub = new MenuItem("Bekijk club");
+        organiseerToernooi = new MenuItem("Organiseer toernooi");
+        aanmakenMatch = new MenuItem("Aanmaken match");
+        bekijkDeelnames = new MenuItem("Bekijk deelnames");
+        bekijkMatches = new MenuItem("Bekijk matches");
 
-        veranderProfiel.setOnAction(actionEvent -> {
-            try {
-                switchScene.switchToScene(menuBar, "SpelerSettingsFXML");
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-        });
+        club.getItems().addAll(bekijkClub, organiseerToernooi, aanmakenMatch, bekijkDeelnames, bekijkMatches);
 
-        signOut.setOnAction(actionEvent -> {
-            try {
-                SpelerSessie.getSessie().verwijderSessie();
-                switchScene.switchToScene(menuBar, "StartingFXML");
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-        });
+        bekijkClub.setOnAction(event -> switchScene("BekijkClubFXML"));
+        organiseerToernooi.setOnAction(event -> switchScene("OrganiseerToernooiFXML"));
+        aanmakenMatch.setOnAction(event -> switchScene("AanmakenMatchenFXML"));
+        bekijkDeelnames.setOnAction(event -> switchScene("BekijkDeelnamesFXML"));
+        bekijkMatches.setOnAction(event -> switchScene("BekijkMatchesFXML"));
+    }
 
-        selectClubs.setOnAction(actionEvent -> {
-            try {
-                switchScene.switchToScene(menuBar, "SelectClubFXML");
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-        });
-
-        maakClub.setOnAction(actionEvent -> {
-            try {
-                switchScene.switchToScene(menuBar, "AanmakenClubFXML");
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-        });
-
-        dashboard.setOnAction(actionEvent -> {
-            try {
-                switchScene.switchToScene(menuBar, "DashboardFXML");
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-        });
-
-        if(bekijkClub != null) {
-            bekijkClub.setOnAction(actionEvent -> {
-                try {
-                    switchScene.switchToScene(menuBar, "BekijkClubFXML");
-                } catch (IOException e) {
-                    System.out.println(e);
-                }
-            });
-
-            organiseerToernooi.setOnAction(actionEvent -> {
-                try {
-                    switchScene.switchToScene(menuBar, "OrganiseerToernooiFXML");
-                } catch (IOException e) {
-                    System.out.println(e);
-                }
-            });
-
-            aanmakenMatch.setOnAction(actionEvent -> {
-                try {
-                    switchScene.switchToScene(menuBar, "AanmakenMatchenFXML");
-                } catch (IOException e) {
-                    System.out.println(e);
-                }
-            });
-
-            bekijkMatches.setOnAction(actionEvent -> {
-                try {
-                    switchScene.switchToScene(menuBar, "BekijkMatchesFXML");
-                } catch (IOException e) {
-                    System.out.println(e);
-                }
-            });
-
-            bekijkDeelnames.setOnAction(actionEvent -> {
-                try {
-                    switchScene.switchToScene(menuBar, "BekijkDeelnamesFXML");
-                } catch (IOException e) {
-                    System.out.println(e);
-                }
-            });
+    private void switchScene(String fxml) {
+        try {
+            switchScene.switchToScene(menuBar, fxml);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -32,7 +32,7 @@ public class AanmakenSpelerController extends BaseController
     private TextField emailInput;
 
     @FXML
-    private ChoiceBox<String> geslachtSelector;
+    private ChoiceBox<Geslachten> geslachtSelector;
 
     @FXML
     private TextField gewichtInput;
@@ -57,7 +57,6 @@ public class AanmakenSpelerController extends BaseController
     @FXML
     private Button voegToeKnop;
 
-    private String geslachten[] = Arrays.stream(Geslachten.values()).map(Enum::toString).toArray(String[]::new);
     private Integer dagen[] =  IntStream.rangeClosed(1, 31).boxed().toArray(Integer[]::new);
     private Integer maanden[] =  IntStream.rangeClosed(1, 12).boxed().toArray(Integer[]::new);
     private ChangeScene switchScene = new ChangeScene();
@@ -67,7 +66,7 @@ public class AanmakenSpelerController extends BaseController
     @FXML
     void initialize() {
         service = new SpelerService(new SpelersDAO());
-        geslachtSelector.setItems(FXCollections.observableArrayList(geslachten));
+        geslachtSelector.getItems().addAll(Geslachten.values());
         dagInput.setItems(FXCollections.observableArrayList((dagen)));
         maandInput.setItems(FXCollections.observableArrayList((maanden)));
         voegToeKnop.setOnAction(this::maakSpeler);
@@ -87,7 +86,7 @@ public class AanmakenSpelerController extends BaseController
                     naamInput.getText(), telefoonNummerInput.getText(), dagInput.getValue(),
                     maandInput.getValue(), jaarInput.getText(),
                     gewichtInput.getText(), lengteInput.getText(),
-                    rankingInput.getText(), getGeslachtFrom(geslachtSelector.getValue()), emailInput.getText()
+                    rankingInput.getText(), geslachtSelector.getValue(), emailInput.getText()
             );
                     SpelerSessie.getSessie().setSpeler(speler);
             try {
@@ -100,10 +99,4 @@ public class AanmakenSpelerController extends BaseController
         }
     }
 
-    private Geslachten getGeslachtFrom(String geselecteerdGeslacht) {
-        if(geselecteerdGeslacht == null || geselecteerdGeslacht.isEmpty()){
-            throw new EmptyInputException("Je moet een geslacht selecteren voor verder gaan");
-        }
-        return Geslachten.valueOf(geslachtSelector.getValue());
-    }
 }

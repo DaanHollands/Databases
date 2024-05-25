@@ -23,7 +23,7 @@ public class FinaleService extends FinaleMatchenHelper {
             Toernooien toernooi, Velden veld,
             Integer startDag, Integer startMaand, Integer startJaar,
             String startUur, String startMinuut, Spelers scheids,
-            Map.Entry<ReeksenWaardes, Integer> reeks, Integer ronde
+            ReeksenWaardes reeks, Integer reeksniveau, Integer ronde
     ) {
 
         Optional<RuntimeException> exception = validateExceptions(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut);
@@ -31,7 +31,7 @@ public class FinaleService extends FinaleMatchenHelper {
             throw exception.get();
         }
 
-        Finales finale = (Finales) createMatch(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, ronde);
+        Finales finale = (Finales) createMatch(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, reeksniveau, ronde);
         Scheidsen nieuweScheids = new ScheidenDAO().find(scheids.getSpelerID());
 
         if(nieuweScheids == null) {

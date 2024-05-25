@@ -106,6 +106,17 @@ public class SpelerService {
         spelersDAO.update(speler);
     }
 
+    public void addEmailToSpeler(Spelers speler, String email) {
+        Optional<InvalidEmailException> exception = checkEmailException(email);
+        if(exception.isPresent()) {throw exception.get();}
+        SpelerEmailadressen emailadres = new SpelerEmailadressen();
+        emailadres.setSpelerID(speler);
+        emailadres.setEmail(email);
+        emailadres = new SpelerEmailadressenDAO().create(emailadres);
+        speler.addEmails(emailadres);
+        spelersDAO.update(speler);
+    }
+
     public void removeEmailFromSpeler(Integer spelerID, String email) {
         Set<SpelerEmailadressen> emailadressen = spelersDAO.find(spelerID).getEmails();
         for (SpelerEmailadressen spelerEmailadres : emailadressen) {

@@ -17,7 +17,7 @@ public abstract class FinaleMatchenHelper {
             Toernooien toernooi, Velden veld,
             Integer startDag, Integer startMaand, Integer startJaar,
             String startUur, String startMinuut,
-            Map.Entry<ReeksenWaardes, Integer> reeks, Integer ronde
+            ReeksenWaardes reeks, Integer reeksniveau, Integer ronde
     )
     {
         Matchen match = new Matchen();
@@ -32,7 +32,7 @@ public abstract class FinaleMatchenHelper {
         match.setToernooiID(toernooi);
         match.setVeldID(veld);
         match.setMatchRonde(ronde);
-        Reeksen newReeks = new ReeksenService(new ReeksenDAO()).getReeks(reeks.getValue(), reeks.getKey());
+        Reeksen newReeks = new ReeksenService(new ReeksenDAO()).getReeks(reeksniveau, reeks);
         match.setReeks(newReeks);
         return match;
     }

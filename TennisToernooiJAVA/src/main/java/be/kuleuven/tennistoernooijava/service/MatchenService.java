@@ -18,13 +18,13 @@ public class MatchenService extends FinaleMatchenHelper {
     public Matchen voegMatchAanToernooi(Toernooien toernooi, Velden veld,
                                 Integer startDag, Integer startMaand, Integer startJaar,
                                 String startUur, String startMinuut, Integer ronde,
-                                Map.Entry<ReeksenWaardes, Integer> reeks
+                                ReeksenWaardes reeks, Integer reeksniveau
     ) {
         Optional<RuntimeException> exception = validateExceptions(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut);
         if(exception.isPresent()) {
             throw exception.get();
         }
-        Matchen match = matchenDAO.create(createMatch(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, ronde));
+        Matchen match = matchenDAO.create(createMatch(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, reeksniveau, ronde));
         toernooi.addMatchen(match);
         return match;
     }
