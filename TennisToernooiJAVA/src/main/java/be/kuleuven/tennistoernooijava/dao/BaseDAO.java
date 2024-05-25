@@ -1,9 +1,10 @@
 package be.kuleuven.tennistoernooijava.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.hibernate.criterion.CriteriaQuery;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface BaseDAO<T, ID> {
     EntityManagerFactory sessionFactory = Persistence.createEntityManagerFactory("be.kuleuven.tennistoernooijava.databasePU");
@@ -58,5 +59,17 @@ public interface BaseDAO<T, ID> {
 
     default List<T> findAll() {
         return entityManager.createQuery("FROM " + getEntityClass().getName()).getResultList();
+    }
+
+    default <T> List<T> executeQuery(String qlString, Class<T> resultClass, Map<String, Object> parameters) {
+        TypedQuery<T> query = entityManager.createQuery(qlString, resultClass);
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
     }
 }

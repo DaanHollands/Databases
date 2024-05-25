@@ -13,15 +13,4 @@ public class BallenraperDAO implements BaseDAO<Ballenrapers, Integer> {
         return Ballenrapers.class;
     }
 
-    public List<Ballenrapers> getBallenraperFromSpeler(Spelers speler) {
-        TypedQuery<Ballenrapers> query = entityManager.createQuery(
-                "SELECT b FROM Ballenrapers b WHERE b.speler = :spelerID",
-                Ballenrapers.class);
-        query.setParameter("spelerID", speler);
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
 }

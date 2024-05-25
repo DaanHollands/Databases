@@ -80,7 +80,7 @@ public class OrganiseerToernooiController extends BaseController
                 speler
             );
             Map<Map<Integer, List<Integer>>, Map<ReeksenWaardes, Integer>> map = new HashMap<>();
-            map.put(new MatchenService(new MatchenDAO()).calculateMatches(Integer.parseInt(beginMatchenInput.getText())), reeksen);
+            map.put(FinaleMatchenHelper.calculateMatches(Integer.parseInt(beginMatchenInput.getText())), reeksen);
             MatchenHolderService.getInstance().setData(map);
 
             try {

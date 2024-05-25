@@ -3,9 +3,10 @@ package be.kuleuven.tennistoernooijava.dao;
 import be.kuleuven.tennistoernooijava.models.Matchen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 
-import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MatchenDAO implements BaseDAO<Matchen, Integer> {
     @Override
@@ -14,27 +15,27 @@ public class MatchenDAO implements BaseDAO<Matchen, Integer> {
     }
 
     public List<Matchen> getMatchenFrom(Spelers speler) {
-        TypedQuery<Matchen> query = entityManager.createQuery(
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("spelerID", speler.getSpelerID());
+        return executeQuery(
                 "SELECT m FROM Matchen m " +
                         "LEFT JOIN m.deelnamens d " +
                         "WHERE d.spelerID.spelerID = :spelerID",
-                Matchen.class);
-        query.setParameter("spelerID", speler.getSpelerID());
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
+                Matchen.class,
+                parameters
+        );
     }
 
-    public List<Matchen> getMatchenFromEverything(Spelers speler) {
-        TypedQuery<Matchen> query = entityManager.createQuery(
+    public List<Matchen> getMatchenAndFinalesFrom(Spelers speler) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("spelerID", speler.getSpelerID());
+        return executeQuery(
                 "SELECT DISTINCT m FROM Matchen m " +
                         "LEFT JOIN FETCH m.deelnamens d " +
                         "WHERE d.spelerID.spelerID = :spelerID " +
                         "OR m.toernooiID.wedstrijdleider.speler.spelerID = :spelerID",
-                Matchen.class);
-        query.setParameter("spelerID", speler.getSpelerID());
-        return query.getResultList();
+                Matchen.class,
+                parameters
+        );
     }
 }

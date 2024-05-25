@@ -10,61 +10,38 @@ import be.kuleuven.tennistoernooijava.models.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-public class FinaleService {
+public class FinaleService extends FinaleMatchenHelper {
     private static FinaleDAO finaleDAO;
 
     public FinaleService(FinaleDAO finaleDAO) {
-        this.finaleDAO = finaleDAO;
+        FinaleService.finaleDAO = finaleDAO;
     }
 
-    public Finales voegFinaleAanToernooi(Toernooien toernooi, Velden veld,
-                                      Integer startDag, Integer startMaand, Integer startJaar,
-                                      Integer startdUur, Integer startMinuut, Spelers scheids,
-                                     Map.Entry<ReeksenWaardes, Integer> reeks, Integer ronde
+    public Finales voegFinaleAanToernooi(
+            Toernooien toernooi, Velden veld,
+            Integer startDag, Integer startMaand, Integer startJaar,
+            String startUur, String startMinuut, Spelers scheids,
+            Map.Entry<ReeksenWaardes, Integer> reeks, Integer ronde
     ) {
-        if (startDag<=0 || startDag >31 ){
-            throw new IllegalDateException("Ongeldige begindag");
-        }
-        if (startMaand<=0 || startMaand >12 ){
-            throw new IllegalDateException("Ongeldige beginmaand");
-        }
-        if (startJaar<=2023 ){
-            throw new IllegalDateException("Ongeldig beginjaar");
-        }
-        if (startdUur<=0 || startdUur >24 ){
-            throw new IllegalTimeException("Ongeldig Startuur");
-        }
-        if (startMinuut <0 || startMinuut >=60 ){
-            throw new IllegalTimeException("Ongeldig Startuur");
-        }
-        if(veld == null) {
-            throw new EmptyInputException("Het veld input mag niet leeg zijn!");
+
+        Optional<RuntimeException> exception = validateExceptions(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut);
+        if(exception.isPresent()) {
+            throw exception.get();
         }
 
-        Finales finale = new Finales();
-        Datums startDatum = new Datums();
-        startDatum.setDag(startDag);
-        startDatum.setMaand(startMaand);
-        startDatum.setJaar(startJaar);
-        startDatum.setUur(startdUur);
-        startDatum.setMinuten(startMinuut);
-        startDatum = new DatumsDAO().create(startDatum);
-        finale.setDatumID(startDatum);
-        finale.setMatchRonde(ronde);
+        Finales finale = (Finales) createMatch(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, ronde);
         Scheidsen nieuweScheids = new ScheidenDAO().find(scheids.getSpelerID());
 
         if(nieuweScheids == null) {
             nieuweScheids = new Scheidsen();
             nieuweScheids.setScheids(scheids);
-            nieuweScheids.setArbiterRanking("Was dees");
+            nieuweScheids.setArbiterRanking("Empty");
             nieuweScheids = new ScheidenDAO().create(nieuweScheids);
         }
+
         finale.setScheidsID(nieuweScheids);
-        finale.setToernooiID(toernooi);
-        finale.setVeldID(veld);
-        Reeksen newReeks = new ReeksenService(new ReeksenDAO()).getReeks(reeks.getValue(), reeks.getKey());
-        finale.setReeks(newReeks);
         finale = finaleDAO.create(finale);
         toernooi.addMatchen(finale);
         return finale;

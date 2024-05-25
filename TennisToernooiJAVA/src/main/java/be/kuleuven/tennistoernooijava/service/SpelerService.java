@@ -69,7 +69,7 @@ public class SpelerService {
         return speler;
     }
 
-    public Spelers initializeSpeler(
+    public Spelers initializeSpeler (
             Spelers speler,
             String naam,
             String telefoonnummer,

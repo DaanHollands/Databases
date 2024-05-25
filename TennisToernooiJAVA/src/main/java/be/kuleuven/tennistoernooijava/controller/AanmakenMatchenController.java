@@ -11,19 +11,15 @@ import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.VeldSoort;
 import be.kuleuven.tennistoernooijava.service.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AanmakenMatchenController extends BaseController
 {
@@ -69,81 +65,31 @@ public class AanmakenMatchenController extends BaseController
         matchenService = new MatchenService(new MatchenDAO());
         finaleService = new FinaleService(new FinaleDAO());
         clubService = new TennisclubService(new TennisclubDAO());
-        spelers.addAll(clubService.getAlleSpelers(speler.getTennisclubID()));
+
         toernooi = clubService.getToernooiVanSpeler(speler.getTennisclubID(), speler);
+
         scheidsText.setVisible(false);
         matchSettingAnchorpane.setVisible(false);
-        veldList.getItems().addAll(VeldSoort.values());
         spelerListScheids.setVisible(false);
+
+        spelers.addAll(clubService.getAlleSpelers(speler.getTennisclubID()));
+        veldList.getItems().addAll(VeldSoort.values());
 
         if(MatchenHolderService.getInstance() != null && MatchenHolderService.getInstance().getData() != null) {
             displayMatchenList(MatchenHolderService.getInstance().getData().keySet());
         }
-
-        if(toernooi != null) {
-            toernooiText.setText(
-                    toernooi.getBeginDatumID().getDag() + "/" + toernooi.getBeginDatumID().getMaand() + "/" + toernooi.getBeginDatumID().getMaand()
-                            + " tot " +
-                        toernooi.getEindDatumID().getDag() + "/" + toernooi.getEindDatumID().getMaand() + "/" + toernooi.getEindDatumID().getMaand()
-            );
-        }
+        updateToernooien(toernooi);
+        updateSpelers(spelers);
 
         matchenList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(matchenList.getSelectionModel().getSelectedItem().contains("Match:")) {
-                    matchSettingAnchorpane.setVisible(true);
-                    if(matchenList.getSelectionModel().getSelectedItem().contains("Finale")) {
-                        scheidsText.setVisible(true);
-                        spelerListScheids.setVisible(true);
-                    }
-                    else {
-                        scheidsText.setVisible(false);
-                        spelerListScheids.setVisible(false);
-                    }
-                }
-                else {
-                    matchSettingAnchorpane.setVisible(false);
-                }
+                handleMatchenListClick();
             }
         });
 
-        okeKnop.setOnAction(event -> {
-            try {
-                Map<ReeksenWaardes, Integer> reeksen = (Map<ReeksenWaardes, Integer>) MatchenHolderService.getInstance().getData().values().toArray()[0];
-                if(matchenList.getSelectionModel().getSelectedItem().contains("Finale")) {
-                    for(Map.Entry<ReeksenWaardes, Integer> map : reeksen.entrySet()) {
-                        finaleService.voegFinaleAanToernooi(
-                                toernooi, clubService.getOrCreateVeld(veldList.getSelectionModel().getSelectedItem(), speler.getTennisclubID()),
-                                datumPicker.getValue().getDayOfMonth(), datumPicker.getValue().getMonthValue(), datumPicker.getValue().getYear(),
-                                Integer.parseInt(uurInput.getText()), Integer.parseInt(minuutInput.getText()), spelers.get(spelerListScheids.getSelectionModel().getSelectedIndex()),
-                                map, Integer.parseInt(matchenList.getSelectionModel().getSelectedItem().split("->")[0].trim().split(":")[1].trim())
-                        );
-                    }
-                }
-                else {
-                    for (Map.Entry<ReeksenWaardes, Integer> map : reeksen.entrySet()) {
-                        matchenService.voegMatchAanToernooi(
-                                toernooi, clubService.getOrCreateVeld(veldList.getSelectionModel().getSelectedItem(), speler.getTennisclubID()),
-                                datumPicker.getValue().getDayOfMonth(), datumPicker.getValue().getMonthValue(), datumPicker.getValue().getYear(),
-                                Integer.parseInt(uurInput.getText()), Integer.parseInt(minuutInput.getText()), Integer.parseInt(matchenList.getSelectionModel().getSelectedItem().split("->")[0].trim().split(":")[1].trim()),
-                                map
-                        );
-                    }
-                    }
-                matchenList.getItems().remove(matchenList.getSelectionModel().getSelectedIndex());
-                if(matchenList.getItems().isEmpty()) {
-                    MatchenHolderService.clearInstance();
-                }
-            }
-            catch (IllegalDateException | IllegalTimeException | IllegalMatchInToernooiException | EmptyInputException e) {
-                System.out.println(e.getMessage());
-            }
-        });
+        okeKnop.setOnAction(event -> saveMatches());
 
-        for (Spelers speler : spelers) {
-            spelerListScheids.getItems().add(speler.getNaam());
-        }
 
     }
 
@@ -163,5 +109,92 @@ public class AanmakenMatchenController extends BaseController
                 }
             }
         }
+    }
+
+    private void updateToernooien(Toernooien toernooi) {
+        if(toernooi != null) {
+            toernooiText.setText(
+                    toernooi.getBeginDatumID().getDag() + "/" + toernooi.getBeginDatumID().getMaand() + "/" + toernooi.getBeginDatumID().getJaar()
+                            + " tot " +
+                    toernooi.getEindDatumID().getDag() + "/" + toernooi.getEindDatumID().getMaand() + "/" + toernooi.getEindDatumID().getJaar()
+            );
+        }
+    }
+
+    private void updateSpelers(ArrayList<Spelers> spelers) {
+        for (Spelers speler : spelers) {
+            spelerListScheids.getItems().add(speler.getNaam());
+        }
+    }
+
+    private void handleMatchenListClick() {
+        if(matchenList.getSelectionModel().getSelectedItem().contains("Match:")) {
+            matchSettingAnchorpane.setVisible(true);
+            if(matchenList.getSelectionModel().getSelectedItem().contains("Finale")) {
+                scheidsText.setVisible(true);
+                spelerListScheids.setVisible(true);
+            }
+            else {
+                scheidsText.setVisible(false);
+                spelerListScheids.setVisible(false);
+            }
+        }
+        else {
+            matchSettingAnchorpane.setVisible(false);
+        }
+    }
+
+    private void saveMatches() {
+        try {
+            Map<ReeksenWaardes, Integer> reeksen = new ArrayList<>(MatchenHolderService.getInstance().getData().values()).get(0);
+            String selectedItem = matchenList.getSelectionModel().getSelectedItem();
+            int matchNumber = Integer.parseInt(selectedItem.split("->")[0].trim().split(":")[1].trim());
+
+            //Voor elke reeks, gaan we een match maken of finale maken
+            for(Map.Entry<ReeksenWaardes, Integer> map : reeksen.entrySet()) {
+                if(selectedItem.contains("Finale")) {
+                    addFinaleToernooi(map, matchNumber);
+                } else {
+                    addMatchToernooi(map, matchNumber);
+                }
+            }
+
+            matchenList.getItems().remove(matchenList.getSelectionModel().getSelectedIndex());
+            if(matchenList.getItems().isEmpty()) {
+                MatchenHolderService.clearInstance();
+            }
+        }
+        catch (IllegalDateException | IllegalTimeException | IllegalMatchInToernooiException | EmptyInputException e) {
+            showAlert("Error", e.getMessage());
+        }
+    }
+
+    private void addFinaleToernooi(Map.Entry<ReeksenWaardes, Integer> map, int matchNumber) {
+        finaleService.voegFinaleAanToernooi(
+                toernooi,
+                clubService.getOrCreateVeld(veldList.getSelectionModel().getSelectedItem(), speler.getTennisclubID()),
+                datumPicker.getValue().getDayOfMonth(),
+                datumPicker.getValue().getMonthValue(),
+                datumPicker.getValue().getYear(),
+                uurInput.getText(),
+                minuutInput.getText(),
+                spelers.get(spelerListScheids.getSelectionModel().getSelectedIndex()),
+                map,
+                matchNumber
+        );
+    }
+
+    private void addMatchToernooi(Map.Entry<ReeksenWaardes, Integer> map, int matchNumber) {
+        matchenService.voegMatchAanToernooi(
+                toernooi,
+                clubService.getOrCreateVeld(veldList.getSelectionModel().getSelectedItem(), speler.getTennisclubID()),
+                datumPicker.getValue().getDayOfMonth(),
+                datumPicker.getValue().getMonthValue(),
+                datumPicker.getValue().getYear(),
+                uurInput.getText(),
+                minuutInput.getText(),
+                matchNumber,
+                map
+        );
     }
 }

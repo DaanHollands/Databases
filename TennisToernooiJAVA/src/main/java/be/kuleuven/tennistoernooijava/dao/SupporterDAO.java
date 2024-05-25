@@ -13,15 +13,4 @@ public class SupporterDAO implements BaseDAO<Supporters, Integer> {
         return Supporters.class;
     }
 
-    public List<Supporters> getSupporterFromSpeler(Spelers speler) {
-        TypedQuery<Supporters> query = entityManager.createQuery(
-                "SELECT s FROM Supporters s WHERE s.supporterID = :spelerID",
-                Supporters.class);
-        query.setParameter("spelerID", speler);
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
 }

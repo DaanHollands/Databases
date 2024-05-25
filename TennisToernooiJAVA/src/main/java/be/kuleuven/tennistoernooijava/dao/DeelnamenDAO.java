@@ -12,16 +12,4 @@ public class DeelnamenDAO implements BaseDAO<Deelnamen, Integer> {
     public Class<Deelnamen> getEntityClass() {
         return Deelnamen.class;
     }
-
-    public List<Deelnamen> getDeelnamenFromSpeler(Spelers speler) {
-        TypedQuery<Deelnamen> query = entityManager.createQuery(
-                "SELECT m FROM Deelnamen m WHERE m.spelerID = :spelerID",
-                Deelnamen.class);
-        query.setParameter("spelerID", speler);
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
 }

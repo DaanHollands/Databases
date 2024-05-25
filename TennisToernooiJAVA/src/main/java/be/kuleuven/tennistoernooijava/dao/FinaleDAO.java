@@ -1,49 +1,30 @@
 package be.kuleuven.tennistoernooijava.dao;
 
 import be.kuleuven.tennistoernooijava.models.Finales;
+import be.kuleuven.tennistoernooijava.models.Matchen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FinaleDAO implements BaseDAO<Finales, Integer> {
+public class FinaleDAO implements BaseDAO<Finales, Integer>{
     @Override
     public Class<Finales> getEntityClass() {
         return Finales.class;
     }
 
-//    public List<Finales> getFinalesEveythingFromSpeler(Spelers speler) {
-//        TypedQuery<Finales> query = entityManager.createQuery(
-//                "SELECT f FROM Finales f " +
-//                        "LEFT JOIN f.deelnamens d " +
-//                        "LEFT JOIN f.ballenrapers b " +
-//                        "LEFT JOIN f.supporters s " +
-//                        "WHERE d.spelerID.spelerID = :spelerID " +
-//                        "OR f.scheidsID.scheids.spelerID = :spelerID " +
-//                        "OR b.speler.spelerID = :spelerID " +
-//                        "OR s.supporterID.spelerID = :spelerID " +
-//                        "OR f.toernooiID.wedstrijdleider.speler.spelerID = :spelerID ",
-//                Finales.class);
-//        query.setParameter("spelerID", speler.getSpelerID());
-//        try {
-//            return query.getResultList();
-//        } catch (NoResultException e) {
-//            return null;
-//        }
-//    }
-
     public List<Finales> getFinalesFromSpeler(Spelers speler) {
-        TypedQuery<Finales> query = entityManager.createQuery(
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("spelerID", speler.getSpelerID());
+        return executeQuery(
                 "SELECT f FROM Finales f " +
                         "LEFT JOIN f.deelnamens d " +
                         "WHERE d.spelerID.spelerID = :spelerID ",
-                Finales.class);
-        query.setParameter("spelerID", speler.getSpelerID());
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
+                Finales.class,
+                parameters
+        );
     }
 }
