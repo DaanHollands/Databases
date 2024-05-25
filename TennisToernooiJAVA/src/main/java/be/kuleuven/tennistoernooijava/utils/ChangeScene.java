@@ -1,4 +1,4 @@
-package be.kuleuven.tennistoernooijava.service;
+package be.kuleuven.tennistoernooijava.utils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,7 +18,6 @@ public class ChangeScene {
     }
 
     public void switchToScene(Node node, String sceneNaam) throws IOException {
-        URL url = getClass().getResource("/be/kuleuven/tennistoernooijava/" + sceneNaam +".fxml");
         Parent root = FXMLLoader.load(getClass().getResource("/be/kuleuven/tennistoernooijava/" + sceneNaam + ".fxml"));
         stage = (Stage)node.getScene().getWindow();
         scene = new Scene(root);

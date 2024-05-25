@@ -3,7 +3,7 @@ package be.kuleuven.tennistoernooijava.controller;
 import be.kuleuven.tennistoernooijava.dao.*;
 import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.Posities;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

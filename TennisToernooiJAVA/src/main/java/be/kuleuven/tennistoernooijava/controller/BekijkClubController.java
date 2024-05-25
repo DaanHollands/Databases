@@ -5,7 +5,7 @@ import be.kuleuven.tennistoernooijava.models.Adressen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
 import be.kuleuven.tennistoernooijava.models.Toernooien;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
 import javafx.fxml.*;
 import javafx.scene.control.ListView;

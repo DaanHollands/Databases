@@ -21,4 +21,6 @@ module be.kuleuven.tennistoernooijava {
     exports be.kuleuven.tennistoernooijava.view;
     exports be.kuleuven.tennistoernooijava.models;
     exports be.kuleuven.tennistoernooijava;
+    exports be.kuleuven.tennistoernooijava.utils;
+    opens be.kuleuven.tennistoernooijava.utils to javafx.fxml;
 }

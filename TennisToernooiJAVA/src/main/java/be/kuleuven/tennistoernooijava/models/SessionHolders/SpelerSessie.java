@@ -1,4 +1,4 @@
-package be.kuleuven.tennistoernooijava.service;
+package be.kuleuven.tennistoernooijava.models.SessionHolders;
 
 import be.kuleuven.tennistoernooijava.models.Spelers;
 

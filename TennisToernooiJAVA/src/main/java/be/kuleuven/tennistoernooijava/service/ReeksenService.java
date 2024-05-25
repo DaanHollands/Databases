@@ -1,9 +1,8 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalReeksException;
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
+import be.kuleuven.tennistoernooijava.exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalReeksException;
+import be.kuleuven.tennistoernooijava.exceptions.InvalidInputException;
 import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
@@ -13,7 +12,6 @@ import be.kuleuven.tennistoernooijava.models.Spelers;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Optional;
 
 public class ReeksenService {
     private final ReeksenDAO reeksenDAO;

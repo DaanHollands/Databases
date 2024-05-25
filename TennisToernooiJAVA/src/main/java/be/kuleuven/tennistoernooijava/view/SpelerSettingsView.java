@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.view;
 
 import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;

@@ -7,7 +7,7 @@ import be.kuleuven.tennistoernooijava.models.Finales;
 import be.kuleuven.tennistoernooijava.models.Matchen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.enums.Uitslagen;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.FinaleService;
 import be.kuleuven.tennistoernooijava.service.MatchenService;
 import be.kuleuven.tennistoernooijava.service.SpelerService;

@@ -1,9 +1,11 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalMatchInToernooiException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
+import be.kuleuven.tennistoernooijava.exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalMatchInToernooiException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalTimeException;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.MatchenHolderSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
@@ -11,15 +13,12 @@ import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;
 import be.kuleuven.tennistoernooijava.enums.VeldSoort;
 import be.kuleuven.tennistoernooijava.service.*;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AanmakenMatchenController extends BaseController
 {
@@ -86,8 +85,8 @@ public class AanmakenMatchenController extends BaseController
         updateToernooien(toernooi);
         spelers.addAll(clubService.getAlleSpelers(speler.getTennisclubID()));
         updateSpelers(spelers);
-        if (MatchenHolderService.getInstance() != null && MatchenHolderService.getInstance().getData() != null) {
-            displayMatchenList(MatchenHolderService.getInstance().getData().keySet());
+        if (MatchenHolderSessie.getInstance() != null && MatchenHolderSessie.getInstance().getData() != null) {
+            displayMatchenList(MatchenHolderSessie.getInstance().getData().keySet());
         }
     }
 
@@ -147,7 +146,7 @@ public class AanmakenMatchenController extends BaseController
 
     private void saveMatches() {
         try {
-            Map<ReeksenWaardes, Integer> reeksen = new ArrayList<>(MatchenHolderService.getInstance().getData().values()).get(0);
+            Map<ReeksenWaardes, Integer> reeksen = new ArrayList<>(MatchenHolderSessie.getInstance().getData().values()).get(0);
             String selectedItem = matchenList.getSelectionModel().getSelectedItem();
             int matchNumber = Integer.parseInt(selectedItem.split("->")[0].trim().split(":")[1].trim());
 
@@ -161,7 +160,7 @@ public class AanmakenMatchenController extends BaseController
 
             matchenList.getItems().remove(matchenList.getSelectionModel().getSelectedIndex());
             if (matchenList.getItems().isEmpty()) {
-                MatchenHolderService.clearInstance();
+                MatchenHolderSessie.clearInstance();
             }
         } catch (IllegalDateException | IllegalTimeException | IllegalMatchInToernooiException | EmptyInputException e) {
             showAlert("Error", e.getMessage());

@@ -1,11 +1,10 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.*;
+import be.kuleuven.tennistoernooijava.exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
-import be.kuleuven.tennistoernooijava.models.SpelerEmailadressen;
 import be.kuleuven.tennistoernooijava.models.Spelers;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import be.kuleuven.tennistoernooijava.view.SpelerSettingsView;
 import javafx.collections.FXCollections;

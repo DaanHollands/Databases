@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidPhoneNumberException;
+import be.kuleuven.tennistoernooijava.exceptions.InvalidPhoneNumberException;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.models.Adressen;
 

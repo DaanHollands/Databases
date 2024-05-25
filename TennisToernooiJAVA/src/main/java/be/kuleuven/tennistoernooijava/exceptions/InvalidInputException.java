@@ -1,4 +1,4 @@
-package be.kuleuven.tennistoernooijava.Exceptions;
+package be.kuleuven.tennistoernooijava.exceptions;
 
 public class InvalidInputException extends RuntimeException {
     public InvalidInputException(String message) {

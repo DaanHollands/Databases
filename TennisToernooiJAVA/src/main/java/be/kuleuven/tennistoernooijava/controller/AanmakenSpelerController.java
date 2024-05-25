@@ -1,12 +1,12 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.*;
+import be.kuleuven.tennistoernooijava.exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.enums.Geslachten;
-import be.kuleuven.tennistoernooijava.service.ChangeScene;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
+import be.kuleuven.tennistoernooijava.utils.ChangeScene;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class AanmakenSpelerController extends BaseController

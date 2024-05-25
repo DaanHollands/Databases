@@ -1,6 +1,6 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.*;
+import be.kuleuven.tennistoernooijava.exceptions.*;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;

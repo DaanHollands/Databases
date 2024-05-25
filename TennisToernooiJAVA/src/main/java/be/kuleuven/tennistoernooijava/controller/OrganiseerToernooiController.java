@@ -1,14 +1,16 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalReeksException;
-import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
+import be.kuleuven.tennistoernooijava.exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.exceptions.InvalidInputException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalReeksException;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.MatchenHolderSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.Spelers;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
 import be.kuleuven.tennistoernooijava.service.*;
+import be.kuleuven.tennistoernooijava.utils.ChangeScene;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.*;
@@ -81,7 +83,7 @@ public class OrganiseerToernooiController extends BaseController
             );
             Map<Map<Integer, List<Integer>>, Map<ReeksenWaardes, Integer>> map = new HashMap<>();
             map.put(FinaleMatchenHelper.calculateMatches(Integer.parseInt(beginMatchenInput.getText())), reeksen);
-            MatchenHolderService.getInstance().setData(map);
+            MatchenHolderSessie.getInstance().setData(map);
 
             try {
                 new ChangeScene().switchToScene(opslaanKnop, "AanmakenMatchenFXML");

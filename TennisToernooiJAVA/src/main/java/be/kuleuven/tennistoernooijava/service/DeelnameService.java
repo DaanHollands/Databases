@@ -1,13 +1,10 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalReeksException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalReeksException;
 import be.kuleuven.tennistoernooijava.dao.DeelnamenDAO;
-import be.kuleuven.tennistoernooijava.dao.FinaleDAO;
 import be.kuleuven.tennistoernooijava.dao.MatchenDAO;
-import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
 import be.kuleuven.tennistoernooijava.models.*;
 
-import java.util.List;
 import java.util.Set;
 
 public class DeelnameService {

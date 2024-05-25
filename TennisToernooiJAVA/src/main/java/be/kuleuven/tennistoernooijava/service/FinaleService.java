@@ -1,15 +1,11 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
 import be.kuleuven.tennistoernooijava.dao.*;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
 import be.kuleuven.tennistoernooijava.models.*;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class FinaleService extends FinaleMatchenHelper {

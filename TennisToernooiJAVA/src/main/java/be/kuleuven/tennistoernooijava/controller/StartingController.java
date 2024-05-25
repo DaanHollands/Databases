@@ -1,11 +1,11 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.SpelerNotFoundException;
+import be.kuleuven.tennistoernooijava.exceptions.SpelerNotFoundException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.models.Spelers;
-import be.kuleuven.tennistoernooijava.service.ChangeScene;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
+import be.kuleuven.tennistoernooijava.utils.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.Node;

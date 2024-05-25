@@ -1,9 +1,9 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalTimeException;
-import be.kuleuven.tennistoernooijava.Exceptions.InvalidInputException;
+import be.kuleuven.tennistoernooijava.exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalTimeException;
+import be.kuleuven.tennistoernooijava.exceptions.InvalidInputException;
 import be.kuleuven.tennistoernooijava.dao.DatumsDAO;
 import be.kuleuven.tennistoernooijava.dao.ReeksenDAO;
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;

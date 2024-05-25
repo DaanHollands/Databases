@@ -1,7 +1,7 @@
 package be.kuleuven.tennistoernooijava.service;
 
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalDateException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalWedstrijdleiderException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalDateException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalWedstrijdleiderException;
 import be.kuleuven.tennistoernooijava.dao.*;
 import be.kuleuven.tennistoernooijava.enums.Uitslagen;
 import be.kuleuven.tennistoernooijava.models.*;
@@ -48,26 +48,26 @@ public class ToernooiService {
         Set<Matchen> matchen = toernooien.getMatchen();
         for(Matchen match : matchen) {
             if(match.getUitslag() != null) {
-                Deelnamen gewonne;
-                Deelnamen verloren;
+                Deelnamen gewonnenSpeler;
+                Deelnamen verlorenSpeler;
                 if(match.getUitslag().equals(Uitslagen.GEWONNEN)) {
-                    gewonne = (Deelnamen) match.getDeelnamens().toArray()[0];
-                    verloren = (Deelnamen) match.getDeelnamens().toArray()[1];
+                    gewonnenSpeler = (Deelnamen) match.getDeelnamens().toArray()[0];
+                    verlorenSpeler = (Deelnamen) match.getDeelnamens().toArray()[1];
                 } else if(match.getUitslag().equals(Uitslagen.VERLOREN)) {
-                    gewonne = (Deelnamen) match.getDeelnamens().toArray()[1];
-                    verloren = (Deelnamen) match.getDeelnamens().toArray()[0];
+                    gewonnenSpeler = (Deelnamen) match.getDeelnamens().toArray()[1];
+                    verlorenSpeler = (Deelnamen) match.getDeelnamens().toArray()[0];
                 } else {
                     continue;
                 }
                 for(Matchen newMatch : matchen) {
                     if((newMatch.getMatchRonde() == match.getMatchRonde()+1) && (newMatch.getDeelnamens().size() < 2) && (newMatch.getReeks().equals(match.getReeks()))) {
-                        if(matchen.stream().filter(m -> m.getMatchRonde() == match.getMatchRonde()+1).anyMatch(nm -> nm.getDeelnamens().contains(gewonne))) {
+                        if(matchen.stream().filter(m -> m.getMatchRonde() == match.getMatchRonde()+1).anyMatch(nm -> nm.getDeelnamens().contains(gewonnenSpeler))) {
                             break;
                         }
-                        gewonne.setMatchID(newMatch);
-                        newMatch.addDeelname(gewonne);
+                        gewonnenSpeler.setMatchID(newMatch);
+                        newMatch.addDeelname(gewonnenSpeler);
                         new MatchenDAO().update(newMatch);
-                        new DeelnamenDAO().update(gewonne);
+                        new DeelnamenDAO().update(gewonnenSpeler);
                         break;
                     }
                 }

@@ -1,13 +1,13 @@
 package be.kuleuven.tennistoernooijava.controller;
-import be.kuleuven.tennistoernooijava.Exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalAdresException;
+import be.kuleuven.tennistoernooijava.exceptions.EmptyInputException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalAdresException;
 import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
-import be.kuleuven.tennistoernooijava.service.ChangeScene;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.SpelerService;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
+import be.kuleuven.tennistoernooijava.utils.ChangeScene;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;

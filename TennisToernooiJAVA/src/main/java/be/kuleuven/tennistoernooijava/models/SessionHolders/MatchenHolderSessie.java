@@ -1,25 +1,23 @@
-package be.kuleuven.tennistoernooijava.service;
+package be.kuleuven.tennistoernooijava.models.SessionHolders;
 
 import be.kuleuven.tennistoernooijava.enums.ReeksenWaardes;
-import be.kuleuven.tennistoernooijava.models.Reeksen;
-import javafx.scene.control.ListView;
 
 import java.util.List;
 import java.util.Map;
 
-public class MatchenHolderService {
-    private static MatchenHolderService instance = new MatchenHolderService();
+public class MatchenHolderSessie {
+    private static MatchenHolderSessie instance = new MatchenHolderSessie();
 
     private Map<Map<Integer, List<Integer>>, Map<ReeksenWaardes, Integer>> data;
 
-    private MatchenHolderService() { }
+    private MatchenHolderSessie() { }
 
-    public static MatchenHolderService getInstance() {
+    public static MatchenHolderSessie getInstance() {
         return instance;
     }
 
     public static void clearInstance() {
-        instance = new MatchenHolderService();
+        instance = new MatchenHolderSessie();
     }
 
     public Map<Map<Integer, List<Integer>>, Map<ReeksenWaardes, Integer>> getData() {
@@ -30,7 +28,4 @@ public class MatchenHolderService {
         this.data = data;
     }
 
-    public void updateMatches(){
-
-    }
 }

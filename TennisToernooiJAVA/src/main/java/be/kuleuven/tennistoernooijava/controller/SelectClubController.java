@@ -1,19 +1,15 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.Exceptions.ClubNotFoundException;
-import be.kuleuven.tennistoernooijava.Exceptions.IllegalClubException;
-import be.kuleuven.tennistoernooijava.dao.SpelersDAO;
+import be.kuleuven.tennistoernooijava.exceptions.ClubNotFoundException;
+import be.kuleuven.tennistoernooijava.exceptions.IllegalClubException;
 import be.kuleuven.tennistoernooijava.dao.TennisclubDAO;
 import be.kuleuven.tennistoernooijava.models.Tennisclubs;
-import be.kuleuven.tennistoernooijava.service.SpelerSessie;
-import be.kuleuven.tennistoernooijava.service.SpelerService;
+import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.service.TennisclubService;
 
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-
-import java.util.Optional;
 
 public class SelectClubController extends BaseController
 {
