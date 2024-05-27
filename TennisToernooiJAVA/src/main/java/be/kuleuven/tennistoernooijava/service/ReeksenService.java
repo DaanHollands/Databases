@@ -12,6 +12,7 @@ import be.kuleuven.tennistoernooijava.models.Spelers;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Map;
 import java.util.Optional;
 
 public class ReeksenService {
@@ -55,7 +56,7 @@ public class ReeksenService {
         return Period.between(geboortedatum, nu).getYears();
     }
 
-    public void validateExceptions(String reeksNiveau, ReeksenWaardes reeksenWaarde)
+    public void validateExceptions(String reeksNiveau, ReeksenWaardes reeksenWaarde, Map<ReeksenWaardes, Integer> reeksen)
     {
         if(reeksNiveau == null || reeksNiveau.isEmpty()) {
             throw new EmptyInputException("Het reeksNiveau is niet ingevuld, dit is een getal tussen 0 en 10");
@@ -69,5 +70,11 @@ public class ReeksenService {
         if(reeksenWaarde == null) {
             throw new IllegalReeksException("Je moet eerst een reeks kiezen");
         }
+
+        reeksen.forEach((key, value) -> {
+            if (value == Integer.parseInt(reeksNiveau) && key.equals(reeksenWaarde)) {
+                throw new IllegalReeksException("Deze reeks heb je er al tussen staan!");
+            }
+        });
     }
 }

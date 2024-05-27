@@ -145,6 +145,7 @@ public class AanmakenMatchenController extends BaseController
     }
 
     private void saveMatches() {
+
         try {
             Map<ReeksenWaardes, Integer> reeksen = new ArrayList<>(MatchenHolderSessie.getInstance().getData().values()).get(0);
             String selectedItem = matchenList.getSelectionModel().getSelectedItem();
@@ -183,6 +184,9 @@ public class AanmakenMatchenController extends BaseController
     }
 
     private void addMatchToernooi(ReeksenWaardes reeks, int reeksNiveau, int matchNumber) {
+        if(datumPicker.getValue() == null) {
+            throw new EmptyInputException("Je moet de datum wel nog invullen eh!");
+        }
         matchenService.voegMatchAanToernooi(
                 toernooi,
                 clubService.getOrCreateVeld(veldList.getSelectionModel().getSelectedItem(), speler.getTennisclubID()),

@@ -1,8 +1,6 @@
 package be.kuleuven.tennistoernooijava.controller;
 
-import be.kuleuven.tennistoernooijava.exceptions.EmptyInputException;
-import be.kuleuven.tennistoernooijava.exceptions.InvalidInputException;
-import be.kuleuven.tennistoernooijava.exceptions.IllegalReeksException;
+import be.kuleuven.tennistoernooijava.exceptions.*;
 import be.kuleuven.tennistoernooijava.models.SessionHolders.MatchenHolderSessie;
 import be.kuleuven.tennistoernooijava.models.SessionHolders.SpelerSessie;
 import be.kuleuven.tennistoernooijava.dao.ToernooienDAO;
@@ -65,15 +63,21 @@ public class OrganiseerToernooiController extends BaseController
         opslaanKnop.setOnAction(event -> {
             try {
                 saveToernooi();
-            } catch (IllegalReeksException e) {
+            } catch (IllegalReeksException | EmptyInputException e) {
                 showAlert("Error", e.getMessage());
             }
         });
     }
 
     private void saveToernooi() {
-        if(Integer.parseInt(beginMatchenInput.getText()) < 4) {
+        if(beginMatchenInput.getText().isEmpty() || beginMatchenInput.getText().contains("[a-zA-Z]+") || Integer.parseInt(beginMatchenInput.getText()) < 4) {
             throw new IllegalReeksException("Je moet minimaal 4 matches hebben!");
+        }
+        if(reeksen.size() < 4) {
+            throw new IllegalReeksException("Je moet minimaal 4 reeksen hebben!");
+        }
+        if(beginDatumInput.getValue() == null || eindDatumInput.getValue() == null) {
+            throw new EmptyInputException("Je bent de dagen van het toernooi vergeten");
         }
         try{
             toernooiService.createToernooi(club,
@@ -91,14 +95,14 @@ public class OrganiseerToernooiController extends BaseController
                 System.out.println(e.getMessage());
             }
 
-        }catch (IllegalArgumentException e){
+        }catch (IllegalDateException | IllegalWedstrijdleiderException e){
             showAlert("Error", e.getMessage());
         }
     }
 
     public void addReeks(ReeksenWaardes reeks, String niveau) {
         try {
-            reeksenService.validateExceptions(niveau, reeks);
+            reeksenService.validateExceptions(niveau, reeks, reeksen);
             Text text = new Text();
             text.setText(reeks.toString() + " - " + niveau);
             reeksen.put(reeks, Integer.parseInt(niveau));
