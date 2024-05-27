@@ -12,6 +12,7 @@ import be.kuleuven.tennistoernooijava.models.Spelers;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Optional;
 
 public class ReeksenService {
     private final ReeksenDAO reeksenDAO;
@@ -21,9 +22,9 @@ public class ReeksenService {
     }
 
     public Reeksen getReeks(Integer reeksNiveau, ReeksenWaardes reeks) {
-        Reeksen checkReeks = reeksenDAO.findFromNivea(reeks, reeksNiveau);
-        if(checkReeks != null) {
-            return checkReeks;
+        Optional<Reeksen> checkReeks = reeksenDAO.findFromNivea(reeks, reeksNiveau);
+        if(checkReeks.isPresent()) {
+            return checkReeks.get();
         }
         Reeksen newReeks = new Reeksen();
         newReeks.setReeks(reeks);

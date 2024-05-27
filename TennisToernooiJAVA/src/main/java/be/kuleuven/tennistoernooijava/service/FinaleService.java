@@ -27,7 +27,7 @@ public class FinaleService extends FinaleMatchenHelper {
             throw exception.get();
         }
 
-        Finales finale = (Finales) createMatch(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, reeksniveau, ronde);
+        Finales finale = (Finales) createMatch(false, toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, reeksniveau, ronde);
         Scheidsen nieuweScheids = new ScheidenDAO().find(scheids.getSpelerID());
 
         if(nieuweScheids == null) {

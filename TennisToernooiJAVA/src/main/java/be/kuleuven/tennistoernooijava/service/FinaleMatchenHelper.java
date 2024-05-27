@@ -14,13 +14,19 @@ import java.util.*;
 public abstract class FinaleMatchenHelper {
 
     protected Matchen createMatch(
+            boolean isMatch,
             Toernooien toernooi, Velden veld,
             Integer startDag, Integer startMaand, Integer startJaar,
             String startUur, String startMinuut,
             ReeksenWaardes reeks, Integer reeksniveau, Integer ronde
     )
     {
-        Matchen match = new Matchen();
+        Matchen match = null;
+        if(isMatch) {
+            match = new Matchen();
+        }else {
+            match = new Finales();
+        }
         Datums startDatum = new Datums();
         startDatum.setDag(startDag);
         startDatum.setMaand(startMaand);

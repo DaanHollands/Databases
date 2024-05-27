@@ -4,6 +4,8 @@ import be.kuleuven.tennistoernooijava.exceptions.InvalidPhoneNumberException;
 import be.kuleuven.tennistoernooijava.dao.AdresDAO;
 import be.kuleuven.tennistoernooijava.models.Adressen;
 
+import java.util.Optional;
+
 public class AdresService {
     private final AdresDAO adresDAO;
 
@@ -26,10 +28,7 @@ public class AdresService {
     }
 
     public Adressen getOrCreate(Integer postcode, String straatnaam, Integer straatnummer) {
-        Adressen adres = adresDAO.getAdresFrom(postcode, straatnaam, straatnummer);
-        if(adres == null) {
-            return create(postcode, straatnaam, straatnummer);
-        }
-        return adres;
+        Optional<Adressen> adres = adresDAO.getAdresFrom(postcode, straatnaam, straatnummer);
+        return adres.orElseGet(() -> create(postcode, straatnaam, straatnummer));
     }
 }

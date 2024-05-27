@@ -24,7 +24,7 @@ public class MatchenService extends FinaleMatchenHelper {
         if(exception.isPresent()) {
             throw exception.get();
         }
-        Matchen match = matchenDAO.create(createMatch(toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, reeksniveau, ronde));
+        Matchen match = matchenDAO.create(createMatch(true, toernooi, veld, startDag, startMaand, startJaar, startUur, startMinuut, reeks, reeksniveau, ronde));
         toernooi.addMatchen(match);
         return match;
     }
