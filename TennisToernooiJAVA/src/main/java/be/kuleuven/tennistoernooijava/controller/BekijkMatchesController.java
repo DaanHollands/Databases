@@ -117,6 +117,7 @@ public class BekijkMatchesController extends BaseController
     }
 
     private void handleMatchClick() {
+        opslaanKnop.setVisible(false);
         finaleAnchorpane.setVisible(false);
         Matchen selectedMatch = matchens.get(matchesList.getSelectionModel().getSelectedIndex());
 
@@ -201,16 +202,18 @@ public class BekijkMatchesController extends BaseController
         matchens.addAll(toernooi.getMatchen());
         matchens.forEach(match -> {
             String matchInfo = match instanceof Finales ?
-                    String.format("%d Finale : %02d/%02d/%04d",
+                    String.format("%d Finale : %02d/%02d/%04d, Ronde: %02d" ,
                             matchens.indexOf(match),
                             match.getDatumID().getDag(),
                             match.getDatumID().getMaand(),
-                            match.getDatumID().getJaar()) :
-                    String.format("%d : %02d/%02d/%04d",
+                            match.getDatumID().getJaar(),
+                            match.getMatchRonde()) :
+                    String.format("%d : %02d/%02d/%04d, Ronde: %02d",
                             matchens.indexOf(match),
                             match.getDatumID().getDag(),
                             match.getDatumID().getMaand(),
-                            match.getDatumID().getJaar());
+                            match.getDatumID().getJaar(),
+                            match.getMatchRonde());
             matchesList.getItems().add(matchInfo);
         });
     }
@@ -228,6 +231,7 @@ public class BekijkMatchesController extends BaseController
 
     private void selectSupporter() {
         resetSelectors();
+        opslaanKnop.setVisible(true);
         supporterSelector.setSelected(true);
         positiesList.setVisible(false);
         positiesText.setVisible(false);
@@ -235,6 +239,7 @@ public class BekijkMatchesController extends BaseController
 
     private void selectBallenraper() {
         resetSelectors();
+        opslaanKnop.setVisible(true);
         ballenraperSelector.setSelected(true);
         positiesText.setVisible(true);
         positiesList.setVisible(true);
@@ -242,12 +247,14 @@ public class BekijkMatchesController extends BaseController
 
     private void selectDeelname() {
         resetSelectors();
+        opslaanKnop.setVisible(true);
         deelnemenSelector.setSelected(true);
         positiesList.setVisible(false);
         positiesText.setVisible(false);
     }
 
     private void resetSelectors() {
+        opslaanKnop.setVisible(false);
         supporterSelector.setSelected(false);
         ballenraperSelector.setSelected(false);
         deelnemenSelector.setSelected(false);
