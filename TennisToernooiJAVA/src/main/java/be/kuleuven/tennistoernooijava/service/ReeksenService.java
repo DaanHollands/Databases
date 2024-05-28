@@ -61,7 +61,7 @@ public class ReeksenService {
         if(reeksNiveau == null || reeksNiveau.isEmpty()) {
             throw new EmptyInputException("Het reeksNiveau is niet ingevuld, dit is een getal tussen 0 en 10");
         }
-        else if(reeksNiveau.contains("[a-zA-Z]+")) {
+        else if(reeksNiveau.matches(".*[a-zA-Z]+.*")) {
             throw new InvalidInputException("Je mag enkel nummers ingeven hier");
         }
         else if(Integer.parseInt(reeksNiveau) < 0) {

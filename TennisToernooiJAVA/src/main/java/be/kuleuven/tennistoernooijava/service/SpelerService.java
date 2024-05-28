@@ -149,19 +149,19 @@ public class SpelerService {
         if(naam.isEmpty()) {
             return Optional.of(new EmptyInputException("Geen naam ingegeven!"));
         }
-        if (telefoonnummer == null || telefoonnummer.contains("[a-zA-Z]+")) {
+        if (telefoonnummer == null || telefoonnummer.matches(".*[a-zA-Z]+.*")) {
             return Optional.of(new InvalidPhoneNumberException("Ongeldige telefoonnummer!"));
         }
-        if (gewicht == null || gewicht.isEmpty() || gewicht.contains("[a-zA-Z]+") || Integer.parseInt(gewicht) < 0) {
+        if (gewicht == null || gewicht.isEmpty() || gewicht.matches(".*[a-zA-Z]+.*") || Integer.parseInt(gewicht) < 0) {
             return Optional.of(new InvalidInputException("Ongeldige gewicht!"));
         }
-        if (lengte == null || lengte.isEmpty() || lengte.contains("[a-zA-Z]+") || Integer.parseInt(lengte) < 0) {
+        if (lengte == null || lengte.isEmpty() || lengte.matches(".*[a-zA-Z]+.*") || Integer.parseInt(lengte) < 0) {
             return Optional.of(new InvalidInputException("Ongeldige lengte!"));
         }
-        if (geboorteJaar == null || geboorteJaar.isEmpty() || geboorteJaar.contains("[a-zA-Z]+") || Integer.parseInt(geboorteJaar) < 0) {
+        if (geboorteJaar == null || geboorteJaar.isEmpty() || geboorteJaar.matches(".*[a-zA-Z]+.*") || Integer.parseInt(geboorteJaar) < 0) {
             return Optional.of(new IllegalDateException("Ongeldige geboorteJaar!"));
         }
-        if (ranking == null || ranking.isEmpty() || ranking.contains("[a-zA-Z]+") || Integer.parseInt(ranking) < 0) {
+        if (ranking == null || ranking.isEmpty() || ranking.matches(".*[a-zA-Z]+.*") || Integer.parseInt(ranking) < 0) {
             return Optional.of(new InvalidInputException("Ongeldige ranking!"));
         }
         if(geboorteDag == null || geboorteDag < 1 || geboorteDag > 31 || geboorteMaand == null || geboorteMaand < 1 || geboorteMaand > 12) {

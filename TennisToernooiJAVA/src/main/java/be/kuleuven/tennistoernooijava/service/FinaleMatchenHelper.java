@@ -58,10 +58,10 @@ public abstract class FinaleMatchenHelper {
         if (startJaar<=2023 ){
             return Optional.of(new IllegalDateException("Ongeldige beginjaar"));
         }
-        if (startdUur == null || startdUur.isEmpty() || startdUur.contains("[a-zA-Z]+") || Integer.parseInt(startdUur) < 0 || Integer.parseInt(startdUur) >= 24 ) {
+        if (startdUur == null || startdUur.isEmpty() || startdUur.matches(".*[a-zA-Z]+.*") || Integer.parseInt(startdUur) < 0 || Integer.parseInt(startdUur) >= 24 ) {
             return Optional.of(new IllegalTimeException("Ongeldig Startuur"));
         }
-        if (startMinuut == null || startMinuut.isEmpty() || startMinuut.contains("[a-zA-Z]+") || Integer.parseInt(startMinuut) < 0 || Integer.parseInt(startMinuut) >= 60) {
+        if (startMinuut == null || startMinuut.isEmpty() || startMinuut.matches(".*[a-zA-Z]+.*") || Integer.parseInt(startMinuut) < 0 || Integer.parseInt(startMinuut) >= 60) {
             return Optional.of(new IllegalTimeException("Ongeldig Startuur"));
         }
         if(veld == null) {

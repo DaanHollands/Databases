@@ -122,13 +122,13 @@ public class TennisclubService {
         if(clubNaam.isEmpty()) {
             return Optional.of(new EmptyInputException("De clubnaam is leeg!"));
         }
-        if(postcode == null || postcode.isEmpty() || postcode.contains("[a-zA-Z]+") || Integer.parseInt(postcode) <= 0 || Integer.parseInt(postcode) >= 9999) {
+        if(postcode == null || postcode.isEmpty() || postcode.matches(".*[a-zA-Z]+.*") || Integer.parseInt(postcode) <= 0 || Integer.parseInt(postcode) >= 9999) {
             return Optional.of(new IllegalAdresException("Ongeldige postcode!"));
         }
         if(straatnaam == null || !onlyLetters(straatnaam)) {
             return Optional.of(new IllegalAdresException("Ongeldige straatnaam!"));
         }
-        if(straatnummer == null || straatnummer.isEmpty() || straatnummer.contains("[a-zA-Z]+") || Integer.parseInt(postcode) <= 0) {
+        if(straatnummer == null || straatnummer.isEmpty() || straatnummer.matches(".*[a-zA-Z]+.*") || Integer.parseInt(postcode) <= 0) {
             return Optional.of(new IllegalAdresException("Ongeldige straatnummer!"));
         }
 

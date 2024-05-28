@@ -70,7 +70,7 @@ public class OrganiseerToernooiController extends BaseController
     }
 
     private void saveToernooi() {
-        if(beginMatchenInput.getText().isEmpty() || beginMatchenInput.getText().contains("[a-zA-Z]+") || Integer.parseInt(beginMatchenInput.getText()) < 4) {
+        if(beginMatchenInput.getText().isEmpty() || beginMatchenInput.getText().matches(".*[a-zA-Z]+.*") || Integer.parseInt(beginMatchenInput.getText()) < 4) {
             throw new IllegalReeksException("Je moet minimaal 4 matches hebben!");
         }
         if(reeksen.size() < 4) {

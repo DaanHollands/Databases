@@ -51,10 +51,10 @@ public class MatchenService extends FinaleMatchenHelper {
     }
 
     public void updateScores(Matchen match, String scoreThuis, String scoreUit, Uitslagen uitslagen) {
-        if(scoreThuis == null || scoreThuis.isEmpty() || scoreThuis.contains("[a-zA-Z]+") || Integer.parseInt(scoreThuis) < 0) {
+        if(scoreThuis == null || scoreThuis.isEmpty() || scoreThuis.matches(".*[a-zA-Z]+.*") || Integer.parseInt(scoreThuis) < 0) {
             throw new IllegalScoreException("De thuis score is geen geldige score");
         }
-        if(scoreUit == null || scoreUit.isEmpty() || scoreUit.contains("[a-zA-Z]+") || Integer.parseInt(scoreUit) < 0) {
+        if(scoreUit == null || scoreUit.isEmpty() || scoreUit.matches(".*[a-zA-Z]+.*") || Integer.parseInt(scoreUit) < 0) {
             throw new IllegalScoreException("De score uit is geen geldige score");
         }
 
